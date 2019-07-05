@@ -1,0 +1,196 @@
+<div class="wrapper">
+
+  <!-- Sidebar -->
+  <nav id="sidebar" class="sidebar"
+       [ngClass]="stateSide === 'hideSide'? 'hidden-side':'' || stateSide === 'smallSide' || stateSide === 'hideSide' ? 'small-side':''">
+    <div class="side-image">
+      <div class="side-block pb-3" [ngClass]="stateSide === 'smallSide' || stateSide === 'hideSide' ? 'small-side':''">
+
+        <div class="p-3 pt-3" [ngClass]="stateSide === 'smallSide' ? 'text-center':''">
+          <!--<img *ngIf="stateSide !== 'smallSide'" class="mb-3" src="../../assets/logo.png" height="auto" width="100"/>-->
+          <h3 class="mb-0">
+            {{stateSide === 'smallSide' ? 'N':'NOTIFICATION'}} <span class="pink font-weight-bold">{{stateSide === 'smallSide' ? 'S':'SERVICE'}}</span>
+          </h3>
+        </div>
+
+        <div class="dropitem ml-3 mr-3 mb-2"></div>
+
+        <ul class="nav flex-column">
+
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="home" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''"><i
+                  class="fas fa-home"></i></div>
+                <div class="col-7 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Главная'}}</span></div>
+                <!--<div class="col-3 text-right p-0 m-0"><span class="badge badge-light">5</span></div>-->
+              </div>
+            </a>
+          </li>
+
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="order" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
+                  <i class="fas fa-indent"></i>
+                </div>
+                <div class="col-7 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Заказы'}}</span></div>
+                <!--<div class="col-3 text-right p-0 m-0"><span class="badge badge-light">Bobr</span></div>-->
+              </div>
+            </a>
+          </li>
+
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="request" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
+                  <i class="fas fa-phone-square"></i>
+                </div>
+                <div class="col-7 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Заявки'}}</span></div>
+                <!--<div class="col-3 text-right p-0 m-0"><span class="badge badge-light">Bobr</span></div>-->
+              </div>
+            </a>
+          </li>
+
+          <div class="dropitem ml-3 mr-3 mb-2"></div>
+
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="service" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
+                  <i class="fas fa-suitcase"></i>
+                </div>
+                <div class="col-7 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Услуги'}}</span></div>
+                <!--<div class="col-3 text-right p-0 m-0"><span class="badge badge-light">Bobr</span></div>-->
+              </div>
+            </a>
+          </li>
+
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="user" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''"><i
+                  class="fas fa-user-tie"></i></div>
+                <div class="col-7 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Пользователи'}}</span></div>
+                <!--<div class="col-3 text-right p-0 m-0"><span class="badge badge-light">Bobr</span></div>-->
+              </div>
+            </a>
+          </li>
+
+        </ul>
+
+
+        <div class="dropitem ml-3 mr-3 mb-2"></div>
+
+        <ul class="list-group">
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="dropGame()">
+            <a class="nav-link nav-link-side" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-10 p-0 m-0"><span
+                  class="mt-3">{{stateSide === 'smallSide' ? 'СО':'Системные отчеты'}}</span></div>
+                <div *ngIf="stateSide === 'fullSide'" class="col-2 text-right p-0 m-0"><i [@arrow]="!dropDownGame ? 'right':'bottom'"
+                                                                            class="fas fa-caret-right"></i></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="list-group" [@dropdown]="dropDownGame" *ngIf="dropDownGame">
+
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="game-prize" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
+                  <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="col-10 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Отчет по заказам'}}</span>
+                </div>
+                <!--<div class="col-4 text-right p-0 m-0"><span class="badge badge-light">ПРИЗОВЫЕ</span></div>-->
+              </div>
+            </a>
+          </li>
+
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="game-prize" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
+                  <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="col-10 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Отчет по товарам'}}</span></div>
+                <!--<div class="col-4 text-right p-0 m-0"><span class="badge badge-light">ПРИЗОВЫЕ</span></div>-->
+              </div>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div id="content" class="content" [ngClass]="stateSide === 'fullSide' ? 'content-show':''">
+
+    <nav class="navbar navbar-light bg-light mt-1 pl-lg-3 pr-lg-3 pl-2 pr-2"
+         [ngClass]="stateSide === 'fullSide' ? 'content-show-back':''">
+      <nav class="nav">
+        <button type="button" class="btn btn-light btn-user w-auto" (click)="Side('desktop')">
+          <i class="fas fa-align-justify"></i>
+        </button>
+        <button type="button" class="btn btn-light btn-user w-auto none-sm" (click)="onSmallSide()">
+          <i class="fas fa-align-left"></i>
+        </button>
+        <div class="nav-link text-muted none-sm">
+          <div>
+            <span class="breadcrumb-item">Панель управления</span>
+            <span class="breadcrumb-item" *ngIf="pathOne">{{pathOne}}</span>
+            <span class="breadcrumb-item" *ngIf="pathTwo">{{pathTwo}}</span>
+          </div>
+        </div>
+      </nav>
+      <ul class="nav justify-content-end">
+
+        <li class="nav-item pr-3">
+          <button class="btn btn-blue rounded-circle position-relative">
+            <span class="badge-alert rounded-circle">2</span>
+            <i class="fas fa-phone-square"></i>
+          </button>
+        </li>
+
+        <li class="nav-item pr-3">
+          <button class="btn btn-pink rounded-circle position-relative">
+            <span class="badge-alert rounded-circle">1</span>
+            <i class="fas fa-indent"></i>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <div class="dropdown">
+            <button class="btn btn-light btn-user" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+              <span class="">{{nameUser}}</span><i class="fas fa-user ml-2"></i><i
+              class="fas fa-angle-down ml-1"></i></button>
+
+            <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item drp-item pt-2 pb-2" routerLink="profile"><i
+                class="fas fa-user-edit mr-2 pagination-custom"></i>Профиль</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item drp-item pt-2 pb-2" (click)="onExit()"><i
+                class="fas fa-sign-out-alt mr-2 pagination-custom"></i>Выйти</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+
+    <div class="container-fluid pl-lg-3 pr-lg-3 pt-2 pb-3"
+         [ngClass]="stateSide === 'fullSide' ? 'content-show-back':''">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>
+
+

@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Новый заказ</h5>
+      </div>
+      <div class="card-body pt-0">
+        <form [formGroup]="formOrder">
+          <div class="form-group">
+            <label>Услуги</label>
+            <select class="form-control form-control-sm" name="service" formControlName="service" id="service">
+              <optgroup *ngFor="let category of listCategory" label="{{category.name}}">
+                <option *ngFor="let service of category.service" value="{{service.id}}">{{service.name}}</option>
+              </optgroup>
+            </select>
+            <small class="text-muted">Выберите услугу из списка.</small>
+          </div>
+          <div class="form-group">
+            <label>Имя заказчика</label>
+            <input type="text" class="form-control form-control-sm" name="name" formControlName="name"/>
+            <small class="text-muted">Введите имя заказчика.</small>
+          </div>
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="number" class="form-control form-control-sm" name="telephone" formControlName="telephone"/>
+            <small class="text-muted">Введите номер телефона заказчика.</small>
+          </div>
+          <div class="form-group">
+            <label>Описание заказа</label>
+            <textarea type="text" class="form-control form-control-sm" name="info" id="info" rows="3" formControlName="info">
+            </textarea>
+            <small class="text-muted">Напишите более подробную информацию о заказе.</small>
+          </div>
+          <button class="btn btn-blue btn-sm pl-lg-5 pr-lg-5" [disabled]="formOrder.invalid" (click)="createOrder(formOrder.value)">Добавить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

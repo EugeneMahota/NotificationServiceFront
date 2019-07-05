@@ -1,1 +1,163 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Oswald:300');
+
+$lightBlueColor: #1e88e5;
+$blueColor: #1565c0;
+$darkBlue: #0d47a1;
+$redColor: #e53935;
+$greenColor: #43a047;
+$pinkColor: #EC407A;
+$greyColor: #9E9E9E;
+$blueGrey: #90a4ae;
+$lightGreyColor: #e0e0e0;
+$darkGreyColor: #212121;
+$whiteColor: #FFFFFF;
+
+$borderRadius: 2px;
+$boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+
+body {
+  font-family: 'Oswald', sans-serif!important;
+  background-color: #FAFAFA!important;
+  overflow-x:hidden!important;
+}
+
+.card {
+  box-shadow: $boxShadow;
+  border: none!important;
+  border-radius: $borderRadius!important;
+  .card-header {
+    border: none;
+    border-top-left-radius: $borderRadius!important;
+    border-top-right-radius: $borderRadius!important;
+    background-color: #FFFFFF;
+    color: $darkBlue;
+  }
+}
+.input-group-text {
+  color: $darkGreyColor;
+  border: none;
+  background-color: #FFFFFF;
+  i {
+    color: $blueColor;
+    width: 15px;
+  }
+}
+.form-control {
+  //-webkit-text-fill-color: $darkGreyColor;
+  //-webkit-animation-name: autofill;
+  //-webkit-animation-fill-mode: both;
+  border: {
+    left: 0;
+    right: 0;
+    top: 0;
+    radius: 0;
+    color: $greyColor!important;
+  }
+  &:focus {
+    box-shadow: none!important;
+    border-color: $darkGreyColor!important;
+  }
+}
+.btn-group {
+  .btn {
+    border-radius: $borderRadius!important;
+  }
+  .btn:last-child {
+    margin-left:3px;
+  }
+}
+.btn {
+  border-radius: $borderRadius;
+  &:focus {
+    box-shadow: $boxShadow;
+  }
+  &:hover {
+    box-shadow: $boxShadow;
+  }
+  &:active {
+    box-shadow: $boxShadow!important;
+  }
+}
+
+@mixin btn($bgColor, $color) {
+  background-color: $bgColor!important;
+  border-color: $bgColor!important;
+  color: $color!important;
+  box-shadow: $boxShadow!important;
+  &:active {
+    background-color: darken($bgColor, 15%)!important;
+    border-color: darken($bgColor, 15%)!important;
+    color: $color!important;
+  }
+  &:hover {
+    background-color: lighten($bgColor, 10%);
+    border-color: lighten($bgColor, 10%);
+    color: $color!important;
+    transition: all 0.3s;
+  }
+  &:focus {
+    background-color: lighten($bgColor, 5%);
+    border-color: lighten($bgColor, 5%);
+    color: $color!important;
+  }
+}
+.btn-table {
+  color: #757575!important;
+  &:active, &:focus, &:hover {
+    box-shadow: none!important;
+    color: #000000!important;
+  }
+}
+.btn-header {
+  @include btn($lightBlueColor, $whiteColor);
+}
+
+.btn-pink {
+  @include btn($pinkColor, $whiteColor);
+}
+
+.btn-blue {
+  @include btn($blueColor, $whiteColor);
+}
+
+.btn-red {
+  @include btn($redColor, $whiteColor);
+}
+.btn-grey {
+  @include btn($blueGrey, $whiteColor);
+}
+
+.btn-white {
+  @include btn($whiteColor, $darkGreyColor);
+}
+
+.pink {
+  color: $pinkColor;
+}
+
+input.ng-touched.ng-invalid{
+  border-color: $redColor;
+}
+input.ng-touched.ng-valid{
+  border-color: $greenColor;
+}
+.valid {
+  color: $greenColor;
+}
+.invalid {
+  color: $redColor;
+}
+
+.custom-multiselect .multiselect-dropdown .dropdown-btn {
+  min-height: 38px;
+  border: {
+    top:0!important;
+    left:0!important;
+    right: 0!important;
+    radius: 0!important;
+  }
+  .selected-item {
+    font-size: 13px;
+  }
+}

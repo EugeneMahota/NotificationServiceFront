@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-5 col-7">
+            <h5>Список заявок</h5>
+          </div>
+          <div class="col-md-7 col-5 text-right">
+            <div class="btn-group">
+              <div class="dropdown d-lg-none">
+                <button class="btn btn-sm btn-table" id="dropdownMenuButton2" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-calendar"></i>
+                </button>
+
+                <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2">
+                  <button class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activePeriod === 'day' ? 'btn-active':''"
+                          (click)="setActivePeriod('day')">Сегодня
+                  </button>
+                  <button class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activePeriod === 'week' ? 'btn-active':''"
+                          (click)="setActivePeriod('week')">Неделя
+                  </button>
+                  <button class="dropdown-item drp-item pt-2 pb-2"
+                          [ngClass]="activePeriod === 'month' ? 'btn-active':''" (click)="setActivePeriod('month')">
+                    Месяц
+                  </button>
+                  <button class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activePeriod === 'all' ? 'btn-active':''"
+                          (click)="setActivePeriod('all')">За все время
+                  </button>
+                </div>
+              </div>
+
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'day' ? 'btn-active':''" (click)="setActivePeriod('day')">Сегодня
+              </button>
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'week' ? 'btn-active':''" (click)="setActivePeriod('week')">Неделя
+              </button>
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'month' ? 'btn-active':''" (click)="setActivePeriod('month')">Месяц
+              </button>
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'all' ? 'btn-active':''" (click)="setActivePeriod('all')">За все время
+              </button>
+              <button class="btn btn-table btn-sm font-weight-bold" (click)="getOrderForPeriod()"><i
+                class="fas fa-sync-alt"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="overflow-auto card-req">
+        <div class="border-top pt-2 pb-2 pl-4 pr-4" *ngFor="let req of listRequest">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="media">
+                <img src="https://image.flaticon.com/icons/png/512/97/97895.png" width="32" height="32"
+                     class="rounded mr-3">
+                <div class="media-body">
+                  <h5 class="mt-0">{{req.name}},
+                    <small class="text-muted">{{req.date | date: 'dd MMM yyyy HH:mm'}}</small>
+                  </h5>
+                  {{req.info}}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <small class="font-weight-bold">Телефон</small><br/> {{req.telephone}}
+            </div>
+            <div class="col-md-2 col-6 text-right">
+              <button class="btn btn-table btn-sm font-weight-bold pr-0" (click)="deleteRequest(req)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

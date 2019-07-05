@@ -1,0 +1,18 @@
+<div class="alert-block position-absolute">
+  <div [@alert] *ngFor="let alert of listAlert" [ngClass]="
+   alert.type === 'success' ? 'alert-success':'' ||
+   alert.type === 'error' ? 'alert-danger':'' ||
+   alert.type === 'warning' ? 'alert-warning':''"
+       class="alert text-center mb-4 mr-3" role="alert">
+    <div class="row">
+      <div class="col-10 text-left">
+        <strong class="title mr-2">{{alert.title}}</strong> <span class="text">{{alert.message}}</span>
+      </div>
+      <div class="col-2 text-right">
+        <button type="button" class="btn-table btn btn-sm pt-0" (click)="delAlert(alert)">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

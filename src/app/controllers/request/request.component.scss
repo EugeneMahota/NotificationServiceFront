@@ -1,0 +1,19 @@
+.btn-active {
+  color: #EC407A!important;
+  &:hover {
+    color: darken(#EC407A, 13)!important;
+  }
+}
+.dropdown-menu {
+  cursor: pointer;
+  border: none;
+  border-radius:2px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+}
+.dropdown-item:focus, .dropdown-item:active {
+  background-color: rgba(255, 255, 255, 0.61);
+  color: #4b4b4b !important;
+}
+.card {
+  max-height: 88vh;
+}

@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-order">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-lg-2">
+            <h5>Список заказов</h5>
+          </div>
+          <div class="col-lg-5">
+            <form class="text-right" [formGroup]="formSearch">
+              <div class="input-group">
+                <input type="number" class="form-control form-control-sm border-right-0 border-left-0 border-top-0 border-radius-0 pl-0"
+                       id="searchStr" name="searchStr" formControlName="searchStr" placeholder="Введите номер заказчика"/>
+                <div class="input-group-append">
+                  <div class="btn-group">
+                    <button *ngIf="formSearch.valid" class="btn btn-sm btn-table" (click)="formSearch.reset()"><i class="fas fa-times"></i></button>
+                    <button class="btn btn-sm btn-table" [disabled]="formSearch.invalid" (click)="searchOrder(formSearch.value)"><i class="fas fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-5 text-right">
+            <div class="btn-group">
+              <div class="dropdown d-lg-none">
+                <button class="btn btn-sm btn-table" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-calendar"></i>
+                </button>
+
+                <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton2">
+                  <button class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activePeriod === 'day' ? 'btn-active':''" (click)="setActivePeriod('day')">Сегодня</button>
+                  <button class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activePeriod === 'yesterday' ? 'btn-active':''" (click)="setActivePeriod('yesterday')">Вчера</button>
+                  <button class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activePeriod === 'week' ? 'btn-active':''" (click)="setActivePeriod('week')">Неделя</button>
+                  <button class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activePeriod === 'month' ? 'btn-active':''" (click)="setActivePeriod('month')">Месяц</button>
+                  <button class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activePeriod === 'all' ? 'btn-active':''" (click)="setActivePeriod('all')">За все время</button>
+                </div>
+              </div>
+
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'day' ? 'btn-active':''" (click)="setActivePeriod('day')">Сегодня</button>
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'yesterday' ? 'btn-active':''" (click)="setActivePeriod('yesterday')">Вчера</button>
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'week' ? 'btn-active':''" (click)="setActivePeriod('week')">Неделя</button>
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'month' ? 'btn-active':''" (click)="setActivePeriod('month')">Месяц</button>
+              <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                      [ngClass]="activePeriod === 'all' ? 'btn-active':''" (click)="setActivePeriod('all')">За все время</button>
+
+              <div class="dropdown">
+                <button class="btn btn-sm btn-table" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-bell"></i>
+                </button>
+
+                <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton1">
+                  <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'new' ? 'btn-active':''" (click)="activeStatus = 'new'">Новые</div>
+                  <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'pending' ? 'btn-active':''" (click)="activeStatus = 'pending'">В работе</div>
+                  <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'success' ? 'btn-active':''" (click)="activeStatus = 'success'">Выполнены</div>
+                  <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'cancel' ? 'btn-active':''" (click)="activeStatus = 'cancel'">Отменены</div>
+                  <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'all' ? 'btn-active':''" (click)="activeStatus = 'all'">Все заказы</div>
+                </div>
+              </div>
+              <button class="btn btn-table btn-sm font-weight-bold" routerLink="add"><i class="fas fa-plus"></i></button>
+              <button class="btn btn-table btn-sm font-weight-bold" (click)="getOrderForPeriod()"><i class="fas fa-sync-alt"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     <div [ngClass]="listOrder.length >= 3 ? 'overflow-auto':''">
+       <div class="card-body border-top p-2 pl-3 pr-3" [ngClass]="activeStatus === order.status || activeStatus === 'all' ? '':'d-none'"
+            *ngFor="let order of listOrder">
+         <div class="row">
+           <div class="col-md-5">
+             <div class="media">
+               <img src="{{order.service.image}}" class="mr-3 rounded" width="32" height="32">
+               <div class="media-body">
+                 <h5 class="mt-0 mb-1">
+                   <span *ngIf="order.status === 'new'" class="badge badge-danger mr-2">Новый</span>
+                   <span *ngIf="order.status === 'pending'" class="badge badge-primary mr-2">В работе</span>
+                   <span *ngIf="order.status === 'success'" class="badge badge-success mr-2">Выполнен</span>
+                   <span *ngIf="order.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
+                   {{order.name}},
+                   <small class="text-muted">{{order.date | date: 'dd MMM yyyy HH:mm '}}</small>
+                 </h5>
+                 <div>{{order.info}}</div>
+               </div>
+             </div>
+           </div>
+
+           <div class="col-md-2 col-6">
+             <small class="font-weight-bold">Услуга</small><br/>
+             <div>{{order.service.name}}({{order.service.category.name}})</div>
+           </div>
+
+           <div class="col-md-3 col-6">
+             <small class="font-weight-bold">Номер</small><br/>
+             <div>{{order.telephone}}</div>
+           </div>
+
+           <div class="col-md-2 text-right font-weight-bold">
+
+             <div class="btn-group pr-0">
+
+               <div class="dropdown">
+                 <button class="btn btn-sm btn-table" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <i class="fas fa-bell"></i>
+                 </button>
+
+                 <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton">
+                   <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'pending')">В работе</div>
+                   <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'success')">Выполнен</div>
+                   <!--<div class="dropdown-divider"></div>-->
+                   <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'cancel')">Отменен</div>
+                 </div>
+               </div>
+               <!--<button class="btn btn-sm btn-table"><i class="fas fa-edit"></i></button>-->
+               <button class="btn btn-sm btn-table pr-0" (click)="deleteOrder(order.id)"><i class="fas fa-trash-alt"></i></button>
+             </div><br/>
+               <div class="text-muted">{{order.service.price | currency:'RUB':' ':'1.0-0'}} ₽</div>
+             </div>
+         </div>
+       </div>
+     </div>
+
+    </div>
+  </div>
+</div>

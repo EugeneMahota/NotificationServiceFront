@@ -1,0 +1,32 @@
+<div [@confirm] class="card-block position-absolute" *ngIf="confirm.title && confirm.message" (click)="setConfirm(false)">
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+      <div class="card mt-4 m-3 mb-4">
+        <div class="card-header pb-0">
+          <div class="row">
+            <div class="col-9">
+              <h5 class="mb-0 title">{{confirm.title}}</h5>
+            </div>
+            <div class="col-3 text-right">
+              <button class="btn btn-table btn-sm pt-0 pr-0" (click)="setConfirm(false)">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-0">
+          <div class="dropdown-divider"></div>
+          <div class="mb-3">
+            {{confirm.message}}
+          </div>
+          <div class="text-right">
+            <button class="btn btn-blue" (click)="setConfirm(true)">Да</button>
+            <button class="btn btn-pink ml-2" (click)="setConfirm(false)">Нет</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+</div>

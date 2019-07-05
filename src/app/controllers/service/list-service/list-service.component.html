@@ -1,0 +1,168 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="card card-service">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Список услуг</h5>
+          </div>
+          <div class="col-md-6">
+            <form class="text-right" [formGroup]="formCategory">
+              <div class="input-group">
+                <input class="form-control form-control-sm border-right-0 border-left-0 border-top-0 border-radius-0"
+                       id="name" name="name" formControlName="name" placeholder="Новая категория"/>
+                <div class="input-group-append">
+                  <div class="btn-group">
+                    <button class="btn btn-sm btn-table" [disabled]="formCategory.invalid"
+                            (click)="createCategory(formCategory.value); formCategory.reset()"><i class="fas fa-plus"></i></button>
+                    <button class="btn btn-sm btn-table"
+                            (click)="getListCategory()"><i class="fas fa-sync-alt"></i></button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive" *ngIf="listCategory.length > 0">
+        <table class="table table-sm">
+          <tbody *ngFor="let category of listCategory; let j = index;" class="border-0">
+          <tr>
+            <th class="pl-4 align-middle" colspan="3" *ngIf="category !== itemCategory">{{category.name}}</th>
+            <th class="pl-4 align-middle p-3" colspan="3" *ngIf="category === itemCategory">
+              <input class="form-control form-control-sm" #categoryUpdate
+                     name="name" [(ngModel)]="itemCategory.name" (keyup.enter)="updateCategory(itemCategory)" placeholder="Введите название категории"/>
+            </th>
+            <th class="align-middle text-right pr-4" colspan="2">
+              <div class="btn-group">
+                <button *ngIf="category !== itemCategory" class="btn btn-table btn-sm" (click)="focusCategoryUpdate(category)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button *ngIf="category === itemCategory" class="btn btn-table btn-sm" (click)="closeCategoryUpdate()">
+                  <i class="fas fa-times"></i>
+                </button>
+                <button *ngIf="category === itemCategory" class="btn btn-table btn-sm" (click)="updateCategory(itemCategory)">
+                  <i class="fas fa-save"></i>
+                </button>
+                <button class="btn btn-table btn-sm" (click)="deleteCategory(category.id)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <td class="border-0 text-muted pl-4" scope="col"><small>#</small></td>
+            <td class="border-0 text-muted" scope="col"><small>Название</small></td>
+            <td class="border-0 text-muted" scope="col"><small>Информация</small></td>
+            <td class="border-0 text-muted" scope="col"><small>Цена</small>
+            </td><td class="border-0 text-muted" scope="col"></td>
+          </tr>
+          <tr *ngFor="let service of category.service let i = index" [ngClass]="itemService === service ? 'active-tr':''">
+            <td class="pl-4 align-middle">
+              <img src="{{service.image}}" width="25" height="25" class="rounded">
+            </td>
+            <td class="align-middle">{{service.name}}</td>
+            <td class="align-middle">{{service.info}}</td>
+            <td class="align-middle">{{service.price | currency:'RUB':' ':'1.0-0'}} ₽</td>
+            <td class="text-right align-middle pr-4">
+              <div class="btn-group">
+                <button class="btn btn-table btn-sm" (click)="
+                itemService = service;
+                this.imageInput.nativeElement.value = null;
+                this.image = null;">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-table btn-sm" (click)="deleteService(service.id)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card" *ngIf="itemService">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10">
+            <h5>Редактировать услугу</h5>
+          </div>
+          <div class="col-2 text-right">
+            <button class="btn btn-sm btn-table" (click)="itemService = null; getListCategory();">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body pt-0">
+        <form #formService="ngForm">
+          <div class="form-group">
+            <label class="text-muted">Категория</label>
+            <select class="form-control form-control-sm" name="category" [(ngModel)]="itemService.category">
+              <option *ngFor="let category of listCategory" value="{{category.id}}">{{category.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="text-muted">Название</label>
+            <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="itemService.name"/>
+          </div>
+          <div class="form-group">
+            <label class="text-muted">Цена</label>
+            <input type="number" class="form-control form-control-sm" name="price" [(ngModel)]="itemService.price"/>
+          </div>
+          <div class="form-group">
+            <label class="text-muted">Описание</label>
+            <textarea type="text" class="form-control form-control-sm" name="info" rows="3" [(ngModel)]="itemService.info">
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label for="image">Изображение</label>
+            <input class="form-control-file" type="file" name="image" (change)="selectImage($event)" #image>
+          </div>
+          <button class="btn btn-blue pl-lg-5 pr-lg-5 btn-sm" [disabled]="formService.invalid"
+                  (click)="updateService(itemService)">Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="!itemService">
+      <div class="card-header">
+        <h5>Новая услуга</h5>
+      </div>
+      <div class="card-body pt-0">
+        <form [formGroup]="formService">
+          <div class="form-group">
+            <label class="text-muted">Категория</label>
+            <select class="form-control form-control-sm" name="category" formControlName="category" id="category">
+              <option *ngFor="let category of listCategory" value="{{category.id}}">{{category.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="text-muted">Название</label>
+            <input type="text" class="form-control form-control-sm" name="name" formControlName="name"/>
+          </div>
+          <div class="form-group">
+            <label class="text-muted">Цена</label>
+            <input type="number" class="form-control form-control-sm" name="price" formControlName="price"/>
+          </div>
+          <div class="form-group">
+            <label class="text-muted">Описание</label>
+            <textarea type="text" class="form-control form-control-sm" name="info" id="info" rows="3" formControlName="info">
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label for="image">Изображение</label>
+            <input class="form-control-file" type="file" id="image" name="image" (change)="selectImage($event)" #image>
+          </div>
+          <button class="btn btn-blue pl-lg-5 pr-lg-5 btn-sm" [disabled]="formService.invalid"
+                  (click)="createService(formService.value)">Добавить
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
