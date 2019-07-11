@@ -5,6 +5,7 @@ import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {Tokens} from '../models/tokens';
+import {User} from '../models/user';
 
 const httpHeaders = {
   headers: new HttpHeaders({
@@ -102,5 +103,17 @@ export class AuthService {
     this.tokens = new Tokens();
     localStorage.clear();
     this.router.navigate(['login']);
+  }
+
+  getUser(): Observable<User> {
+    return this.http.get(environment.apiUrl + '/profile')
+      .pipe(map(res => {
+        return {
+          id: res['_id'],
+          name: res['name'],
+          email: res['email'],
+          password: res['password']
+        };
+      }));
   }
 }

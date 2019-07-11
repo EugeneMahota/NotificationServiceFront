@@ -17,8 +17,9 @@ const httpOptions = {
 export class OrderService {
 
   listOrder: Order[] = [];
-
   activePeriod: string = 'day';
+
+
   constructor(private http: HttpClient) {
   }
 
@@ -41,7 +42,8 @@ export class OrderService {
               price: data.service.price,
               info: data.service.info,
               image: data.service.image,
-              category: data.service.category
+              category: data.service.category,
+              flActive: data.service.flActive
             },
             info: data.info
           };
@@ -66,7 +68,8 @@ export class OrderService {
               price: data.service.price,
               info: data.service.info,
               image: data.service.image,
-              category: data.service.category
+              category: data.service.category,
+              flActive: data.service.flActive
             },
             info: data.info
           };

@@ -1,0 +1,55 @@
+<div class="w-100 p-3">
+  <div class="row">
+    <div class="col-12">
+      <h5 class="mb-0 title pl-3 pb-3">Выбрана услуга</h5>
+    </div>
+
+    <div class="col-lg-6 pb-3">
+      <div class="card p-3 h-100">
+        <div class="row">
+          <div class="col-2">
+            <img class="image-card rounded" src="{{itemService.image}}">
+          </div>
+          <div class="col-10">
+            <div class="row">
+              <div class="col-8"><h5 class="mt-0">{{itemService.name}}</h5></div>
+              <div class="col-4 text-right text-muted price pl-0">от {{itemService.price | currency:'RUB':' ':'1.0-0'}} ₽</div>
+              <div class="col-lg-12">{{itemService.info}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12"></div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0 title">Заполните форму</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formOrder">
+            <div class="form-group">
+              <label class="text-muted">Имя</label>
+              <input type="text" class="form-control" name="name" formControlName="name" placeholder="">
+            </div>
+
+            <div class="form-group">
+              <label class="text-muted">Телефон</label>
+              <input type="text" class="form-control" name="telephone" formControlName="telephone" placeholder="">
+            </div>
+
+            <div class="form-group">
+              <label class="text-muted">Опишите проблему</label>
+              <textarea type="text" class="form-control" name="info" formControlName="info" placeholder="" rows="3"></textarea>
+            </div>
+
+            <button class="btn btn-blue pl-lg-5 pr-lg-5" [disabled]="formOrder.invalid" (click)="createOrder(formOrder.value)">Отправить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

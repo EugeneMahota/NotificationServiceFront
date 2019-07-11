@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {AlertService} from '../../services/alert.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +7,8 @@ import {AlertService} from '../../services/alert.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private alert: AlertService) { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

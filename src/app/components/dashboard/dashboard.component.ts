@@ -3,6 +3,8 @@ import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AuthService} from '../../services/auth.service';
 import {ConfirmService} from '../../services/confirm.service';
+import {User} from '../../models/user';
+import {WsService} from '../../services/ws.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +30,16 @@ import {ConfirmService} from '../../services/confirm.service';
         transform: 'rotate(90deg)'
       })),
       transition('right<=>bottom', animate('200ms ease-in-out'))
-    ])
+    ]),
+    trigger('notification', [
+      state('void', style({
+        transform: 'scale(0)'
+      })),
+      state('*', style({
+        transform: 'scale(1)'
+      })),
+      transition('void=>*, *=>void', animate('150ms ease-in-out'))
+    ]),
   ]
 })
 export class DashboardComponent implements OnInit {
@@ -36,7 +47,7 @@ export class DashboardComponent implements OnInit {
   stateSide: string;
   switchSide: boolean;
 
-  nameUser: string = 'Евгений Махота';
+  user: User = new User();
 
   dropDownGame: boolean;
   dropDownReport: boolean;
@@ -44,7 +55,10 @@ export class DashboardComponent implements OnInit {
   pathOne: string;
   pathTwo: string;
 
-  constructor(private router: Router, private authService: AuthService, private confirm: ConfirmService) {
+  countOrder: number;
+  countRequest: number;
+
+  constructor(private router: Router, private authService: AuthService, private confirm: ConfirmService, private ws: WsService) {
     this.router.events.subscribe(res => {
       if (res instanceof NavigationEnd) {
         if (res.urlAfterRedirects === '/dashboard/service') {
@@ -71,14 +85,37 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
+
+    this.ws.getMessage().subscribe(res => {
+      console.log(res);
+      if (res.event === 'updateOrder') {
+        this.countOrder = res.data;
+      }
+
+      if (res.event === 'updateRequest') {
+        this.countRequest = res.data;
+      }
+    });
   }
 
   ngOnInit() {
-    this.stateSide = 'smallSide';
-    this.switchSide = true;
-
+    if (window.innerWidth < 1131) {
+      this.stateSide = 'hideSide';
+      this.switchSide = true;
+    } else {
+      this.stateSide = localStorage.getItem('stateSide') || 'fullSide';
+      this.switchSide = localStorage.getItem('switchSide') === 'true' ? true : false;
+    }
 
     this.saveDrop();
+    this.getUser();
+    this.checkNotification();
+  }
+
+  getUser() {
+    this.authService.getUser().subscribe(res => {
+      this.user = res;
+    });
   }
 
   onExit() {
@@ -104,6 +141,8 @@ export class DashboardComponent implements OnInit {
       this.stateSide = 'fullSide';
       this.switchSide = false;
     }
+    localStorage.setItem('switchSide', this.switchSide.toString());
+    localStorage.setItem('stateSide', this.stateSide);
   }
 
   onSmallSide() {
@@ -118,6 +157,9 @@ export class DashboardComponent implements OnInit {
       this.stateSide = 'fullSide';
       this.switchSide = false;
     }
+
+    localStorage.setItem('switchSide', this.switchSide.toString());
+    localStorage.setItem('stateSide', this.stateSide);
   }
 
   ShowDisplaySm() {
@@ -139,5 +181,10 @@ export class DashboardComponent implements OnInit {
   saveDrop() {
     this.dropDownReport = JSON.parse(localStorage.getItem('dropDownReport')) || false;
     this.dropDownGame = JSON.parse(localStorage.getItem('dropDownGame')) || false;
+  }
+
+  checkNotification() {
+    this.ws.sendMessage('checkOrder', null);
+    this.ws.sendMessage('checkRequest', null);
   }
 }

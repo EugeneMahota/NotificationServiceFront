@@ -5,4 +5,5 @@ export class Service {
   info: string;
   image: string;
   category: any;
+  flActive: boolean;
 }

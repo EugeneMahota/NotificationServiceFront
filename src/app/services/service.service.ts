@@ -44,6 +44,7 @@ export class ServiceService {
                 info: service.info,
                 image: service.image,
                 category: service.category,
+                flActive: service.flActive
               };
             })
           };
@@ -63,6 +64,7 @@ export class ServiceService {
             info: service.info,
             image: service.image,
             category: service.category,
+            flActive: service.flActive
           };
         });
       }));

@@ -7,7 +7,7 @@ $darkBlue: #0d47a1;
 $redColor: #e53935;
 $greenColor: #43a047;
 $pinkColor: #EC407A;
-$greyColor: #9E9E9E;
+$greyColor: #bdbdbd;
 $blueGrey: #90a4ae;
 $lightGreyColor: #e0e0e0;
 $darkGreyColor: #212121;
@@ -31,7 +31,7 @@ body {
     border-top-left-radius: $borderRadius!important;
     border-top-right-radius: $borderRadius!important;
     background-color: #FFFFFF;
-    color: $darkBlue;
+    color: #000000;
   }
 }
 .input-group-text {

@@ -51,7 +51,8 @@ export class ListServiceComponent implements OnInit {
       name: ['', [Validators.required]],
       price: ['', [Validators.required]],
       info: ['', []],
-      category: ['', [Validators.required]]
+      category: ['', [Validators.required]],
+      flActive: ['', [Validators.required]]
     });
   }
 
@@ -107,6 +108,7 @@ export class ListServiceComponent implements OnInit {
     serviceData.append('info', service.info);
     serviceData.append('category', service.category);
     serviceData.append('image', this.image);
+    serviceData.append('flActive', service.flActive.toString());
 
     this.serviceService.postService(serviceData).subscribe(res => {
       this.getListCategory();
@@ -120,6 +122,7 @@ export class ListServiceComponent implements OnInit {
     serviceData.append('price', service.price.toString());
     serviceData.append('info', service.info);
     serviceData.append('category', service.category);
+    serviceData.append('flActive', service.flActive.toString());
     if (this.image) {
       serviceData.append('image', this.image);
     }

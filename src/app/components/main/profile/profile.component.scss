@@ -1,0 +1,23 @@
+.border-radius-0 {
+  background-color: #FAFAFA;
+  border-radius: 0!important;
+}
+.image-card {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+}
+@media (max-width: 400px) {
+  .image-card {
+    object-fit: cover;
+    height: 35px;
+    width: 35px;
+  }
+  .price {
+    font-size: 0.8rem;
+  }
+}
+.title {
+  letter-spacing: 1px;
+  color: #1565C0;
+}

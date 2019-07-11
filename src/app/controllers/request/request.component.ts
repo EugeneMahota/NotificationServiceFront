@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RequestService} from '../../services/request.service';
 import {Request} from '../../models/request';
 import {ConfirmService} from '../../services/confirm.service';
+import {WsService} from '../../services/ws.service';
 
 @Component({
   selector: 'app-request',
@@ -14,7 +15,8 @@ export class RequestComponent implements OnInit {
   activePeriod: string;
 
   constructor(private requestService: RequestService,
-              private confirm: ConfirmService) {
+              private confirm: ConfirmService,
+              private ws: WsService) {
   }
 
   ngOnInit() {
@@ -109,5 +111,16 @@ export class RequestComponent implements OnInit {
           confirm.unsubscribe();
         }
       });
+  }
+
+
+  updateStatusRequest(request: Request, status: string) {
+    request.status = status;
+    this.requestService.putRequest(request).subscribe(res => {
+      if (res.status === 'Ok') {
+        this.ws.sendMessage('checkRequest', null);
+        this.getOrderForPeriod();
+      }
+    });
   }
 }

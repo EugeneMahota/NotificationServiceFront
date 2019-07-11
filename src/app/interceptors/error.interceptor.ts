@@ -18,11 +18,13 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (response.body.status === 'Error') {
             this.alert.onAlertList('error', 'Ошибка!', response.body.msg);
           }
+          if (response.body.status === 'Ok') {
+            this.alert.onAlertList('success', '', 'Операция выполненна успешно.');
+          }
         }
       }
     }, error => {
       if (error instanceof HttpErrorResponse) {
-        console.log(error.error);
         if (error.status === 500) {
           this.alert.onAlertList('error', 'Ошибка!', error.error);
         }

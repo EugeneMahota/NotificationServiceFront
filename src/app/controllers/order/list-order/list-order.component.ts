@@ -3,6 +3,7 @@ import {OrderService} from '../../../services/order.service';
 import {Order} from '../../../models/order';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ConfirmService} from '../../../services/confirm.service';
+import {WsService} from '../../../services/ws.service';
 
 @Component({
   selector: 'app-list-order',
@@ -17,7 +18,10 @@ export class ListOrderComponent implements OnInit {
 
   formSearch: FormGroup;
 
-  constructor(private orderService: OrderService, private fb: FormBuilder, private confirm: ConfirmService) {
+  constructor(private orderService: OrderService,
+              private fb: FormBuilder,
+              private confirm: ConfirmService,
+              private ws: WsService) {
   }
 
   ngOnInit() {
@@ -53,11 +57,11 @@ export class ListOrderComponent implements OnInit {
       let dateEnd: Date = new Date();
       let dateStart: Date = new Date();
 
-      dateEnd.setDate(date.getDate() - 1);
+      dateEnd.setDate(date.getDate());
       dateStart.setDate(date.getDate() - 1);
 
-      dateEnd.setHours(24);
-      dateEnd.setMinutes(59);
+      dateEnd.setHours(0);
+      dateEnd.setMinutes(0);
 
       dateStart.setHours(0);
       dateStart.setMinutes(0);
@@ -127,7 +131,10 @@ export class ListOrderComponent implements OnInit {
 
   updateStatusOrder(id: string, status: string) {
     this.orderService.putOrder(id, status).subscribe(res => {
-      this.getOrderForPeriod();
+      if (res.status === 'Ok') {
+        this.ws.sendMessage('checkOrder', null);
+        this.getOrderForPeriod();
+      }
     });
   }
 

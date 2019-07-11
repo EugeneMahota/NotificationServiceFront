@@ -1,0 +1,43 @@
+<div class="image-container">
+  <img src="https://images.wallpaperscraft.ru/image/sony_xperia_m4_aqua_smartfon_102357_1920x1080.jpg" />
+  <div class="after">
+    <div class="w-100 p-4 pt-5">
+      <div class="row">
+        <div class="col-lg-6 pb-3 pt-lg-4">
+          <div class="display-2 title font-weight-bold">
+            Быстрый ремонт и надежная гарантия
+          </div>
+          <h3 class="header-text pt-4">
+            Город людей, город компьютеров. Этому городу нужен новый герой...
+          </h3>
+        </div>
+        <div class="col-lg-6 pr-lg-5 pl-lg-5 pt-lg-4">
+          <div class="card mr-lg-5 ml-lg-5 card-feedback">
+            <div class="card-header">
+              <h3>Мы позвоним</h3>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="formRequest">
+                <div class="form-group">
+                  <label class="text-muted">Имя</label>
+                  <input class="form-control" name="name" formControlName="name">
+                </div>
+                <div class="form-group">
+                  <label class="text-muted">Телефон</label>
+                  <input class="form-control" name="telephone" formControlName="telephone">
+                </div>
+                <div class="form-group">
+                  <label class="text-muted">Опишите проблему</label>
+                  <textarea class="form-control" name="info" formControlName="info" rows="3"></textarea>
+                </div>
+
+                <button class="btn btn-blue pr-5 pl-5 mt-3" [disabled]="formRequest.invalid"
+                        (click)="createRequest(formRequest.value); formRequest.reset();">Отправить</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

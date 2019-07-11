@@ -1,0 +1,22 @@
+.image-card {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+}
+.active-btn {
+  border: 1px solid #bdbdbd;
+}
+@media (max-width: 400px) {
+  .image-card {
+    object-fit: cover;
+    height: 35px;
+    width: 35px;
+  }
+  .price {
+    font-size: 0.8rem;
+  }
+}
+.border-radius-0 {
+  background-color: #FAFAFA;
+  border-radius: 0!important;
+}

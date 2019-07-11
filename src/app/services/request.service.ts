@@ -30,6 +30,7 @@ export class RequestService {
         return this.listRequest = this.listRequest.map(function (data: any) {
           return {
             id: data._id,
+            status: data.status,
             name: data.name,
             telephone: data.telephone,
             date: data.date,
@@ -44,7 +45,7 @@ export class RequestService {
   }
 
   putRequest(request: Request): Observable<any> {
-    return this.http.post(environment.apiUrl + '/request', JSON.stringify(request), httpOptions);
+    return this.http.put(environment.apiUrl + '/request', JSON.stringify(request), httpOptions);
   }
 
   deleteRequest(id: string): Observable<any> {

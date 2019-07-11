@@ -1,0 +1,23 @@
+.navbar {
+  z-index: 101;
+  background-color: #f5f5f5!important;
+}
+.navbar-title {
+  color: #000000;
+  letter-spacing: 1.5px;
+}
+.navbar-text {
+  letter-spacing: 0.5px;
+}
+.navbar-info {
+  letter-spacing: 1.5px;
+}
+.active-pink {
+  color: #EC407A!important;
+}
+.navbar-toggler{
+  &:focus {
+    color: black;
+    outline: none!important;
+  }
+}
