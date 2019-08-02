@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css?family=Oswald:300');
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:300,400,500&display=swap');
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 $lightBlueColor: #1e88e5;
 $blueColor: #1565c0;
@@ -9,15 +10,16 @@ $greenColor: #43a047;
 $pinkColor: #EC407A;
 $greyColor: #bdbdbd;
 $blueGrey: #90a4ae;
-$lightGreyColor: #e0e0e0;
+$lightGreyColor: #b9b9b9;
 $darkGreyColor: #212121;
 $whiteColor: #FFFFFF;
 
-$borderRadius: 2px;
-$boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+$borderRadius: 15px;
+$boxShadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
 
 body {
-  font-family: 'Oswald', sans-serif!important;
+  font-weight: 300!important;
+  font-family: 'Fira Sans Extra Condensed', sans-serif!important;
   background-color: #FAFAFA!important;
   overflow-x:hidden!important;
 }
@@ -57,6 +59,9 @@ body {
   &:focus {
     box-shadow: none!important;
     border-color: $darkGreyColor!important;
+  }
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset!important;
   }
 }
 .btn-group {
@@ -103,10 +108,15 @@ body {
   }
 }
 .btn-table {
+  border-radius: $borderRadius!important;
   color: #757575!important;
   &:active, &:focus, &:hover {
     box-shadow: none!important;
     color: #000000!important;
+    background-color: rgba(0, 0, 0, 0.03)!important;
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.03);
   }
 }
 .btn-header {
@@ -137,10 +147,10 @@ body {
 }
 
 input.ng-touched.ng-invalid{
-  border-color: $redColor;
+  border-color: $redColor!important;
 }
 input.ng-touched.ng-valid{
-  border-color: $greenColor;
+  border-color: $greenColor!important;
 }
 .valid {
   color: $greenColor;
@@ -159,5 +169,69 @@ input.ng-touched.ng-valid{
   }
   .selected-item {
     font-size: 13px;
+  }
+}
+
+
+.modal-show {
+  overflow: hidden!important;
+}
+.table-responsive::-webkit-scrollbar-track, .overflow-auto::-webkit-scrollbar-track
+{
+  border-radius: 3px!important;
+  background-color: #FFFFFF;
+}
+
+.table-responsive::-webkit-scrollbar, .overflow-auto::-webkit-scrollbar
+{
+  width: 5px;
+  background-color: #FFFFFF;
+  border-radius: 3px!important;
+}
+
+.table-responsive::-webkit-scrollbar-thumb, .overflow-auto::-webkit-scrollbar-thumb
+{
+  background-color: rgba(236, 64, 122, 0.8);
+  border-radius: 3px!important;
+}
+body::-webkit-scrollbar-thumb
+{
+  background-color: rgba(236, 64, 122, 0.8);
+}
+body::-webkit-scrollbar-track
+{
+  background-color: #FFFFFF;
+}
+
+body::-webkit-scrollbar
+{
+  width: 5px;
+  background-color: #FFFFFF;
+}
+
+.modal-open {
+  overflow-y:scroll!important;
+  padding-right:0 !important;
+}
+.badge {
+  font-weight: 400!important;
+}
+.badge-danger {
+  background-color: $redColor!important;
+}
+.badge-primary {
+  background-color: $blueColor!important;
+}
+.badge-success {
+  background-color: $greenColor!important;
+}
+.badge-secondary {
+  background-color: $lightGreyColor!important;
+}
+
+//mobile
+@media (max-width: 768px) {
+  .display-4 {
+    font-size: 2rem!important;
   }
 }

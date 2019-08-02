@@ -1,38 +1,46 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <a class="navbar-brand font-weight-bold navbar-title" href="#">
-    <h4 class="mb-0">ULTRA SERVICE</h4>
-  </a>
-  <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <i class="fas fa-bars"></i>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link navbar-text" routerLinkActive="active-pink" routerLink="feedback">Главная</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link navbar-text" routerLinkActive="active-pink" routerLink="service">Услуги</a>
-      </li>
-      <!--<li class="nav-item">-->
-        <!--<a class="nav-link navbar-text" routerLinkActive="active-pink" routerLink="contact">Контакты</a>-->
-      <!--</li>-->
-      <li class="nav-item">
-        <a class="nav-link navbar-text" routerLinkActive="active-pink" routerLink="profile">Мои заказы</a>
-      </li>
-      <li class="nav-item" *ngIf="showOrder">
-        <a class="nav-link navbar-text" routerLinkActive="active-pink" routerLink="order">Новый заказ</a>
-      </li>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-light pt-lg-3 pb-lg-3 border-bottom" *ngIf="showNavbar">
+  <div class="container">
+    <a class="navbar-brand navbar-title" href="#">
+      <h4 class="mb-0">ULTRA SERVICE</h4>
+    </a>
+    <button class="navbar-toggler border-0" type="button"
+            data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
+            #btnMenu>
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item" (click)="hideMenu()" *ngIf="showOrder">
+          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="order">
+            {{'Новый заказ'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item" (click)="hideMenu()">
+          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="feedback">
+            {{'Главная'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item" (click)="hideMenu()">
+          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="service">
+            {{'Услуги'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item" (click)="hideMenu()">
+          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="product">
+            {{'Товары'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item" (click)="hideMenu()">
+          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="profile">
+            {{'Статус ремонта'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item" (click)="hideMenu()">
+          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="location">
+            {{'Контакты'| uppercase}}
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
-  <ul class="nav justify-content-end">
-    <li class="nav-item">
-      <div class="nav-link navbar-info pl-0 text-muted">+7(952)858-95-96</div>
-    </li>
-    <li class="nav-item">
-      <div class="nav-link navbar-info pl-0 text-muted">
-        г. Краснодар,
-        ул. Коммунаров, 170
-      </div>
-    </li>
-  </ul>
 </nav>

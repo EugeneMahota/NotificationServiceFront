@@ -1,36 +1,50 @@
-<div class="w-100 p-3">
+<div class="container pt-3 pb-4">
   <div class="row">
-    <div class="col-md-6 mb-3 mt-3">
-      <form [formGroup]="formSearch">
-        <div class="input-group">
-          <input type="text" name="telephone" class="form-control border-radius-0"
-                 formControlName="telephone" placeholder="Введите номер телефона, чтобы отследить заказ">
-          <div class="input-group-append">
-            <button class="btn btn-table" [disabled]="formSearch.invalid" (click)="getListOrder(formSearch.value.telephone)">Найти</button>
-          </div>
-        </div>
-      </form>
+    <div class="col-12 text-center">
+      <div class="font-weight-bold title pt-lg-4 pb-lg-4 pt-2 pb-2 display-4">Статус ремонта</div>
+      <div class="dropdown-divider pb-lg-4 pb-3 m-auto"></div>
+      <h5 class="pb-lg-5 pb-3 mb-0">
+        Если вы являетесь нашим клиентом,
+        то на этой странице вы можете узнать статус
+        ремонта своего устройства. Для этого нужно ввести
+        номер телефона, который вы вводили при подаче заявки.
+      </h5>
     </div>
 
-    <div class="col-lg-7 mb-3" *ngFor="let order of listOrder">
-      <div class="card p-3 h-100">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 mb-4 mt-lg-3 text-center">
+      <form [formGroup]="formSearch">
+        <input type="text" name="telephone" class="form-control form-control-search"
+               formControlName="telephone" placeholder="Введите номер телефона, чтобы отследить заказ">
+        <button class="btn btn-blue btn-search mt-4 pl-lg-5 pr-lg-5 pl-4 pr-4" (click)="getListOrder(formSearch.value.telephone)">Найти</button>
+      </form>
+    </div>
+    <div class="col-md-3"></div>
+
+    <div class="m-auto" *ngFor="let order of listOrder" [ngClass]="listOrder.length > 1 ? 'col-lg-6':'col-lg-8'">
+      <div class="card p-3 h-100 mb-3">
         <div class="row">
           <div class="col-12">
             <div class="row">
-              <div class="col-8"><h5 class="mt-0">
-                <span *ngIf="order.status === 'new'" class="badge badge-danger mr-2">В ожидании</span>
-                <span *ngIf="order.status === 'pending'" class="badge badge-primary mr-2">В работе</span>
-                <span *ngIf="order.status === 'success'" class="badge badge-success mr-2">Выполнен</span>
-                <span *ngIf="order.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
-                {{order.service.name}}, <small class="text-muted">{{order.date | date:'dd MMM yyyy HH:mm'}}</small></h5></div>
-              <div class="col-4 text-right text-muted price pl-0">от {{order.service.price | currency:'RUB':' ':'1.0-0'}} ₽</div>
+              <div class="col-8">
+                <h5 class="mt-0">
+                  <span *ngIf="order.status === 'new'" class="badge badge-danger mr-2">В ожидании</span>
+                  <span *ngIf="order.status === 'pending'" class="badge badge-primary mr-2">В работе</span>
+                  <span *ngIf="order.status === 'success'" class="badge badge-success mr-2">Выполнен</span>
+                  <span *ngIf="order.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
+                  {{order.service.name}}
+                  <br/>
+                  <small class="text-muted">{{order.date | date:'dd MMM yyyy HH:mm'}}</small>
+                </h5>
+              </div>
+              <div class="col-4 text-right text-muted price pl-0">{{order.price | currency:'RUB':' ':'1.0-0'}}₽</div>
               <div class="col-12 mb-3">{{order.service.info}}</div>
               <div class="col-12">
                 {{order.name}}
               </div>
               <div class="col-12">
                 <div class="pl-2 text-muted">
-                  <i class="fas fa-comment mr-2"></i>  <strong>{{order.info}}</strong>
+                  - {{order.info}}
                 </div>
               </div>
             </div>

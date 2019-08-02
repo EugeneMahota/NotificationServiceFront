@@ -25,17 +25,19 @@ export class ServiceService {
 
   listCategory: CategoryService[] = [];
   listService: Service[] = [];
+
   constructor(private http: HttpClient) {
   }
 
   getCategoryService(): Observable<CategoryService[]> {
-    return this.http.get(environment.apiUrl + '/category', httpOptions)
+    return this.http.get(environment.apiUrl + '/category-and-service', httpOptions)
       .pipe(map(res => {
         this.listCategory = [].slice.call(res);
         return this.listCategory = this.listCategory.map(function (category: any) {
           return {
             id: category._id,
             name: category.name,
+            image: category.image,
             service: category.service.map(function (service: any) {
               return {
                 id: service._id,
@@ -47,6 +49,21 @@ export class ServiceService {
                 flActive: service.flActive
               };
             })
+          };
+        });
+      }));
+  }
+
+  getCategory(): Observable<CategoryService[]> {
+    return this.http.get(environment.apiUrl + '/category', httpOptions)
+      .pipe(map(res => {
+        let listCategory = [].slice.call(res);
+        return listCategory.map(function (category: any) {
+          return {
+            id: category._id,
+            name: category.name,
+            image: category.image,
+            service: []
           };
         });
       }));
@@ -70,12 +87,12 @@ export class ServiceService {
       }));
   }
 
-  postCategory(category: CategoryService): Observable<any> {
-    return this.http.post(environment.apiUrl + '/category', JSON.stringify(category), httpOptions);
+  postCategory(category: FormData): Observable<any> {
+    return this.http.post(environment.apiUrl + '/category', category, httpOptionsMulti);
   }
 
-  putCategory(category: CategoryService): Observable<any> {
-    return this.http.put(environment.apiUrl + '/category', JSON.stringify(category), httpOptions);
+  putCategory(category: FormData): Observable<any> {
+    return this.http.put(environment.apiUrl + '/category', category, httpOptionsMulti);
   }
 
   postService(service: FormData): Observable<any> {

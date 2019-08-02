@@ -8,4 +8,5 @@ export class Order {
   status: string;
   service: Service;
   info: string;
+  price: number;
 }

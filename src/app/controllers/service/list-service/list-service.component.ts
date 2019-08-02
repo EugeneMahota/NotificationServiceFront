@@ -12,12 +12,14 @@ import {ConfirmService} from '../../../services/confirm.service';
 })
 export class ListServiceComponent implements OnInit {
 
-  listCategory: CategoryService[] = [];
+  listCategoryForSelect: CategoryService[];
+  listCategory: CategoryService[];
   formCategory: FormGroup;
   formService: FormGroup;
 
   image: File;
   @ViewChild('image') imageInput: ElementRef;
+  @ViewChild('imageCategory') imageInputCategory: ElementRef;
 
   itemService: Service;
   itemCategory: CategoryService;
@@ -30,6 +32,8 @@ export class ListServiceComponent implements OnInit {
 
   ngOnInit() {
     this.getListCategory();
+    this.getListCategoryForSelect();
+
     this.initFormCategory();
     this.initFormService();
   }
@@ -37,6 +41,12 @@ export class ListServiceComponent implements OnInit {
   getListCategory() {
     this.serviceService.getCategoryService().subscribe(res => {
       this.listCategory = res;
+    });
+  }
+
+  getListCategoryForSelect() {
+    this.serviceService.getCategory().subscribe(res => {
+      this.listCategoryForSelect = res;
     });
   }
 
@@ -56,18 +66,13 @@ export class ListServiceComponent implements OnInit {
     });
   }
 
-  createCategory(category: CategoryService) {
-    this.serviceService.postCategory(category).subscribe(res => {
-      this.getListCategory();
-    });
-  }
-
   deleteCategory(id: string) {
     let confirm = this.confirm.openConfirm('Удаление', 'Вы действительно хотите удалить категорию?')
       .subscribe(res => {
         if (res === true) {
           this.serviceService.deleteCategory(id).subscribe(res => {
             this.getListCategory();
+            this.getListCategoryForSelect();
           });
           confirm.unsubscribe();
         } else if (res === false) {
@@ -101,6 +106,17 @@ export class ListServiceComponent implements OnInit {
     }
   }
 
+  selectImageCategory(image: any) {
+    let file: File;
+    file = image.target.files.item(0);
+    if (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg') {
+      this.image = image.target.files.item(0);
+    } else {
+      this.imageInputCategory.nativeElement.value = null;
+      this.image = null;
+    }
+  }
+
   createService(service: Service) {
     const serviceData: FormData = new FormData();
     serviceData.append('name', service.name);
@@ -111,6 +127,9 @@ export class ListServiceComponent implements OnInit {
     serviceData.append('flActive', service.flActive.toString());
 
     this.serviceService.postService(serviceData).subscribe(res => {
+      if (res.status === 'Ok') {
+        this.formService.reset();
+      }
       this.getListCategory();
     });
   }
@@ -143,11 +162,37 @@ export class ListServiceComponent implements OnInit {
     this.itemCategory = null;
   }
 
-  updateCategory(category: CategoryService) {
-    console.log({id: category.id, name: category.name});
-    this.serviceService.putCategory({id: category.id, name: category.name, service: []}).subscribe(res => {
+  createCategory(category: CategoryService) {
+    const categoryData = new FormData();
+    categoryData.append('name', category.name);
+    categoryData.append('image', this.image);
+
+    this.serviceService.postCategory(categoryData).subscribe(res => {
+      this.getListCategoryForSelect();
       this.getListCategory();
-      this.itemCategory = null;
+      this.clearImage();
     });
+  }
+
+  updateCategory(category: CategoryService) {
+    const categoryData = new FormData();
+    categoryData.append('id', category.id);
+    categoryData.append('name', category.name);
+    if (this.image) {
+      categoryData.append('image', this.image);
+    }
+
+    this.serviceService.putCategory(categoryData).subscribe(res => {
+      this.getListCategory();
+      this.getListCategoryForSelect();
+      this.itemCategory = null;
+      this.clearImage();
+    });
+  }
+
+  clearImage() {
+    this.image = null;
+    this.imageInput.nativeElement.value = null;
+    this.imageInputCategory.nativeElement.value = null;
   }
 }

@@ -36,6 +36,7 @@ export class OrderService {
             telephone: data.telephone,
             date: data.date,
             status: data.status,
+            price: data.price,
             service: {
               id: data.service._id,
               name: data.service.name,
@@ -62,6 +63,7 @@ export class OrderService {
             telephone: data.telephone,
             date: data.date,
             status: data.status,
+            price: data.price,
             service: {
               id: data.service._id,
               name: data.service.name,
@@ -81,8 +83,12 @@ export class OrderService {
     return this.http.post(environment.apiUrl + '/order', JSON.stringify(order), httpOptions);
   }
 
-  putOrder(id: string, status: string): Observable<any> {
+  putStatusOrder(id: string, status: string): Observable<any> {
     return this.http.put(environment.apiUrl + '/order', JSON.stringify({id: id, status: status}), httpOptions);
+  }
+
+  putPriceOrder(id: string, price: number): Observable<any> {
+    return this.http.put(environment.apiUrl + '/order', JSON.stringify({id: id, price: price}), httpOptions);
   }
 
   deleteOrder(id: string): Observable<any> {

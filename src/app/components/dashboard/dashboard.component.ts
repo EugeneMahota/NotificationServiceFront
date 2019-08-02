@@ -27,7 +27,7 @@ import {WsService} from '../../services/ws.service';
         transform: 'rotate(0deg)'
       })),
       state('bottom', style({
-        transform: 'rotate(90deg)'
+        transform: 'rotate(-90deg)'
       })),
       transition('right<=>bottom', animate('200ms ease-in-out'))
     ]),
@@ -73,12 +73,30 @@ export class DashboardComponent implements OnInit {
         } else if (res.urlAfterRedirects === '/dashboard/order') {
           this.pathOne = 'Заказы';
           this.pathTwo = '';
+        } else if (res.urlAfterRedirects === '/dashboard/report-order') {
+          this.pathOne = 'Отчет по заказам';
+          this.pathTwo = '';
         } else if (res.urlAfterRedirects === '/dashboard/request') {
           this.pathOne = 'Заявки';
           this.pathTwo = '';
         } else if (res.urlAfterRedirects === '/dashboard/order/add') {
           this.pathOne = 'Заказы';
           this.pathTwo = 'Новый заказ';
+        } else if (res.urlAfterRedirects === '/dashboard/product') {
+          this.pathOne = 'Товары';
+          this.pathTwo = '';
+        } else if (res.urlAfterRedirects === '/dashboard/product/add') {
+          this.pathOne = 'Товары';
+          this.pathTwo = 'Новый товар';
+        } else if (res.urlAfterRedirects.includes('/dashboard/product/')) {
+          this.pathOne = 'Товары';
+          this.pathTwo = 'Редактировать товар';
+        } else if (res.urlAfterRedirects === '/dashboard/sale') {
+          this.pathOne = 'Продажи';
+          this.pathTwo = '';
+        } else if (res.urlAfterRedirects.includes('/dashboard/sale/')) {
+          this.pathOne = 'Продажи';
+          this.pathTwo = 'Новая продажа';
         } else {
           this.pathOne = '';
           this.pathTwo = '';
@@ -87,7 +105,6 @@ export class DashboardComponent implements OnInit {
     });
 
     this.ws.getMessage().subscribe(res => {
-      console.log(res);
       if (res.event === 'updateOrder') {
         this.countOrder = res.data;
       }

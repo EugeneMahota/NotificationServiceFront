@@ -34,7 +34,7 @@ export class AddOrderComponent implements OnInit {
       telephone: ['', [Validators.required]],
       status: ['new', [Validators.required]],
       service: ['', [Validators.required]],
-      info: ['', [Validators.required]]
+      info: ['', []]
     });
   }
 

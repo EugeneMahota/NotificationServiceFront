@@ -12,11 +12,14 @@ import {WsService} from '../../../services/ws.service';
 })
 export class ListOrderComponent implements OnInit {
 
-  listOrder: Order[] = [];
+  listOrder: Order[];
+  itemOrder: Order = new Order();
+
   activePeriod: string;
   activeStatus: string;
 
   formSearch: FormGroup;
+  formPrice: FormGroup;
 
   constructor(private orderService: OrderService,
               private fb: FormBuilder,
@@ -30,11 +33,18 @@ export class ListOrderComponent implements OnInit {
     this.getOrderForPeriod();
 
     this.initFormSearch();
+    this.initFormPrice();
   }
 
   initFormSearch() {
     this.formSearch = this.fb.group({
       searchStr: ['', [Validators.required]]
+    });
+  }
+
+  initFormPrice() {
+    this.formPrice = this.fb.group({
+      price: ['', [Validators.required]]
     });
   }
 
@@ -130,10 +140,19 @@ export class ListOrderComponent implements OnInit {
   }
 
   updateStatusOrder(id: string, status: string) {
-    this.orderService.putOrder(id, status).subscribe(res => {
+    this.orderService.putStatusOrder(id, status).subscribe(res => {
       if (res.status === 'Ok') {
         this.ws.sendMessage('checkOrder', null);
         this.getOrderForPeriod();
+      }
+    });
+  }
+
+  updatePriceOrder(price: number) {
+    this.orderService.putPriceOrder(this.itemOrder.id, price).subscribe(res => {
+      if (res.status === 'Ok') {
+        this.getOrderForPeriod();
+        this.formPrice.reset();
       }
     });
   }
@@ -144,6 +163,7 @@ export class ListOrderComponent implements OnInit {
         if (res === true) {
           this.orderService.deleteOrder(id).subscribe(res => {
             this.getOrderForPeriod();
+            this.ws.sendMessage('checkOrder', null);
           });
           confirm.unsubscribe();
         } else if (res === false) {

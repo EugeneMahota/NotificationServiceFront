@@ -4,13 +4,13 @@
   <nav id="sidebar" class="sidebar"
        [ngClass]="stateSide === 'hideSide'? 'hidden-side':'' || stateSide === 'smallSide' || stateSide === 'hideSide' ? 'small-side':''">
     <div class="side-image">
-      <div class="side-block pb-3" [ngClass]="stateSide === 'smallSide' || stateSide === 'hideSide' ? 'small-side':''">
+      <div class="side-block pb-2" [ngClass]="stateSide === 'smallSide' || stateSide === 'hideSide' ? 'small-side':''">
 
-        <div class="p-3 pt-3" [ngClass]="stateSide === 'smallSide' ? 'text-center':''">
+        <div class="p-3 pt-3 text-center">
           <!--<img *ngIf="stateSide !== 'smallSide'" class="mb-3" src="../../assets/logo.png" height="auto" width="100"/>-->
-          <h3 class="mb-0">
-            {{stateSide === 'smallSide' ? 'N':'NOTIFICATION'}} <span class="pink font-weight-bold">{{stateSide === 'smallSide' ? 'S':'SERVICE'}}</span>
-          </h3>
+          <h4 class="mb-0 title-side">
+            {{stateSide === 'smallSide' ? 'U':'ULTRA'}} <span class="pink font-weight-bold">{{stateSide === 'smallSide' ? 'S':'SERVICE'}}</span>
+          </h4>
         </div>
 
         <div class="dropitem ml-3 mr-3 mb-2"></div>
@@ -52,6 +52,18 @@
             </a>
           </li>
 
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="sale" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
+                  <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="col-7 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Продажи'}}</span></div>
+                <!--<div class="col-3 text-right p-0 m-0"><span class="badge badge-light">Bobr</span></div>-->
+              </div>
+            </a>
+          </li>
+
           <div class="dropitem ml-3 mr-3 mb-2"></div>
 
           <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
@@ -61,6 +73,18 @@
                   <i class="fas fa-suitcase"></i>
                 </div>
                 <div class="col-7 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Услуги'}}</span></div>
+                <!--<div class="col-3 text-right p-0 m-0"><span class="badge badge-light">Bobr</span></div>-->
+              </div>
+            </a>
+          </li>
+
+          <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
+            <a class="nav-link nav-link-side" routerLink="product" routerLinkActive="active">
+              <div class="row p-0 m-0">
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
+                  <i class="fas fa-dolly-flatbed"></i>
+                </div>
+                <div class="col-7 p-0 m-0"><span class="mt-3">{{stateSide === 'smallSide' ? '':'Товары'}}</span></div>
                 <!--<div class="col-3 text-right p-0 m-0"><span class="badge badge-light">Bobr</span></div>-->
               </div>
             </a>
@@ -86,10 +110,14 @@
           <li class="nav-item ml-3 mr-3 mb-2" (click)="dropGame()">
             <a class="nav-link nav-link-side" routerLinkActive="active">
               <div class="row p-0 m-0">
-                <div class="col-10 p-0 m-0"><span
-                  class="mt-3">{{stateSide === 'smallSide' ? 'СО':'Системные отчеты'}}</span></div>
-                <div *ngIf="stateSide === 'fullSide'" class="col-2 text-right p-0 m-0"><i [@arrow]="!dropDownGame ? 'right':'bottom'"
-                                                                            class="fas fa-caret-right"></i></div>
+                <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
+                  <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="col-8 p-0 m-0"><span
+                  class="mt-3">{{stateSide === 'smallSide' ? '':'Системные отчеты'}}</span></div>
+                <div *ngIf="stateSide === 'fullSide'" class="col-2 text-right p-0 m-0">
+                  <i [@arrow]="!dropDownGame ? 'right':'bottom'" class="fas fa-caret-left"></i>
+                </div>
               </div>
             </a>
           </li>
@@ -98,7 +126,7 @@
         <ul class="list-group" [@dropdown]="dropDownGame" *ngIf="dropDownGame">
 
           <li class="nav-item ml-3 mr-3 mb-2" (click)="ShowDisplaySm()">
-            <a class="nav-link nav-link-side" routerLink="game-prize" routerLinkActive="active">
+            <a class="nav-link nav-link-side" routerLink="report-order" routerLinkActive="active">
               <div class="row p-0 m-0">
                 <div class="col-2 p-0 m-0" [ngClass]="stateSide === 'smallSide' ? ['col-12', 'text-center']:''">
                   <i class="fas fa-file-alt"></i>
@@ -142,9 +170,9 @@
         </button>
         <div class="nav-link text-muted none-sm">
           <div>
-            <span class="breadcrumb-item">Панель управления</span>
-            <span class="breadcrumb-item" *ngIf="pathOne">{{pathOne}}</span>
-            <span class="breadcrumb-item" *ngIf="pathTwo">{{pathTwo}}</span>
+            <a class="breadcrumb-item active-bread" routerLink="home">Панель управления</a>
+            <a class="breadcrumb-item" *ngIf="pathOne">{{pathOne}}</a>
+            <a class="breadcrumb-item" *ngIf="pathTwo">{{pathTwo}}</a>
           </div>
         </div>
       </nav>
@@ -186,7 +214,7 @@
     </nav>
 
 
-    <div class="container-fluid pl-lg-3 pr-lg-3 pt-2 pb-3"
+    <div class="container-fluid pl-lg-4 pr-lg-4 pt-2 pb-3"
          [ngClass]="stateSide === 'fullSide' ? 'content-show-back':''">
       <router-outlet></router-outlet>
     </div>

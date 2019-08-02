@@ -1,3 +1,5 @@
+$boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+
 .image-card {
   object-fit: cover;
   height: 50px;
@@ -14,6 +16,25 @@
   }
 }
 .title {
-  letter-spacing: 1px;
-  color: #1565C0;
+  letter-spacing: 3px!important;
+}
+.dropdown-divider {
+  width: 100px;
+  border-top: 3px solid #1565C0!important;
+  border-radius: 2px;
+}
+.content {
+  min-height: 95vh!important;
+}
+.active-link {
+  color: #1565C0!important;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline!important;
+  }
+}
+.card-header-feedback {
+  box-shadow: $boxShadow;
+  color: #FAFAFA;
+  background-color: #1565C0!important;
 }

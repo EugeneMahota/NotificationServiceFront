@@ -2,9 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {WsContract} from '../models/wsContract';
-import {environment} from '../../environments/environment';
 
-const ws = new WebSocket(environment.apiUrl.replace('http', 'ws'));
+const ws = new WebSocket('ws://localhost:3000');
 
 @Injectable({
   providedIn: 'root'

@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {HomeComponent} from './home.component';
 import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
+import {LandingCardComponent} from './landing-card/landing-card.component';
 
 @NgModule({
   imports: [
@@ -10,7 +11,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule,
     RouterModule.forChild([{path: '', component: HomeComponent}])
   ],
-  declarations: [HomeComponent]
+  declarations: [HomeComponent, LandingCardComponent]
 })
 export class HomeModule {
 }

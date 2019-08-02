@@ -1,0 +1,98 @@
+<div class="card" *ngIf="listProduct">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-8">
+        <h5>Собрать заказ</h5>
+      </div>
+      <div class="col-4 text-right">
+        <h5 class="total">{{totalSale | currency:'RUB':' ':'1.0-0'}}₽</h5>
+      </div>
+    </div>
+  </div>
+  <div class="card-body pt-0">
+    <div class="row">
+      <div class="col-lg-6 pr-lg-2 mb-3">
+        <label class="form-text text-center">Список товаров</label>
+        <div class="table-responsive card-product overflow-auto p-2 rounded list-product">
+          <table class="table table-sm mb-0" *ngFor="let category of listProduct">
+            <thead>
+            <tr>
+              <td class="border-0 p-0 align-middle" scope="col"><small class="font-weight-bold">{{category.name}}</small></td>
+              <td class="border-0 nowrap text-right p-0 align-middle" scope="col"><small class="font-weight-bold">Кол-во</small></td>
+              <td class="border-0 nowrap text-right p-0 align-middle" scope="col"><small class="font-weight-bold">Цена</small></td>
+              <td class="border-0 nowrap text-right p-0 align-middle" scope="col"></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of category.product">
+              <td class="p-0 align-middle">{{product.name}}</td>
+              <td class="nowrap text-right p-0 align-middle">{{product.quantity}}</td>
+              <td class="nowrap text-right p-0 align-middle">{{product.price | currency:'RUB':' ':'1.0-0'}} ₽</td>
+              <td class="nowrap text-right p-0 align-middle">
+                <button class="btn btn-sm btn-table" (click)="addProduct(product)">
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-6 pl-lg-2 mb-3">
+        <label class="form-text text-center">Корзина</label>
+        <div class="table-responsive card-product overflow-auto p-2 rounded list-product">
+          <table class="table table-sm mb-0">
+            <thead>
+            <tr>
+              <td class="border-0 p-0 align-middle" scope="col"><small class="font-weight-bold">Товар</small></td>
+              <td class="border-0 nowrap text-center p-0 align-middle" scope="col"><small class="font-weight-bold">Кол-во</small></td>
+              <td class="border-0 nowrap text-right p-0 align-middle" scope="col"><small class="font-weight-bold">Цена</small></td>
+              <td class="border-0 nowrap text-right p-0 align-middle" scope="col"></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of listSaleProduct">
+              <td class="p-0 align-middle">{{product.name}}</td>
+              <td class="nowrap text-right p-0 align-middle">
+                <div class="btn-group border rounded">
+                  <button class="btn btn-sm btn-table pt-0 pb-0 pr-0" (click)="product.quantity !== 0 ? product.quantity = product.quantity - 1:'';updateTotal()"><i class="fas fa-minus"></i></button>
+                  <input class="border-0 w-auto text-center p-0" [(ngModel)]="product.quantity" (change)="updateTotal()">
+                  <button class="btn btn-sm btn-table pt-0 pb-0 pl-0" (click)="product.quantity = product.quantity + 1;updateTotal()"><i class="fas fa-plus"></i></button>
+                </div>
+              </td>
+              <td class="nowrap text-right p-0 align-middle">{{product.price * product.quantity | currency:'RUB':' ':'1.0-0'}} ₽</td>
+              <td class="nowrap text-right p-0 align-middle">
+                <button class="btn btn-sm btn-table" (click)="deleteProduct(product)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <form class="form-row" [formGroup]="formSale">
+          <div class="form-group col-lg-6">
+            <label class="form-text">Имя</label>
+            <input type="text" class="form-control form-control-sm rounded" id="name" name="name" formControlName="name">
+            <small class="text-muted">Введите имя покупателя</small>
+          </div>
+          <div class="form-group col-lg-6">
+            <label class="form-text">Телефон</label>
+            <input type="number" class="form-control form-control-sm rounded" id="telephone" name="telephone" formControlName="telephone">
+            <small class="text-muted">Введите номер телефона покупателя</small>
+          </div>
+          <div class="form-group col-lg-12">
+            <label class="form-text">Комментарий</label>
+            <textarea type="text" class="form-control form-control-sm rounded" id="info" name="info" formControlName="info" rows="3"></textarea>
+            <small class="text-muted">Введите дополнительную информацию, если она есть.</small>
+          </div>
+          <div class="form-group col-lg-12 mb-0">
+            <button class="btn btn-sm btn-blue pl-5 pr-5" (click)="createSale()" [disabled]="formSale.invalid">Оформить на {{totalSale}} ₽</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

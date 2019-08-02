@@ -1,39 +1,80 @@
 <div class="image-container">
-  <img src="https://images.wallpaperscraft.ru/image/sony_xperia_m4_aqua_smartfon_102357_1920x1080.jpg" />
+  <img src="https://www.ecmo.ru/data/remont_smartfona.jpg" class="background-image"/>
+  <div class="background"></div>
   <div class="after">
-    <div class="w-100 p-4 pt-5">
-      <div class="row">
-        <div class="col-lg-6 pb-3 pt-lg-4">
-          <div class="display-2 title font-weight-bold">
-            Быстрый ремонт и надежная гарантия
-          </div>
-          <h3 class="header-text pt-4">
-            Город людей, город компьютеров. Этому городу нужен новый герой...
-          </h3>
-        </div>
-        <div class="col-lg-6 pr-lg-5 pl-lg-5 pt-lg-4">
-          <div class="card mr-lg-5 ml-lg-5 card-feedback">
-            <div class="card-header">
-              <h3>Мы позвоним</h3>
-            </div>
-            <div class="card-body">
-              <form [formGroup]="formRequest">
-                <div class="form-group">
-                  <label class="text-muted">Имя</label>
-                  <input class="form-control" name="name" formControlName="name">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted">Телефон</label>
-                  <input class="form-control" name="telephone" formControlName="telephone">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted">Опишите проблему</label>
-                  <textarea class="form-control" name="info" formControlName="info" rows="3"></textarea>
-                </div>
 
-                <button class="btn btn-blue pr-5 pl-5 mt-3" [disabled]="formRequest.invalid"
-                        (click)="createRequest(formRequest.value); formRequest.reset();">Отправить</button>
-              </form>
+    <nav class="navbar navbar-expand-lg navbar-dark pt-lg-3 pb-lg-3">
+      <div class="container">
+        <a class="navbar-brand navbar-title" href="#">
+          <h4 class="mb-0">ULTRA SERVICE</h4>
+        </a>
+        <button class="navbar-toggler border-0" type="button"
+                data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                aria-expanded="false" aria-label="Toggle navigation"
+                #btnMenu>
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link navbar-text pl-lg-4 active-pink" (click)="onNav('feedback')">
+                {{'Главная' | uppercase}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navbar-text pl-lg-4" (click)="onNav('service')">
+                {{'Услуги' | uppercase}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navbar-text pl-lg-4" (click)="onNav('product')">
+                {{'Товары' | uppercase}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navbar-text pl-lg-4" (click)="onNav('profile')">
+                {{'Статус ремонта' | uppercase}}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link navbar-text pl-lg-4" (click)="onNav('location')">
+                {{'Контакты' | uppercase}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="w-100 container">
+      <div class="row mt-3 pb-5">
+        <div class="col-12 text-center mt-lg-4">
+          <div class="pb-lg-4 pb-3 display-4 title font-weight-bold">Мы ремонтируем</div>
+          <div class="dropdown-divider m-auto pb-lg-4 pb-2"></div>
+          <h5 class="pb-lg-5 pb-3 mb-0">
+            Если вы являетесь нашим клиентом, то отследить состояние заказа можно
+            <a class="active-link p-0 m-0" (click)="onNav('profile')">тут,</a>
+            а если вы хотите заказать обратный звонок нажмите
+            <a data-toggle="modal" data-target="#feedbackModal" class="active-link p-0 m-0">сюда.</a>
+          </h5>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-lg-2" *ngFor="let category of listCategory"
+             (mouseenter)="setActiveCategory(category)" (mouseleave)="delService()">
+          <div class="media p-2 border rounded card-category" (click)="setCategory(category)"
+               [ngClass]="activeCategory === category ? 'active-card':''">
+            <img [src]="category.image" class="card-image mr-3">
+            <div class="media-body align-self-center">
+              <h5>{{category.name}}</h5>
+            </div>
+          </div>
+          <div class="p-1"></div>
+          <div *ngIf="activeCategory" class="dropdown-menu overflow-auto mt-0"
+               [ngClass]="activeCategory.id === category.id ? 'show':''">
+            <div class="row m-1 item-dropdown" *ngFor="let service of activeCategory.service; let i = index"
+                 (click)="setService(service)">
+              <div *ngIf="i !== 0" class="col-12 border-top"></div>
+              <div class="col-8">{{service.name}}</div>
+              <div class="col-4 text-right align-self-center">от {{service.price}} ₽</div>
             </div>
           </div>
         </div>
@@ -41,3 +82,83 @@
     </div>
   </div>
 </div>
+
+<app-landing-card></app-landing-card>
+
+<div class="container pt-5 pb-5">
+  <div class="row">
+    <div class="col-md-7 text-center mb-5">
+      <div class="pb-4 display-4 title font-weight-bold">Обратный звонок</div>
+      <h5 class="mb-0 text-muted pb-5">
+        Если вы не нашли услугу, которая вам подходит, можете заказать обратный звонок.
+        Мы свяжимся с вами и поможем решить эту проблему.
+      </h5>
+      <div class="block-icon rounded-circle m-auto d-none d-md-block">
+        <i class="fas fa-phone-volume"></i>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-header card-header-feedback">
+          <h4 class="mb-0">Мы позвоним</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formRequest">
+            <div class="form-group">
+              <small class="font-weight-bold text-muted">ИМЯ</small>
+              <input class="form-control form-control-sm mt-2" name="name" formControlName="name">
+            </div>
+            <div class="form-group">
+              <small class="font-weight-bold text-muted">ТЕЛЕФОН</small>
+              <input class="form-control form-control-sm mt-2" name="telephone" formControlName="telephone">
+            </div>
+            <div class="form-group">
+              <small class="font-weight-bold text-muted">ОПИШИТЕ ПРОБЛЕМУ</small>
+              <textarea class="form-control form-control-sm mt-2" name="info" formControlName="info" rows="3"></textarea>
+            </div>
+
+            <div class="text-center">
+              <button class="btn btn-blue btn-sm pr-5 pl-5 mt-3" (click)="createRequest(formRequest.value); formRequest.reset();">Отправить
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<form [formGroup]="formRequest">
+  <div class="modal fade bd-example-modal-sm" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog border-0 modal-sm" role="document">
+      <div class="modal-content border-0 rounded-top">
+        <div class="modal-header border-0 rounded-top">
+          <h5 class="modal-title" id="exampleModalLabel">Мы перезвоним</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <small class="font-weight-bold text-muted">ИМЯ</small>
+            <input type="text" class="mt-2 form-control form-control-sm" name="name" formControlName="name" placeholder="">
+          </div>
+
+          <div class="form-group">
+            <small class="font-weight-bold text-muted">ТЕЛЕФОН</small>
+            <input type="text" class="mt-2 form-control form-control-sm" name="telephone" formControlName="telephone" placeholder="">
+          </div>
+
+          <div class="form-group">
+            <small class="font-weight-bold text-muted">ОПИШИТЕ ПРОБЛЕМУ</small>
+            <textarea type="text" class="mt-2 form-control form-control-sm" name="info" formControlName="info" placeholder="" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-sm btn-blue pl-5 pr-5 m-auto" data-dismiss="modal" (click)="createRequest(formRequest.value)">
+            Отправить
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

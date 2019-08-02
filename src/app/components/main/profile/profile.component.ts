@@ -33,10 +33,12 @@ export class ProfileComponent implements OnInit {
   }
 
   getListOrder(telephone: string) {
-    localStorage.setItem('telephone', telephone);
-    this.main.telephone = telephone;
-    this.orderService.getBySearchStr(telephone).subscribe(res => {
-      this.listOrder = res;
-    });
+    if (telephone) {
+      localStorage.setItem('telephone', telephone);
+      this.main.telephone = telephone;
+      this.orderService.getBySearchStr(telephone).subscribe(res => {
+        this.listOrder = res;
+      });
+    }
   }
 }

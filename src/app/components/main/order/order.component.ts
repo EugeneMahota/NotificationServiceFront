@@ -39,7 +39,7 @@ export class OrderComponent implements OnInit {
     this.formOrder = this.fb.group({
       name: ['', [Validators.required]],
       telephone: ['', [Validators.required]],
-      info: ['', [Validators.required]],
+      info: ['', []],
       status: ['new', [Validators.required]],
       service: [this.itemService.id, [Validators.required]]
     });
@@ -56,4 +56,7 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  onProfile() {
+    this.router.navigate(['main', 'profile']);
+  }
 }

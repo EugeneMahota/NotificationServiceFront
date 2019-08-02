@@ -1,0 +1,62 @@
+<div class="container pt-3 pb-4">
+  <div class="row">
+    <div class="col-12 text-center">
+      <div class="font-weight-bold title pt-lg-4 pb-lg-4 pt-2 pb-2 display-4">Список товаров</div>
+      <div class="dropdown-divider pb-lg-4 pb-3 m-auto"></div>
+      <h5 class="pb-lg-5 pb-3 mb-0">
+        На данной странице представлен список категорий, выберите необходимую и ниже появятся все товары из данной категории.
+      </h5>
+    </div>
+
+    <div class="col-lg-3 mb-2 mb-lg-3" *ngFor="let category of listCategory">
+      <div class="border p-2 h-100 text-center card-category" [ngClass]="category.id === itemCategoryProduct.id ? 'card-category-active':''"
+           (click)="setCategoryProduct(category)">
+        <div>{{category.name}}</div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-2 mb-2" #dropDivider></div>
+
+    <div class="col-lg-4 col-md-6 mb-3" *ngFor="let product of itemCategoryProduct.product" [ngClass]="product.flActive ? '':'d-none'">
+      <div class="card h-100">
+        <div class="card-image">
+          <img [src]="product.image" class="image-card">
+        </div>
+        <div class="card-body pb-2">
+          <div class="card-title">
+            <h6 class="mb-0">{{product.name}}</h6>
+          </div>
+        </div>
+        <div class="card-footer bg-white pt-0 border-0">
+          <div class="text-muted">{{product.info}}</div>
+        </div>
+        <div class="card-footer bg-white border-top pt-2">
+          <div class="row">
+            <div class="col-6">
+              <div>В наличии: {{product.quantity}} шт</div>
+              <div>Цена: {{product.price | currency:'RUB':' ':'1.0-0'}} ₽</div>
+            </div>
+            <div class="col-6 text-right align-self-center">
+              <button class="btn btn-blue btn-sm pl-4 pr-4">В корзину</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-12 text-center loading-block" *ngIf="!listCategory">
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

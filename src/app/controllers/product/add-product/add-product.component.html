@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Новый товар</h5>
+      </div>
+      <div class="card-body pt-0">
+        <form class="form-row" [formGroup]="formProduct">
+          <div class="form-group col-lg-12">
+            <label class="text-muted">Категория</label>
+            <select class="form-control form-control-sm" id="category" name="category" formControlName="category">
+              <option *ngFor="let category of listCategory" [value]="category.id">{{category.name}}</option>
+            </select>
+            <small class="text-muted">Выберите категорию в которую добавить товар.</small>
+          </div>
+          <div class="form-group col-lg-6">
+            <label class="text-muted">Название</label>
+            <input type="text" class="form-control form-control-sm" id="name" name="name" formControlName="name" placeholder="">
+            <small class="text-muted">Введите название товара.</small>
+          </div>
+          <div class="form-group col-lg-3">
+            <label class="text-muted">Количество</label>
+            <input type="number" class="form-control form-control-sm" id="quantity" name="quantity" formControlName="quantity" placeholder="">
+            <small class="text-muted">Укажите количество товара.</small>
+          </div>
+          <div class="form-group col-lg-3">
+            <label class="text-muted">Цена</label>
+            <input type="number" class="form-control form-control-sm" id="price" name="price" formControlName="price" placeholder="">
+            <small class="text-muted">Укажите цену за единицу товара.</small>
+          </div>
+          <div class="form-group col-lg-12">
+            <label class="text-muted">Описание</label>
+            <textarea rows="3" class="form-control form-control-sm" id="info" name="info" formControlName="info" placeholder=""></textarea>
+            <small class="text-muted">Напишите более подробную информацию о товаре.</small>
+          </div>
+          <div class="form-group col-12">
+            <label class="text-muted">Изображение</label><br/>
+            <input type="file" (change)="selectImage($event)">
+          </div>
+          <div class="form-group col-auto mb-1">
+            <button class="btn btn-sm btn-blue pl-5 pr-5" [disabled]="formProduct.invalid" (click)="createProduct(formProduct.value)">Добавить</button>
+          </div>
+          <div class="form-group col-auto mb-1">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="flActive" name="flActive" formControlName="flActive">
+              <label class="custom-control-label" for="flActive">Отображать на сайте?</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

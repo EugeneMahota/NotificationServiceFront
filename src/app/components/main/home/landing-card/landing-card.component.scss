@@ -1,0 +1,48 @@
+//block-card
+.block-card {
+  background-color: #FFFFFF;
+}
+.title {
+  letter-spacing: 3px;
+}
+.block-icon {
+  width: 120px;
+  height: 120px;
+  background-color: #EC407A;
+  i {
+    line-height: 120px;
+    color: #FFFFFF;
+    font-size: 4rem;
+  }
+}
+.card-text {
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+//color-block
+.color-block {
+  background-color: #EC407A;
+}
+.color-block-title {
+  color: #FFFFFF;
+}
+.color-block-dropdown-divider {
+  margin: auto;
+  border-top: 3px solid #FFFFFF;
+  border-radius: 2px;
+  width: 100px;
+}
+.color-block-text {
+  font-weight: 400;
+  color: #FFFFFF !important;
+  font-size: 1.5rem;
+}
+.color-block-btn {
+  &:hover {
+    border-color:#000000!important;
+    box-shadow: none!important;
+    background-color: #000000;
+    color:#EC407A;
+  }
+}

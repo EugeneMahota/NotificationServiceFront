@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-md-12">
-    <div class="card card-order">
+    <div class="card card-order" *ngIf="listOrder">
       <div class="card-header">
         <div class="row">
-          <div class="col-lg-4">
-            <h5>Список заказов</h5>
+          <div class="col-lg-3 align-self-center">
+            <h5 class="mb-0">Список заказов</h5>
           </div>
-          <div class="col-lg-8 text-right">
+          <div class="col-lg-9 text-right">
             <form class="text-right" [formGroup]="formSearch">
             <div class="input-group">
-              <input type="number" class="form-control form-control-sm border-right-0 border-left-0 border-top-0 border-radius-0 pl-0"
+              <input type="text" class="form-control form-control-sm searchInput pl-3"
                      id="searchStr" name="searchStr" formControlName="searchStr" placeholder="Введите номер заказчика"/>
               <div class="input-group-append">
                 <div class="btn-group">
@@ -43,16 +43,16 @@
                           [ngClass]="activePeriod === 'all' ? 'btn-active':''" (click)="setActivePeriod('all')">За все время</button>
 
                   <div class="dropdown">
-                    <button class="btn btn-sm btn-table" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-sm btn-table" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Сортировать заказы">
                       <i class="fas fa-bell"></i>
                     </button>
 
                     <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton1">
+                      <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'all' ? 'btn-active':''" (click)="activeStatus = 'all'">Все заказы</div>
                       <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'new' ? 'btn-active':''" (click)="activeStatus = 'new'">Новые</div>
                       <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'pending' ? 'btn-active':''" (click)="activeStatus = 'pending'">В работе</div>
                       <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'success' ? 'btn-active':''" (click)="activeStatus = 'success'">Выполнены</div>
                       <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'cancel' ? 'btn-active':''" (click)="activeStatus = 'cancel'">Отменены</div>
-                      <div class="dropdown-item drp-item pt-2 pb-2" [ngClass]="activeStatus === 'all' ? 'btn-active':''" (click)="activeStatus = 'all'">Все заказы</div>
                     </div>
                   </div>
                   <button class="btn btn-table btn-sm font-weight-bold" routerLink="add"><i class="fas fa-plus"></i></button>
@@ -69,58 +69,60 @@
        <div class="card-body border-top p-2 pl-3 pr-3" [ngClass]="activeStatus === order.status || activeStatus === 'all' ? '':'d-none'"
             *ngFor="let order of listOrder">
          <div class="row">
-           <div class="col-md-4">
+           <div class="col-lg-5">
              <div class="media">
-               <img src="{{order.service.image}}" class="mr-3 rounded" width="32" height="32">
+               <img src="{{order.service.image}}" class="mr-3 rounded" width="36" height="36">
                <div class="media-body">
-                 <h5 class="mt-0 mb-1">
+                 <h6 class="mt-0 mb-0">
                    <span *ngIf="order.status === 'new'" class="badge badge-danger mr-2">Новый</span>
                    <span *ngIf="order.status === 'pending'" class="badge badge-primary mr-2">В работе</span>
                    <span *ngIf="order.status === 'success'" class="badge badge-success mr-2">Выполнен</span>
                    <span *ngIf="order.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
-                   {{order.name}},
-                   <small class="text-muted">{{order.date | date: 'dd MMM yyyy HH:mm '}}</small>
-                 </h5>
-                 <div>{{order.info}}</div>
+                   {{order.name}}
+                 </h6>
+                 <div class="text-muted">{{order.date | date: 'dd MMM yyyy HH:mm '}} {{order.info ? '- ' + order.info: '-   Сообщение отсутствует.'}}</div>
                </div>
              </div>
            </div>
 
-           <div class="col-md-4 col-8">
-             <small class="font-weight-bold">Услуга</small><br/>
-             <div>{{order.service.name}}({{order.service.category.name}})</div>
+           <div class="col-lg-3 col-12 align-self-center">
+             <div class="text-muted service">
+               {{order.service.name}}({{order.service.category.name}})
+             </div>
            </div>
 
-           <div class="col-md-2 col-4">
-             <small class="font-weight-bold">Номер</small><br/>
-             <div>{{order.telephone}}</div>
-           </div>
+           <div class="col-lg-4 col-12 align-self-center">
+             <div class="row">
+               <div class="col-lg-5 col-6">
+                 <div class="text-muted text-right telephone">{{order.telephone}}</div>
+               </div>
+               <div class="col-lg-3 col-6">
+                 <div class="text-muted text-right">{{order.price | currency:'RUB':' ':'1.0-0'}} ₽</div>
+               </div>
+               <div class="col-lg-4 col-12 text-right">
+                 <div class="btn-group pr-0">
+                   <button class="btn btn-sm btn-table" data-toggle="modal" data-target=".bd-example-modal-sm" (click)="itemOrder = order">
+                     <i class="fas fa-wallet"></i>
+                   </button>
+                   <div class="dropdown">
+                     <button class="btn btn-sm btn-table" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       <i class="fas fa-bell"></i>
+                     </button>
 
-           <div class="col-md-1 col-6">
-             <small class="font-weight-bold">Цена</small><br/>
-             <div>{{order.service.price | currency:'RUB':' ':'1.0-0'}} ₽</div>
-           </div>
-
-           <div class="col-md-1 col-6 text-right font-weight-bold">
-
-             <div class="btn-group pr-0">
-
-               <div class="dropdown">
-                 <button class="btn btn-sm btn-table" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   <i class="fas fa-bell"></i>
-                 </button>
-
-                 <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton">
-                   <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'pending')">В работе</div>
-                   <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'success')">Выполнен</div>
-                   <!--<div class="dropdown-divider"></div>-->
-                   <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'cancel')">Отменен</div>
+                     <div class="dropdown-menu-right dropdown-menu m-0" aria-labelledby="dropdownMenuButton">
+                       <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'pending')">В работе</div>
+                       <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'success')">Выполнен</div>
+                       <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusOrder(order.id, 'cancel')">Отменен</div>
+                     </div>
+                   </div>
+                   <button class="btn btn-sm btn-table" (click)="deleteOrder(order.id)"><i class="fas fa-trash-alt"></i></button>
                  </div>
                </div>
-               <!--<button class="btn btn-sm btn-table"><i class="fas fa-edit"></i></button>-->
-               <button class="btn btn-sm btn-table pr-0" (click)="deleteOrder(order.id)"><i class="fas fa-trash-alt"></i></button>
              </div>
-             </div>
+
+
+
+           </div>
          </div>
        </div>
      </div>
@@ -131,6 +133,25 @@
         </h2>
       </div>
 
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm border-0">
+    <div class="modal-content">
+      <form class="p-3" [formGroup]="formPrice">
+        <div class="form-group">
+          <input type="number" class="form-control rounded" placeholder="Задать другую цену" name="price" formControlName="price">
+        </div>
+        <div class="form-group mb-0 text-center">
+          <button class="btn btn-sm btn-blue pl-5 pr-5" data-toggle="modal" data-target=".bd-example-modal-sm"
+                  (click)="updatePriceOrder(formPrice.value.price)" [disabled]="formPrice.invalid">
+            Сохранить
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

@@ -1,0 +1,140 @@
+<div class="w-100">
+  <div class="row">
+    <div class="col-lg-7 mb-3">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5>Параметры</h5>
+          <div class="text-muted">
+            Необходимо задать начало и окончание диапазона на основе которого будет формироваться отчет.
+          </div>
+        </div>
+        <div class="card-body pt-1">
+          <form [formGroup]="formDate" class="form-row">
+            <div class="col-md-4 mb-2">
+              <!--<label class="text-muted">Начало</label>-->
+              <input class="form-control form-control-sm" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="Начало"
+                     formControlName="dateStart">
+              <owl-date-time #dt1></owl-date-time>
+            </div>
+            <div class="col-md-4 mb-2">
+              <!--<label class="text-muted">Окончание</label>-->
+              <input class="form-control form-control-sm" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" placeholder="Окончание"
+                     formControlName="dateEnd">
+              <owl-date-time #dt2></owl-date-time>
+            </div>
+            <div class="col-md-4 mb-2">
+              <button class="btn btn-sm btn-blue w-100" [disabled]="formDate.invalid"
+                      (click)="getReport(formDate.value.dateStart, formDate.value.dateEnd)">Сформировать
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5 mb-3">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5>Готовые параметры</h5>
+          <div class="text-muted">
+            Набор часто используемых диапазонов.
+          </div>
+        </div>
+        <div class="card-body pt-1">
+          <button class="btn btn-pink btn-sm mr-2 mb-2" (click)="getDay(); getReport(formDate.value.dateStart, formDate.value.dateEnd)">Сегодня</button>
+          <button class="btn btn-pink btn-sm mr-2 mb-2" (click)="getWeek(); getReport(formDate.value.dateStart, formDate.value.dateEnd)">За неделю</button>
+          <button class="btn btn-pink btn-sm mr-2 mb-2" (click)="getMonth(); getReport(formDate.value.dateStart, formDate.value.dateEnd)">{{month[date.getMonth()]}}</button>
+          <button class="btn btn-pink btn-sm mr-2 mb-2" (click)="getMonth(); editMonth('-'); getReport(formDate.value.dateStart, formDate.value.dateEnd)">{{month[date.getMonth() - 1]}}</button>
+          <button class="btn btn-pink btn-sm mr-2 mb-2" (click)="getMonth(); editMonth('-'); editMonth('-'); getReport(formDate.value.dateStart, formDate.value.dateEnd)">{{month[date.getMonth() - 2]}}</button>
+          <button class="btn btn-pink btn-sm mr-2 mb-2" (click)="getYear(); getReport(formDate.value.dateStart, formDate.value.dateEnd)">За год</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12" *ngIf="reportOrder">
+      <div class="card data-report">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-lg-4">
+              <h5>Лист выполненных заказов</h5>
+            </div>
+            <div class="col-lg-4 text-right">
+              <div class="text-muted">
+                {{dateStart | date:'dd MMM yyyy, HH:mm'}} - {{dateEnd | date:'dd MMM yyyy, HH:mm'}}
+              </div>
+            </div>
+            <div class="col-lg-4 text-right">
+              <div class="table-total">Итог {{reportTotal| currency:'RUB':' ':'1.0-0'}} ₽</div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+            <tr>
+              <th scope="col" class="border-0"><small class="font-weight-bold pl-4">Номер</small></th>
+              <th scope="col" class="border-0"><small class="font-weight-bold">Категория/Услуга</small></th>
+              <th scope="col" class="border-0"><small class="font-weight-bold">Заказчик</small></th>
+              <th scope="col" class="border-0"><small class="font-weight-bold">Дата</small></th>
+              <th scope="col" class="border-0 text-right"><small class="font-weight-bold pr-4">Цена</small></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of reportOrder">
+              <td class="pl-4">{{order.telephone}}</td>
+              <td>{{order.service.category.name}}/{{order.service.name}}</td>
+              <td>{{order.name}}</td>
+              <td>{{order.date | date:'dd MMM yyyy HH:mm'}}</td>
+              <td class="pr-4 text-right">{{order.price | currency:'RUB':' ':'1.0-0'}} ₽</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-12" *ngIf="!reportOrder">
+      <div class="card data-report">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-lg-4">
+              <h5>Лист выполненных заказов</h5>
+            </div>
+            <div class="col-lg-4 text-right">
+              <div class="text-muted">
+                <div class="block-text w-100"></div>
+              </div>
+            </div>
+            <div class="col-lg-4 text-right">
+              <div class="table-total"><div class="block-text w-100"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm table-borderless">
+            <thead>
+            <tr>
+              <th scope="col" class="border-0 pl-3"><div class="block-text w-50"></div></th>
+              <th scope="col" class="border-0"><div class="block-text w-75"></div></th>
+              <th scope="col" class="border-0"><div class="block-text w-75"></div></th>
+              <th scope="col" class="border-0"><div class="block-text w-75"></div></th>
+              <th scope="col" class="border-0 text-right pr-3"><div class="block-text w-50"></div></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of [1,1,1,1,1,1,1,1,1,1,1,1,1,1]">
+              <td class="pl-3"><div class="block-text"></div></td>
+              <td><div class="block-text"></div></td>
+              <td><div class="block-text"></div></td>
+              <td><div class="block-text"></div></td>
+              <td class="pr-3 text-right"><div class="block-text"></div></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
@@ -8,7 +8,10 @@ import {NavigationEnd, Router} from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  showNavbar: boolean;
   showOrder: boolean;
+
+  @ViewChild('btnMenu') btnMenu;
 
   constructor(private router: Router) {
     this.router.events.subscribe(res => {
@@ -18,6 +21,12 @@ export class NavbarComponent implements OnInit {
         } else {
           this.showOrder = false;
         }
+
+        if (res.urlAfterRedirects === '/main/feedback') {
+          this.showNavbar = false;
+        } else {
+          this.showNavbar = true;
+        }
       }
     });
   }
@@ -25,4 +34,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
+  hideMenu() {
+    if (window.innerWidth < 992) {
+      this.btnMenu.nativeElement.click();
+    }
+  }
 }

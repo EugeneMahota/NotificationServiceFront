@@ -1,17 +1,19 @@
 <div class="row">
-  <div class="col-md-9 mb-md-3">
-    <div class="card card-service">
+  <div class="col-md-9">
+    <div class="card card-service" *ngIf="listCategory">
       <div class="card-header">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <h5>Список услуг</h5>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-8">
             <form class="text-right" [formGroup]="formCategory">
               <div class="input-group">
-                <input class="form-control form-control-sm border-right-0 border-left-0 border-top-0 border-radius-0 pl-0"
+                <input class="form-control form-control-sm rounded"
                        id="name" name="name" formControlName="name" placeholder="Новая категория"/>
                 <div class="input-group-append">
+                  <input class="form-control-file pl-lg-2" type="file" name="image" placeholder="Изображение"
+                         (change)="selectImageCategory($event)" #imageCategory>
                   <div class="btn-group">
                     <button class="btn btn-sm btn-table" [disabled]="formCategory.invalid"
                             (click)="createCategory(formCategory.value); formCategory.reset()"><i class="fas fa-plus"></i></button>
@@ -25,13 +27,20 @@
         </div>
       </div>
       <div class="table-responsive" *ngIf="listCategory.length > 0">
-        <table class="table table-sm">
+        <table class="table table-sm mb-0">
           <tbody *ngFor="let category of listCategory; let j = index;" class="border-0">
           <tr>
-            <th class="pl-4 align-middle" colspan="4" *ngIf="category !== itemCategory">{{category.name}}</th>
-            <th class="pl-4 align-middle p-3" colspan="4" *ngIf="category === itemCategory">
-              <input class="form-control form-control-sm m-0 p-0 border-radius-0 border-right-0 border-left-0 border-top-0" #categoryUpdate
+            <td *ngIf="category !== itemCategory" class="pl-4 align-middle">
+              <img src="{{category.image}}" width="25" height="25" class="rounded">
+            </td>
+            <th *ngIf="category !== itemCategory" class="align-middle" colspan="3">{{category.name}}</th>
+            <th class="pl-4 align-middle p-3" colspan="2" *ngIf="category === itemCategory">
+              <input class="form-control form-control-sm m-0 rounded" #categoryUpdate
                      name="name" [(ngModel)]="itemCategory.name" (keyup.enter)="updateCategory(itemCategory)" placeholder="Введите название категории"/>
+            </th>
+            <th class="pl-4 align-middle p-3" colspan="2" *ngIf="category === itemCategory">
+              <input class="form-control-file pl-2" type="file" name="image" placeholder="Изображение"
+                     (change)="selectImageCategory($event)" #imageCategory>
             </th>
             <th class="align-middle text-right pr-4" colspan="2">
               <div class="btn-group">
@@ -50,7 +59,7 @@
               </div>
             </th>
           </tr>
-          <tr>
+          <tr *ngIf="category.service.length > 0">
             <td class="border-0 text-muted pl-4" scope="col"><small>#</small></td>
             <td class="border-0 text-muted" scope="col"><small>Название</small></td>
             <td class="border-0 text-muted w-50" scope="col"><small>Информация</small></td>
@@ -109,7 +118,7 @@
           <div class="form-group">
             <label class="text-muted">Категория</label>
             <select class="form-control form-control-sm" name="category" [(ngModel)]="itemService.category">
-              <option *ngFor="let category of listCategory" value="{{category.id}}">{{category.name}}</option>
+              <option *ngFor="let category of listCategoryForSelect" value="{{category.id}}">{{category.name}}</option>
             </select>
           </div>
           <div class="form-group">
@@ -149,7 +158,7 @@
           <div class="form-group">
             <label class="text-muted">Категория</label>
             <select class="form-control form-control-sm" name="category" formControlName="category">
-              <option *ngFor="let category of listCategory" value="{{category.id}}">{{category.name}}</option>
+              <option *ngFor="let category of listCategoryForSelect" value="{{category.id}}">{{category.name}}</option>
             </select>
           </div>
           <div class="form-group">

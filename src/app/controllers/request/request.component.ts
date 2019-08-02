@@ -11,7 +11,7 @@ import {WsService} from '../../services/ws.service';
 })
 export class RequestComponent implements OnInit {
 
-  listRequest: Request[] = [];
+  listRequest: Request[];
   activePeriod: string;
 
   constructor(private requestService: RequestService,
@@ -21,11 +21,11 @@ export class RequestComponent implements OnInit {
 
   ngOnInit() {
     this.activePeriod = this.requestService.activePeriod;
-    this.getOrderForPeriod();
+    this.getRequestForPeriod();
   }
 
 
-  getOrderForPeriod() {
+  getRequestForPeriod() {
     if (this.activePeriod === 'day') {
       let dateEnd: Date = new Date();
       let dateStart: Date = new Date();
@@ -89,6 +89,7 @@ export class RequestComponent implements OnInit {
   }
 
   getListOrder(dateStart, dateEnd) {
+    console.log(JSON.stringify(dateStart), JSON.stringify(dateEnd));
     this.requestService.getAll(dateStart, dateEnd, this.activePeriod).subscribe(res => {
       this.listRequest = res;
     });
@@ -96,7 +97,7 @@ export class RequestComponent implements OnInit {
 
   setActivePeriod(period) {
     this.activePeriod = period;
-    this.getOrderForPeriod();
+    this.getRequestForPeriod();
   }
 
   deleteRequest(request: Request) {
@@ -104,7 +105,8 @@ export class RequestComponent implements OnInit {
       .subscribe(res => {
         if (res === true) {
           this.requestService.deleteRequest(request.id).subscribe(res => {
-            this.getOrderForPeriod();
+            this.getRequestForPeriod();
+            this.ws.sendMessage('checkRequest', null);
           });
           confirm.unsubscribe();
         } else if (res === false) {
@@ -119,7 +121,7 @@ export class RequestComponent implements OnInit {
     this.requestService.putRequest(request).subscribe(res => {
       if (res.status === 'Ok') {
         this.ws.sendMessage('checkRequest', null);
-        this.getOrderForPeriod();
+        this.getRequestForPeriod();
       }
     });
   }

@@ -11,6 +11,7 @@ import {registerLocaleData} from '@angular/common';
 import {AlertComponent} from './components/alert/alert.component';
 import {ConfirmComponent} from './components/confirm/confirm.component';
 import {ErrorInterceptor} from './interceptors/error.interceptor';
+import {LoadingComponent} from './components/loading/loading.component';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -18,11 +19,12 @@ registerLocaleData(localeRu, 'ru');
   declarations: [
     AppComponent,
     AlertComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    LoadingComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule
   ],

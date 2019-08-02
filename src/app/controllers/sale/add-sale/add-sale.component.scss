@@ -1,0 +1,20 @@
+$boxShadow: inset 0px 0px 10px rgba(0,0,0,0.3);
+
+.nowrap {
+  white-space: nowrap!important;
+  width: 12%;
+}
+.card-product {
+  max-height: 30vh;
+}
+.total {
+  color: #EC407A;
+}
+.list-product {
+  box-shadow: $boxShadow;
+  border-color: #BDBDBD!important;
+}
+.form-text {
+  color: #1565C0!important;
+  font-weight: 500;
+}

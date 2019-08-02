@@ -1,10 +1,10 @@
 <div class="row">
   <div class="col-md-12">
-    <div class="card">
+    <div class="card" *ngIf="listRequest">
       <div class="card-header">
         <div class="row">
-          <div class="col-md-5 col-7">
-            <h5>Список заявок</h5>
+          <div class="col-md-5 col-7 align-self-center">
+            <h5 class="mb-0">Список заявок</h5>
           </div>
           <div class="col-md-7 col-5 text-right">
             <div class="btn-group">
@@ -43,7 +43,7 @@
               <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
                       [ngClass]="activePeriod === 'all' ? 'btn-active':''" (click)="setActivePeriod('all')">За все время
               </button>
-              <button class="btn btn-table btn-sm font-weight-bold" (click)="getOrderForPeriod()"><i
+              <button class="btn btn-table btn-sm font-weight-bold" (click)="getRequestForPeriod()"><i
                 class="fas fa-sync-alt"></i></button>
             </div>
           </div>
@@ -51,36 +51,36 @@
       </div>
 
       <div [ngClass]="listRequest.length > 3 ? 'overflow-auto':''">
-        <div class="border-top pt-2 pb-2 pl-4 pr-4" *ngFor="let req of listRequest">
+        <div class="border-top pt-2 pb-2 pl-3 pr-3" *ngFor="let req of listRequest">
           <div class="row">
             <div class="col-md-4">
               <div class="media">
                 <img src="https://image.flaticon.com/icons/png/512/97/97895.png" width="32" height="32"
                      class="rounded mr-3">
                 <div class="media-body">
-                  <h5 class="mb-0">
+                  <h6 class="mb-0">
                     <span *ngIf="req.status === 'new'" class="badge badge-danger mr-2">Новый</span>
-                    <span *ngIf="req.status === 'pending'" class="badge badge-primary mr-2">В обработке</span>
+                    <span *ngIf="req.status === 'pending'" class="badge badge-primary mr-2">В работе</span>
                     <span *ngIf="req.status === 'success'" class="badge badge-success mr-2">Принят</span>
                     <span *ngIf="req.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
                     {{req.name}}
-                  </h5>
-                  <small class="text-muted">{{req.date | date: 'dd MMM yyyy HH:mm'}}</small>
+                  </h6>
+                  <div class="text-muted">{{req.date | date: 'dd MMM yyyy HH:mm'}}</div>
                 </div>
               </div>
             </div>
 
-            <div class="col-md-4 col-6">
-              <small class="font-weight-bold">Сообщение</small>
-              <br/> {{req.info}}
+            <div class="col-md-4 col-6 align-self-center">
+              <!--<h6 class="mb-0">Сообщение</h6>-->
+              <div class="text-muted">{{req.info || '-'}}</div>
             </div>
 
-            <div class="col-md-2 col-6">
-              <small class="font-weight-bold">Телефон</small>
-              <br/> {{req.telephone}}
+            <div class="col-md-2 col-6 align-self-center">
+              <!--<h6 class="mb-0">Телефон</h6>-->
+              <div class="text-muted">{{req.telephone}}</div>
             </div>
 
-            <div class="col-md-2 col-12 text-right">
+            <div class="col-md-2 col-12 text-right align-self-center">
               <div class="btn-group pr-0">
 
                 <div class="dropdown">
@@ -90,8 +90,8 @@
                   </button>
 
                   <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton">
-                    <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusRequest(req, 'pending')">В
-                      обработку
+                    <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusRequest(req, 'pending')">
+                      В работе
                     </div>
                     <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusRequest(req, 'success')">
                       Принять
@@ -102,7 +102,7 @@
                     </div>
                   </div>
                 </div>
-                <button class="btn btn-table btn-sm font-weight-bold pr-0" (click)="deleteRequest(req)">
+                <button class="btn btn-table btn-sm font-weight-bold" (click)="deleteRequest(req)">
                   <i class="fas fa-trash-alt"></i>
                 </button>
               </div>
@@ -110,6 +110,14 @@
           </div>
         </div>
       </div>
+
+
+      <div *ngIf="listRequest.length === 0">
+        <h2 class="display-4 text-center card-body pb-5 text-muted">
+          Список заявок пуст.
+        </h2>
+      </div>
+
     </div>
   </div>
 </div>

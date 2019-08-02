@@ -1,0 +1,115 @@
+<div class="w-100">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card card-product" *ngIf="listProduct">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-lg-6">
+              <h5>Список товаров</h5>
+            </div>
+            <div class="col-lg-6 text-right">
+              <form [formGroup]="formCategory">
+                <div class="input-group">
+                  <input class="form-control form-control-sm rounded"
+                         placeholder="Новая категория" formControlName="name" name="name">
+                  <div class="input-group-append">
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-table" (click)="createCategory(formCategory.value)" [disabled]="formCategory.invalid">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                      <button class="btn btn-sm btn-table" (click)="updateProduct(listProduct)">
+                        <i class="fas fa-save"></i>
+                      </button>
+                      <button class="btn btn-sm btn-table" routerLink="add">
+                        Добавить товар
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+          <div class="table-responsive">
+            <table class="table table-sm mb-0" *ngFor="let category of listProduct; let i = index">
+              <tbody>
+              <tr class="border-top">
+                <td colspan="4" class="pl-4 pt-2 border-0"><h6 class="mb-0">{{category.name}}</h6></td>
+                <td colspan="3" class="text-right pr-4 pt-2 border-0">
+                  <div class="btn-group">
+                    <button class="btn btn-sm btn-table" data-toggle="modal" data-target=".bd-example-modal-sm" (click)="setCategory(category)">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-table" (click)="deleteCategory(category.id)">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="category.product.length > 0">
+                <th class="border-0"></th>
+                <th class="border-0"><small class="text-muted w-25">Название</small></th>
+                <th class="border-0"><small class="text-muted w-25">Описание</small></th>
+                <th class="border-0"><small class="text-muted">Количество</small></th>
+                <th class="border-0"><small class="text-muted">Цена</small></th>
+                <th class="border-0 text-center"><small class="text-muted">Отображение</small></th>
+                <th class="border-0"><small class="text-muted"></small></th>
+              </tr>
+              <tr *ngFor="let product of category.product" class="border-top">
+                <td class="pl-4 align-middle">
+                  <img [src]="product.image" width="25" height="25" class="table-image rounded">
+                </td>
+                <td class="w-25 align-middle">{{product.name}}</td>
+                <td class="w-25 align-middle">{{product.info}}</td>
+                <td class="align-middle">
+                  <div class="btn-group border rounded">
+                    <button class="btn btn-sm btn-table" (click)="product.quantity !== 0 ? product.quantity = product.quantity - 1:''"><i class="fas fa-minus"></i></button>
+                    <input class="form-control form-control-sm border-0 w-auto text-center" [(ngModel)]="product.quantity">
+                    <button class="btn btn-sm btn-table" (click)="product.quantity = product.quantity + 1"><i class="fas fa-plus"></i></button>
+                  </div>
+                </td>
+                <td class="align-middle">{{product.price | currency:'RUB':' ':'1.0-0'}}</td>
+                <td class="align-middle text-center">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="flActive" name="flActive" [(ngModel)]="product.flActive" disabled>
+                    <label class="custom-control-label" for="flActive"></label>
+                  </div>
+                </td>
+                <td class="pr-4 align-middle text-right">
+                  <div class="btn-group">
+                    <button class="btn btn-sm btn-table" [routerLink]="product.id">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-table" (click)="deleteProduct(product.id)">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm border-0">
+    <div class="modal-content">
+      <form class="p-3" [formGroup]="formCategoryEdit">
+        <div class="form-group">
+          <input type="text" class="form-control rounded" placeholder="Имя категории" name="name" formControlName="name">
+        </div>
+        <div class="form-group mb-0 text-center">
+          <button class="btn btn-sm btn-blue pl-5 pr-5" data-toggle="modal" data-target=".bd-example-modal-sm"
+                  (click)="updateCategory(formCategoryEdit.value)" [disabled]="formCategoryEdit.invalid">
+            Сохранить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

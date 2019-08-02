@@ -1,12 +1,17 @@
-.border-radius-0 {
-  background-color: #FAFAFA;
-  border-radius: 0!important;
+.title {
+  letter-spacing: 3px!important;
+}
+.dropdown-divider {
+  width: 100px;
+  border-top: 3px solid #1565C0!important;
+  border-radius: 2px;
 }
 .image-card {
   object-fit: cover;
   height: 50px;
   width: 50px;
 }
+
 @media (max-width: 400px) {
   .image-card {
     object-fit: cover;
@@ -17,7 +22,16 @@
     font-size: 0.8rem;
   }
 }
-.title {
-  letter-spacing: 1px;
-  color: #1565C0;
+.form-control-search {
+  border: 1px solid #1565C0!important;
+  background-color: #FAFAFA!important;
+  border-radius: 15px;
+}
+.btn-search {
+  box-shadow: none!important;
+  border-radius: 15px;
+}
+
+.container {
+  min-height: 90vh!important;
 }
