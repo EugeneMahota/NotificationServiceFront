@@ -55,6 +55,10 @@
   background-color: #FAFAFA;
   border: 1px solid #1565C0!important;
   border-radius: 15px;
+  color: #1565C0;
+  &::placeholder {
+    color: #1565C0;
+  }
 }
 .content {
   min-height: 95vh!important;

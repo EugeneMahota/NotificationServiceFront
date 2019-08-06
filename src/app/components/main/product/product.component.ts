@@ -16,11 +16,20 @@ export class ProductComponent implements OnInit {
 
   @ViewChild('dropDivider') dropDivider: ElementRef;
 
-  constructor(private productService: ProductService, private mainService: MainService) {
+  listBasket: Product[] = [];
+
+  constructor(private productService: ProductService,
+              private mainService: MainService) {
   }
 
   ngOnInit() {
     this.getListProduct();
+
+    this.listBasket = this.mainService.basketProduct;
+    this.mainService.basketProductEvent.subscribe(res => {
+      this.listBasket = res;
+      this.editViewProduct();
+    });
   }
 
   getListProduct() {
@@ -32,6 +41,8 @@ export class ProductComponent implements OnInit {
         this.listCategory = res;
         this.itemCategoryProduct = this.listCategory.find(x => x.id === this.mainService.itemCategoryProduct.id);
       }
+
+      this.editViewProduct();
     });
   }
 
@@ -41,6 +52,38 @@ export class ProductComponent implements OnInit {
     if (window.innerWidth < 991) {
       this.dropDivider.nativeElement.scrollIntoView({behavior: 'smooth'});
     }
+
+    this.editViewProduct();
   }
 
+  pushBasket(product: Product) {
+    product.category = 'onBasket';
+
+    this.mainService.pushBasket({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      info: product.info,
+      price: product.price,
+      quantity: 1,
+      category: product.category,
+      flActive: product.flActive
+    });
+  }
+
+  delBasket(product: Product) {
+    product.category = '';
+
+    this.mainService.delBasket(product.id);
+  }
+
+  editViewProduct() {
+    for (let i = 0; this.itemCategoryProduct.product.length > i; i++) {
+      for (let j = 0; this.listBasket.length > j; j++) {
+        if (this.itemCategoryProduct.product[i].id === this.listBasket[j].id) {
+          this.itemCategoryProduct.product[i].category = 'onBasket';
+        }
+      }
+    }
+  }
 }

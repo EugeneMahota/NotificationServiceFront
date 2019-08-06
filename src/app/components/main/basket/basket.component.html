@@ -1,0 +1,74 @@
+<div class="container pt-3 pb-5 w-100">
+  <div class="row">
+
+    <div class="col-12 text-center">
+      <div class="font-weight-bold title pt-lg-4 pb-lg-4 pt-2 pb-2 display-4">Оформить заказ</div>
+      <div class="dropdown-divider pb-lg-4 pb-3 m-auto"></div>
+      <h5 class="pb-lg-5 pb-3 mb-0">
+        Общая сумма заказа составляет <span class="active-link">{{totalBasket | currency:'RUB':' ':'1.0-0'}} ₽.</span>
+      </h5>
+    </div>
+    <div class="col-md-8 mb-3">
+      <div class="card mb-2" *ngFor="let product of listBasket">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-1 col-3">
+              <img [src]="product.image" class="image-product rounded">
+            </div>
+            <div class="col-lg-5 col-9">
+              {{product.name}}
+            </div>
+            <div class="col-lg-3 col-6">
+              {{product.price * product.quantity | currency:'RUB':' ':'1.0-0'}} ₽
+            </div>
+            <div class="col-lg-3 col-6 text-right">
+              <div class="btn-group mr-2">
+                <button class="btn btn-sm btn-table" (click)="quantityMinus(product)">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button class="btn btn-sm btn-table font-weight-bold">x {{product.quantity}}</button>
+                <button class="btn btn-sm btn-table" (click)="quantityPlus(product)">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <button class="btn btn-sm btn-table" (click)="deleteProduct(product.id)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header card-header-feedback">
+          <h4 class="mb-0">Введите данные</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formSale">
+            <div class="form-group">
+              <small class="font-weight-bold text-muted">ИМЯ</small>
+              <input type="text" class="form-control form-control-sm mt-2" name="name" formControlName="name" placeholder="">
+            </div>
+
+            <div class="form-group">
+              <small class="font-weight-bold text-muted">ТЕЛЕФОН</small>
+              <input type="text" class="form-control form-control-sm mt-2" name="telephone" formControlName="telephone" placeholder="">
+            </div>
+
+            <div class="form-group">
+              <small class="font-weight-bold text-muted">КОММЕНТАРИЙ К ЗАКАЗУ</small>
+              <textarea type="text" class="form-control form-control-sm  mt-2" name="info" formControlName="info" placeholder="" rows="3"></textarea>
+            </div>
+
+            <div class="mt-4 text-center">
+              <button class="btn btn-sm btn-blue pl-5 pr-5" [disabled]="formSale.invalid" (click)="createSale()">
+                Отправить
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

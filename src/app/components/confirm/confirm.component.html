@@ -1,4 +1,4 @@
-<div [@confirm] class="card-block position-absolute" *ngIf="confirm.title && confirm.message" (click)="setConfirm(false)">
+<div [@confirm] class="card-block position-fixed" *ngIf="confirm.title && confirm.message" (click)="setConfirm(false)">
   <div class="row">
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
@@ -9,7 +9,7 @@
               <h4 class="mb-0 title">{{confirm.title}}</h4>
             </div>
             <div class="col-3 text-right">
-              <button class="btn btn-table btn-sm pt-0 pr-0" (click)="setConfirm(false)">
+              <button class="btn btn-table btn-sm btn-lg" (click)="setConfirm(false)">
                 <i class="fas fa-times"></i>
               </button>
             </div>

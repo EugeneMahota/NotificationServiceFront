@@ -6,7 +6,7 @@ $lightBlueColor: #1e88e5;
 $blueColor: #1565c0;
 $darkBlue: #0d47a1;
 $redColor: #e53935;
-$greenColor: #43a047;
+$greenColor: #4CAF50;
 $pinkColor: #EC407A;
 $greyColor: #bdbdbd;
 $blueGrey: #90a4ae;
@@ -174,39 +174,7 @@ input.ng-touched.ng-valid{
 
 
 .modal-show {
-  overflow: hidden!important;
-}
-.table-responsive::-webkit-scrollbar-track, .overflow-auto::-webkit-scrollbar-track
-{
-  border-radius: 3px!important;
-  background-color: #FFFFFF;
-}
-
-.table-responsive::-webkit-scrollbar, .overflow-auto::-webkit-scrollbar
-{
-  width: 5px;
-  background-color: #FFFFFF;
-  border-radius: 3px!important;
-}
-
-.table-responsive::-webkit-scrollbar-thumb, .overflow-auto::-webkit-scrollbar-thumb
-{
-  background-color: rgba(236, 64, 122, 0.8);
-  border-radius: 3px!important;
-}
-body::-webkit-scrollbar-thumb
-{
-  background-color: rgba(236, 64, 122, 0.8);
-}
-body::-webkit-scrollbar-track
-{
-  background-color: #FFFFFF;
-}
-
-body::-webkit-scrollbar
-{
-  width: 5px;
-  background-color: #FFFFFF;
+  height: 100%;
 }
 
 .modal-open {
