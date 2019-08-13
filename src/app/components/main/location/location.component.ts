@@ -1,4 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AddressService} from '../../../services/address.service';
+import {Address} from '../../../models/address';
 
 declare const ymaps: any;
 
@@ -11,13 +13,23 @@ export class LocationComponent implements OnInit, AfterViewInit {
 
   public map: any;
 
-  constructor() {
+  listAddress: Address[];
+
+  constructor(private addressService: AddressService) {
   }
 
   ngOnInit() {
     setTimeout(() => {
       this.loadMaps();
     }, 200);
+
+    this.getListAddress();
+  }
+
+  getListAddress() {
+    this.addressService.getAll().subscribe(res => {
+      this.listAddress = res;
+    });
   }
 
   ngAfterViewInit() {
@@ -25,7 +37,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
 
   loadMaps() {
     this.map = new ymaps.Map('map', {
-      center: [45.034948074594105, 38.97850199999997],
+      center: [45.06741707457532, 39.037081],
       zoom: 15
     });
 
@@ -36,14 +48,14 @@ export class LocationComponent implements OnInit, AfterViewInit {
 
   addObject() {
     this.map.geoObjects.add(
-      new ymaps.Placemark([45.034948074594105, 38.97850199999997],
+      new ymaps.Placemark([45.06741707457532, 39.037081],
         {
-          iconCaption: 'ULTRA SERVICE',
+          iconCaption: 'РЕМТЕХСЕРВИС',
           draggable: true
         },
         {
           preset: 'islands#blueCircusIcon',
-          iconColor: '#1565C0'
+          iconColor: '#4CAF50'
         }
       ));
   }

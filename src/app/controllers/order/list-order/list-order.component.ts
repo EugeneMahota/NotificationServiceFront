@@ -17,9 +17,7 @@ export class ListOrderComponent implements OnInit {
 
   activePeriod: string;
   activeStatus: string;
-
-  formSearch: FormGroup;
-  formPrice: FormGroup;
+  formOrder: FormGroup;
 
   constructor(private orderService: OrderService,
               private fb: FormBuilder,
@@ -32,19 +30,14 @@ export class ListOrderComponent implements OnInit {
     this.activePeriod = this.orderService.activePeriod;
     this.getOrderForPeriod();
 
-    this.initFormSearch();
     this.initFormPrice();
   }
 
-  initFormSearch() {
-    this.formSearch = this.fb.group({
-      searchStr: ['', [Validators.required]]
-    });
-  }
-
   initFormPrice() {
-    this.formPrice = this.fb.group({
-      price: ['', [Validators.required]]
+    this.formOrder = this.fb.group({
+      price: [''],
+      comment: [''],
+      dateCompleted: ['']
     });
   }
 
@@ -148,11 +141,19 @@ export class ListOrderComponent implements OnInit {
     });
   }
 
-  updatePriceOrder(price: number) {
-    this.orderService.putPriceOrder(this.itemOrder.id, price).subscribe(res => {
+
+  setEditOrder(order: Order) {
+    this.itemOrder = order;
+    this.formOrder.controls['price'].setValue(order.price);
+    this.formOrder.controls['comment'].setValue(order.comment);
+    this.formOrder.controls['dateCompleted'].setValue(order.dateCompleted);
+  }
+
+  updateOrder(order: Order) {
+    this.orderService.putOrder(this.itemOrder.id, order.price, order.comment, order.dateCompleted).subscribe(res => {
       if (res.status === 'Ok') {
         this.getOrderForPeriod();
-        this.formPrice.reset();
+        this.formOrder.reset();
       }
     });
   }
@@ -170,11 +171,5 @@ export class ListOrderComponent implements OnInit {
           confirm.unsubscribe();
         }
       });
-  }
-
-  searchOrder(data) {
-    this.orderService.getBySearchStr(data.searchStr).subscribe(res => {
-      this.listOrder = res;
-    });
   }
 }

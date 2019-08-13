@@ -24,12 +24,12 @@
     <div class="col-md-3"></div>
 
 
-    <div class="mb-3" *ngFor="let order of listOrder" [ngClass]="listOrder.length > 1 ? 'col-lg-6':'col-lg-8 m-auto'">
-      <div class="card h-100 p-3">
+    <div class="mb-3" [ngClass]="listSale.length === 0 ? 'col-lg-9 m-auto':'col-lg-6'">
+      <div class="card p-3 mb-3" *ngFor="let order of listOrder">
         <div class="row">
           <div class="col-12">
             <div class="row">
-              <div class="col-8">
+              <div class="col-10">
                 <h5 class="mt-0">
                   <span *ngIf="order.status === 'new'" class="badge badge-danger mr-2">В ожидании</span>
                   <span *ngIf="order.status === 'pending'" class="badge badge-primary mr-2">В работе</span>
@@ -37,17 +37,28 @@
                   <span *ngIf="order.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
                   {{order.service.name}}
                   <br/>
-                  <small class="text-muted">{{order.date | date:'dd MMM yyyy HH:mm'}}</small>
                 </h5>
               </div>
-              <div class="col-4 text-right text-muted price pl-0">{{order.price | currency:'RUB':' ':'1.0-0'}}₽</div>
-              <div class="col-12 mb-3">{{order.service.info}}</div>
-              <div class="col-12">
-                {{order.name}}
+              <div class="col-2 text-right text-muted price pl-0 text-nowrap" *ngIf="order.status === 'new'">≈ {{order.price | currency:'RUB':' ':'1.0-0'}}₽</div>
+              <div class="col-12 mb-3">{{order.date | date:'dd MMM yyyy HH:mm'}}</div>
+              <div class="col-md-auto">
+                <h6>Итоговая цена</h6>
+                <div class="text-muted mb-3">
+                  <div *ngIf="order.status !== 'new'">{{order.price | currency:'RUB':' ':'1.0-0'}}₽</div>
+                  <div *ngIf="order.status === 'new'">-</div>
+                </div>
               </div>
-              <div class="col-12">
-                <div class="pl-2 text-muted">
-                  - {{order.info}}
+              <div class="col-md-auto">
+                <h6>Комментарий от мастера</h6>
+                <div class="text-muted mb-3">
+                  {{order.comment || '-'}}
+                </div>
+              </div>
+              <div class="col-md-auto">
+                <h6>Дата выполнения</h6>
+                <div class="text-muted mb-3">
+                  <div *ngIf="order.dateCompleted">{{order.dateCompleted | date:'dd MMM yyyy HH:mm'}}</div>
+                  <div *ngIf="!order.dateCompleted">-</div>
                 </div>
               </div>
             </div>
@@ -56,25 +67,25 @@
       </div>
     </div>
 
-    <div class="col-lg-10 m-auto" *ngFor="let sale of listSale">
-      <div class="card mb-3">
+    <div class="mb-3" [ngClass]="listOrder.length === 0 ? 'col-lg-9 m-auto':'col-lg-6'">
+      <div class="card mb-3" *ngFor="let sale of listSale">
         <div class="card-header">
           <div class="row">
             <div class="col-lg-7 align-middle">
               <h5 class="mb-0">
                 <span *ngIf="sale.status === 'new'" class="badge badge-danger mr-2">В ожидании</span>
-                <span *ngIf="sale.status === 'pending'" class="badge badge-primary mr-2">Готовится</span>
-                <span *ngIf="sale.status === 'success'" class="badge badge-success mr-2">Получен</span>
+                <span *ngIf="sale.status === 'pending'" class="badge badge-primary mr-2">Собирается</span>
+                <span *ngIf="sale.status === 'success'" class="badge badge-success mr-2">Собран</span>
                 <span *ngIf="sale.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
                 {{sale.name}}
                 <br/>
-                <small class="text-muted">{{sale.date | date:'dd MMM yyyy HH:mm'}}</small>
               </h5>
             </div>
             <div class="col-lg-5 align-middle text-right">
               Сумма заказа {{sale.sum | currency:'RUB':' ':'1.0-0'}}₽
             </div>
           </div>
+          <div class="mt-2">{{sale.date | date:'dd MMM yyyy HH:mm'}}</div>
         </div>
         <div class="card-body table-responsive pt-0">
           <table class="table table-sm table-borderless">
@@ -95,6 +106,8 @@
             </tr>
             </tbody>
           </table>
+          <div *ngIf="sale.flPickup"><small class="mr-2 font-weight-bold">Самовывоз:</small> {{sale.address}}</div>
+          <div *ngIf="!sale.flPickup"><small class="mr-2 font-weight-bold">Доставка:</small> {{sale.address}}</div>
         </div>
       </div>
     </div>

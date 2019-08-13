@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SaleService} from '../../services/sale.service';
 import {Sale} from '../../models/sale';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {ConfirmService} from '../../services/confirm.service';
 
 @Component({
@@ -14,30 +14,16 @@ export class SaleComponent implements OnInit {
   listSale: Sale[];
   activePeriod: string = this.saleService.activePeriod;
 
-  formSearch: FormGroup;
-
   constructor(private saleService: SaleService, private fb: FormBuilder, private confirm: ConfirmService) {
   }
 
   ngOnInit() {
     this.getSaleForPeriod();
-    this.initFormSearch();
   }
 
-  initFormSearch() {
-    this.formSearch = this.fb.group({
-      telephone: ['', [Validators.required]]
-    });
-  }
 
   getListSale(dateStart, dateEnd) {
     this.saleService.getSaleByDate(dateStart, dateEnd, this.activePeriod).subscribe(res => {
-      this.listSale = res;
-    });
-  }
-
-  getSaleByTelephone(telephone: number) {
-    this.saleService.getSaleByTelephone(telephone).subscribe(res => {
       this.listSale = res;
     });
   }

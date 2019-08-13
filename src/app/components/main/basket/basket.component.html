@@ -8,7 +8,7 @@
         Общая сумма заказа составляет <span class="active-link">{{totalBasket | currency:'RUB':' ':'1.0-0'}} ₽.</span>
       </h5>
     </div>
-    <div class="col-md-8 mb-3">
+    <div class="col-md-7 mb-3">
       <div class="card mb-2" *ngFor="let product of listBasket">
         <div class="card-body">
           <div class="row">
@@ -18,50 +18,87 @@
             <div class="col-lg-5 col-9">
               {{product.name}}
             </div>
-            <div class="col-lg-3 col-6">
+            <div class="col-lg-2 col-6 text-nowrap">
               {{product.price * product.quantity | currency:'RUB':' ':'1.0-0'}} ₽
             </div>
-            <div class="col-lg-3 col-6 text-right">
-              <div class="btn-group mr-2">
+            <div class="col-lg-4 col-6 text-right">
+              <div class="btn-group">
                 <button class="btn btn-sm btn-table" (click)="quantityMinus(product)">
                   <i class="fas fa-minus"></i>
                 </button>
                 <button class="btn btn-sm btn-table font-weight-bold">x {{product.quantity}}</button>
-                <button class="btn btn-sm btn-table" (click)="quantityPlus(product)">
+                <button class="btn btn-sm btn-table mr-2" (click)="quantityPlus(product)">
                   <i class="fas fa-plus"></i>
                 </button>
+                <button class="btn btn-sm btn-table" (click)="deleteProduct(product.id)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
               </div>
-              <button class="btn btn-sm btn-table" (click)="deleteProduct(product.id)">
-                <i class="fas fa-trash-alt"></i>
-              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
       <div class="card">
         <div class="card-header card-header-feedback">
-          <h4 class="mb-0">Введите данные</h4>
+          <h4 class="mb-0">Заполните данные</h4>
         </div>
         <div class="card-body">
-          <form [formGroup]="formSale">
-            <div class="form-group">
+          <form [formGroup]="formSale" class="form-row">
+            <div class="form-group col-md-6">
               <small class="font-weight-bold text-muted">ИМЯ</small>
-              <input type="text" class="form-control form-control-sm mt-2" name="name" formControlName="name" placeholder="">
+              <input type="text" class="form-control form-control-sm mt-2" name="name" formControlName="name"
+                     placeholder="">
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <small class="font-weight-bold text-muted">ТЕЛЕФОН</small>
-              <input type="text" class="form-control form-control-sm mt-2" name="telephone" formControlName="telephone" placeholder="">
+              <input type="text" class="form-control form-control-sm mt-2" name="telephone" formControlName="telephone"
+                     placeholder="">
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-12">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="flPickup1" name="flPickup" formControlName="flPickup" (change)="clearAddress($event)"
+                       class="custom-control-input" [value]="false">
+                <label class="custom-control-label" for="flPickup1">Доставка</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="flPickup2" name="flPickup" formControlName="flPickup" (change)="clearAddress($event)"
+                       class="custom-control-input" [value]="true">
+                <label class="custom-control-label" for="flPickup2">Самовывоз</label>
+              </div>
+            </div>
+
+            <div class="form-group col-12" *ngIf="!formSale.value.flPickup">
+              <small class="font-weight-bold text-muted">ГОРОД</small>
+              <input type="text" class="form-control form-control-sm mt-2" placeholder="" value="Краснодар" [disabled]="true">
+            </div>
+
+            <div class="form-group col-12" *ngIf="!formSale.value.flPickup">
+              <small class="font-weight-bold text-muted">АДРЕС ДОСТАВКИ</small>
+              <input type="text" class="form-control form-control-sm mt-2" name="address" formControlName="address"
+                     placeholder="">
+              <small class="text-muted">Бесплатная доставка при заказе от 1000 ₽.</small>
+            </div>
+
+            <div class="form-group col-12" *ngIf="formSale.value.flPickup">
+              <small class="font-weight-bold text-muted">ВЫБЕРИТЕ ПУНКТ САМОВЫВОЗА</small>
+              <div class="custom-control custom-radio" *ngFor="let address of listAddress">
+                <input type="radio" [id]="address.id" class="custom-control-input" name="address"
+                       formControlName="address" [value]="address.city+ ' ' +address.address">
+                <label class="custom-control-label" [for]="address.id">{{address.city}} {{address.address}}</label>
+              </div>
+            </div>
+
+            <div class="form-group col-12">
               <small class="font-weight-bold text-muted">КОММЕНТАРИЙ К ЗАКАЗУ</small>
-              <textarea type="text" class="form-control form-control-sm  mt-2" name="info" formControlName="info" placeholder="" rows="3"></textarea>
+              <textarea type="text" class="form-control form-control-sm  mt-2" name="info" formControlName="info"
+                        placeholder="" rows="3"></textarea>
             </div>
 
-            <div class="mt-4 text-center">
+            <div class="mt-4 text-center col-12 form-group mb-0">
               <button class="btn btn-sm btn-blue pl-5 pr-5" [disabled]="formSale.invalid" (click)="createSale()">
                 Отправить
               </button>

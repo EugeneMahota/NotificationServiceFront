@@ -9,4 +9,6 @@ export class Order {
   service: Service;
   info: string;
   price: number;
+  comment: string;
+  dateCompleted: Date;
 }

@@ -9,13 +9,13 @@ const routes = [
   {
     path: '', component: MainComponent, children: [
       {path: '', redirectTo: 'feedback', pathMath: 'full'},
-      {path: 'feedback', loadChildren: './home/home.module#HomeModule'},
-      {path: 'service', loadChildren: './service/service.module#ServiceModule'},
-      {path: 'order', loadChildren: './order/order.module#OrderModule'},
-      {path: 'profile', loadChildren: './profile/profile.module#ProfileModule'},
-      {path: 'location', loadChildren: './location/location.module#LocationModule'},
-      {path: 'product', loadChildren: './product/product.module#ProductModule'},
-      {path: 'basket', loadChildren: './basket/basket.module#BasketModule'}
+      {path: 'feedback', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
+      {path: 'service', loadChildren: () => import('./service/service.module').then(m => m.ServiceModule)},
+      {path: 'order', loadChildren: () => import('./order/order.module').then(m => m.OrderModule)},
+      {path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)},
+      {path: 'location', loadChildren: () => import('./location/location.module').then(m => m.LocationModule)},
+      {path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
+      {path: 'basket', loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule)}
     ]
   }
 ];

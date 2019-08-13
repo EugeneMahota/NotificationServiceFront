@@ -34,7 +34,9 @@ export class ReportService {
             status: data.status,
             service: data.service,
             info: data.info,
-            price: data.price
+            price: data.price,
+            comment: data.comment,
+            dateCompleted: data.dateCompleted
           };
         });
       }));

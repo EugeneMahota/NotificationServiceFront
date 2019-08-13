@@ -4,35 +4,60 @@ import {CategoryService} from '../../../models/category-service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Service} from '../../../models/service';
 import {ConfirmService} from '../../../services/confirm.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Section} from '../../../models/section';
+import {SectionService} from '../../../services/section.service';
 
 @Component({
   selector: 'app-list-service',
   templateUrl: './list-service.component.html',
-  styleUrls: ['./list-service.component.scss']
+  styleUrls: ['./list-service.component.scss'],
+  animations: [
+    trigger('slideIn', [
+      state('void', style({
+        transform: 'translateX(100%)',
+        position: 'absolute',
+        right: 0
+      })),
+      state('*', style({
+        transform: 'translateX(0)'
+      })),
+      transition('void=>*', animate('1000ms linear'))
+    ])
+  ]
 })
 export class ListServiceComponent implements OnInit {
 
+  showForm: boolean;
+
+  listSection: Section[];
   listCategoryForSelect: CategoryService[];
   listCategory: CategoryService[];
   formCategory: FormGroup;
   formService: FormGroup;
 
   image: File;
-  @ViewChild('image') imageInput: ElementRef;
-  @ViewChild('imageCategory') imageInputCategory: ElementRef;
+  imageForCategory: File;
+  @ViewChild('image', {static: false}) imageInput: ElementRef;
+  @ViewChild('imageCategory', {static: false}) imageInputCategory: ElementRef;
 
+  itemSection: Section;
   itemService: Service;
   itemCategory: CategoryService;
-  @ViewChild('categoryUpdate') categoryUpdate: ElementRef;
+  @ViewChild('categoryUpdate', {static: false}) categoryUpdate: ElementRef;
 
   constructor(private serviceService: ServiceService,
               private fb: FormBuilder,
-              private confirm: ConfirmService) {
+              private confirm: ConfirmService,
+              private sectionService: SectionService) {
   }
 
   ngOnInit() {
+    this.showForm = false;
+
     this.getListCategory();
     this.getListCategoryForSelect();
+    this.getListSection();
 
     this.initFormCategory();
     this.initFormService();
@@ -50,9 +75,16 @@ export class ListServiceComponent implements OnInit {
     });
   }
 
+  getListSection() {
+    this.sectionService.getAll().subscribe(res => {
+      this.listSection = res;
+    });
+  }
+
   initFormCategory() {
     this.formCategory = this.fb.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
+      section: ['', [Validators.required]]
     });
   }
 
@@ -110,10 +142,10 @@ export class ListServiceComponent implements OnInit {
     let file: File;
     file = image.target.files.item(0);
     if (file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg') {
-      this.image = image.target.files.item(0);
+      this.imageForCategory = image.target.files.item(0);
     } else {
       this.imageInputCategory.nativeElement.value = null;
-      this.image = null;
+      this.imageForCategory = null;
     }
   }
 
@@ -165,7 +197,8 @@ export class ListServiceComponent implements OnInit {
   createCategory(category: CategoryService) {
     const categoryData = new FormData();
     categoryData.append('name', category.name);
-    categoryData.append('image', this.image);
+    categoryData.append('section', category.section);
+    categoryData.append('image', this.imageForCategory);
 
     this.serviceService.postCategory(categoryData).subscribe(res => {
       this.getListCategoryForSelect();
@@ -178,8 +211,9 @@ export class ListServiceComponent implements OnInit {
     const categoryData = new FormData();
     categoryData.append('id', category.id);
     categoryData.append('name', category.name);
-    if (this.image) {
-      categoryData.append('image', this.image);
+    categoryData.append('section', category.section);
+    if (this.imageForCategory) {
+      categoryData.append('image', this.imageForCategory);
     }
 
     this.serviceService.putCategory(categoryData).subscribe(res => {
@@ -192,6 +226,7 @@ export class ListServiceComponent implements OnInit {
 
   clearImage() {
     this.image = null;
+    this.imageForCategory = null;
     this.imageInput.nativeElement.value = null;
     this.imageInputCategory.nativeElement.value = null;
   }

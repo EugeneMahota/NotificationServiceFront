@@ -4,18 +4,18 @@
       <div class="font-weight-bold title pt-lg-4 pb-lg-4 pt-2 pb-2 display-4">Контакты</div>
       <div class="dropdown-divider pb-lg-4 pb-3 m-auto"></div>
       <h5 class="pb-lg-4 pb-3 mb-0">
-        Мы находимся по адресу г. Краснодар, ул. Коммунаров, 170, напротив торгового центра Сказка.
+        Мы находимся по адресу г. Краснодар, ул. Черкасская, 133 офис 34, вход со стороны противоположной подъездам.
       </h5>
     </div>
     <div class="col-lg-4 pb-4">
       <h3>Местоположение</h3>
-      <ul class="text-muted">
-        <li class="mt-2">г. Краснодар, ул. Коммунаров, 170</li>
+      <ul class="text-muted" *ngFor="let address of listAddress">
+        <li class="mt-2">{{address.city}}, {{address.address}}</li>
       </ul>
       <h3 class="mt-4">Контактные данные</h3>
       <ul class="text-muted">
-        <li class="mt-2">+7(952)858-95-96</li>
-        <li class="mt-2">eugenemahota@gmail.com</li>
+        <li class="mt-2">8(918)363-65-99</li>
+        <li class="mt-2">remtehservice@gmail.com</li>
       </ul>
       <h3 class="mt-4">Время работы</h3>
       <ul class="text-muted">

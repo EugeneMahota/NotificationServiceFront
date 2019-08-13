@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 import {Service} from '../models/service';
+import {Section} from '../models/section';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -29,6 +30,32 @@ export class ServiceService {
   constructor(private http: HttpClient) {
   }
 
+  getCategoryBySection(section: Section): Observable<CategoryService[]> {
+    return this.http.get(environment.apiUrl + '/category/' + section.id, httpOptions)
+      .pipe(map(res => {
+        let listCategory = [].slice.call(res);
+        return listCategory = listCategory.map(function (category: any) {
+          return {
+            id: category._id,
+            name: category.name,
+            image: category.image,
+            section: category.section,
+            service: category.service.map(function (service: any) {
+              return {
+                id: service._id,
+                name: service.name,
+                price: service.price,
+                info: service.info,
+                image: service.image,
+                category: service.category,
+                flActive: service.flActive
+              };
+            })
+          };
+        });
+      }));
+  }
+
   getCategoryService(): Observable<CategoryService[]> {
     return this.http.get(environment.apiUrl + '/category-and-service', httpOptions)
       .pipe(map(res => {
@@ -38,6 +65,7 @@ export class ServiceService {
             id: category._id,
             name: category.name,
             image: category.image,
+            section: category.section,
             service: category.service.map(function (service: any) {
               return {
                 id: service._id,
@@ -63,6 +91,7 @@ export class ServiceService {
             id: category._id,
             name: category.name,
             image: category.image,
+            section: category.section,
             service: []
           };
         });

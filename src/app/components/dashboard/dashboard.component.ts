@@ -97,6 +97,12 @@ export class DashboardComponent implements OnInit {
         } else if (res.urlAfterRedirects.includes('/dashboard/sale/')) {
           this.pathOne = 'Продажи';
           this.pathTwo = 'Новая продажа';
+        } else if (res.urlAfterRedirects === '/dashboard/section') {
+          this.pathOne = 'Разделы';
+          this.pathTwo = '';
+        } else if (res.urlAfterRedirects === '/dashboard/main-settings') {
+          this.pathOne = 'Данные на сайте';
+          this.pathTwo = '';
         } else {
           this.pathOne = '';
           this.pathTwo = '';

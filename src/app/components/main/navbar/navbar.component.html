@@ -1,7 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light pt-lg-3 pb-lg-3 border-bottom w-100" *ngIf="showNavbar">
+<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-0 pb-lg-1 pb-0 border-bottom w-100" *ngIf="showNavbar">
   <div class="container">
     <a class="navbar-brand navbar-title" href="#">
-      <h4 class="mb-0">ULTRA SERVICE</h4>
+      <h4 class="mb-0 font-weight-bold mt-1">
+        <img src="/assets/logo.png" width="auto" height="40" alt="" class="pb-2">
+        РЕМТЕХСЕРВИС
+      </h4>
     </a>
     <button class="navbar-toggler border-0" type="button"
             data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -11,14 +14,21 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
       <ul class="navbar-nav">
-        <li class="nav-item" (click)="hideMenu()" *ngIf="showBasket">
-          <a class="nav-link navbar-text pl-lg-4 basket" routerLinkActive="active-pink" routerLink="basket">
+        <li class="nav-item border-right" (click)="hideMenu()" *ngIf="showBasket">
+          <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="basket">
             {{'Корзина'| uppercase}}
           </a>
         </li>
-        <li class="nav-item" (click)="hideMenu()" *ngIf="showOrder">
-          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="order">
+        <li class="nav-item border-right" (click)="hideMenu()" *ngIf="showOrder">
+          <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="order">
             {{'Новый заказ'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item border-right">
+          <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="location">
+            <i class="fas fa-map-marker-alt mr-3"></i>
+            <i class="fas fa-envelope mr-2"></i>
+            8(918)363-65-99
           </a>
         </li>
         <li class="nav-item" (click)="hideMenu()">
@@ -27,23 +37,23 @@
           </a>
         </li>
         <li class="nav-item" (click)="hideMenu()">
-          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="service">
+          <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="service">
             {{'Услуги'| uppercase}}
           </a>
         </li>
         <li class="nav-item" (click)="hideMenu()">
-          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="product">
-            {{'Товары'| uppercase}}
+          <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="product">
+            {{'Магазин'| uppercase}}
           </a>
         </li>
+        <!--<li class="nav-item" (click)="hideMenu()">-->
+          <!--<a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="location">-->
+            <!--{{'Контакты'| uppercase}}-->
+          <!--</a>-->
+        <!--</li>-->
         <li class="nav-item" (click)="hideMenu()">
-          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="profile">
-            {{'Статус заказа'| uppercase}}
-          </a>
-        </li>
-        <li class="nav-item" (click)="hideMenu()">
-          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="location">
-            {{'Контакты'| uppercase}}
+          <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="profile">
+            <i class="fas fa-user mr-2"></i>{{'Статус заказа'| uppercase}}
           </a>
         </li>
       </ul>
@@ -52,8 +62,72 @@
 </nav>
 
 
+<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-0 pb-lg-1 pb-0 fixed-top w-100 navbar-fixed" *ngIf="heightToTop > 300" [@nav]>
+  <div class="container">
+    <a class="navbar-brand navbar-title" href="#">
+      <!--<img src="/assets/logo2.png" width="auto" height="50" alt="">-->
+      <h4 class="mb-0 font-weight-bold mt-1">
+        <img src="/assets/logo.png" width="auto" height="40" alt="" class="pb-2">
+        РЕМТЕХСЕРВИС
+      </h4>
+    </a>
+    <button class="navbar-toggler border-0" type="button"
+            data-toggle="collapse" data-target="#navbarNavDropdown1" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation"
+            #btnMenuFixed>
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown1">
+      <ul class="navbar-nav">
+        <li class="nav-item border-right" (click)="hideMenuFixed()" *ngIf="showBasket">
+          <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="basket">
+            {{'Корзина'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item border-right" (click)="hideMenuFixed()" *ngIf="showOrder">
+          <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="order">
+            {{'Новый заказ'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item border-right">
+          <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="location">
+            <i class="fas fa-map-marker-alt mr-3"></i>
+            <i class="fas fa-envelope mr-2"></i>
+            8(918)363-65-99
+          </a>
+        </li>
+        <li class="nav-item" (click)="hideMenuFixed()">
+          <a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="feedback">
+            {{'Главная'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item" (click)="hideMenuFixed()">
+          <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="service">
+            {{'Услуги'| uppercase}}
+          </a>
+        </li>
+        <li class="nav-item" (click)="hideMenuFixed()">
+          <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="product">
+            {{'Магазин'| uppercase}}
+          </a>
+        </li>
+        <!--<li class="nav-item" (click)="hideMenu()">-->
+        <!--<a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="location">-->
+        <!--{{'Контакты'| uppercase}}-->
+        <!--</a>-->
+        <!--</li>-->
+        <li class="nav-item" (click)="hideMenuFixed()">
+          <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="profile">
+            <i class="fas fa-user mr-2"></i>{{'Статус заказа'| uppercase}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <div class="btn-group dropup w-100 position-absolute" *ngIf="!showBasket">
-  <button type="button" class="btn mr-3 mb-3 basket-btn" *ngIf="totalBasket" routerLink="basket" [@pulse]="animatePulse ? 'void':'*'">
+  <button type="button" class="btn btn-lg mr-3 mb-3 basket-btn" *ngIf="totalBasket" routerLink="basket" [@pulse]="animatePulse ? 'void':'*'">
     <i class="fas fa-shopping-cart mr-2"></i>{{totalBasket | currency:'RUB':' ':'1.0-0'}} ₽
   </button>
 </div>

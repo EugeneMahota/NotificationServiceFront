@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-4 align-self-center">
+            <h5 class="mb-0">Список адресов</h5>
+          </div>
+          <div class="col-md-8">
+            <form class="form-row" [formGroup]="formAddressCreate" *ngIf="!itemAddress">
+              <div class="col-lg-5 mb-0">
+                <input type="text" class="form-control form-control-sm form-control-add pl-3" name="city"
+                       formControlName="city" placeholder="Город">
+              </div>
+              <div class="col-lg-5 mb-0">
+                <input type="text" class="form-control form-control-sm form-control-add pl-3" name="address"
+                       formControlName="address" placeholder="Адрес">
+              </div>
+              <div class="col-lg-2 mb-0 text-right">
+                <button class="btn btn-sm btn-table" [disabled]="formAddressCreate.invalid"
+                        (click)="createAddress(formAddressCreate.value)">Добавить
+                </button>
+              </div>
+            </form>
+
+            <form class="form-row" [formGroup]="formAddressUpdate" *ngIf="itemAddress">
+              <div class="col-lg-5 mb-0">
+                <input type="text" class="form-control form-control-sm form-control-add pl-3" name="city"
+                       formControlName="city" placeholder="Город">
+              </div>
+              <div class="col-lg-5 mb-0">
+                <input type="text" class="form-control form-control-sm form-control-add pl-3" name="address"
+                       formControlName="address" placeholder="Адрес">
+              </div>
+              <div class="col-lg-2 mb-0 text-right">
+                <button class="btn btn-sm btn-table" [disabled]="formAddressUpdate.invalid"
+                        (click)="updateAddress(formAddressUpdate.value)">Сохранить
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="overflow-auto table-responsive">
+        <table class="table table-sm mb-0">
+          <thead>
+          <tr>
+            <td class="pl-4 align-middle"><small class="font-weight-bold">#</small></td>
+            <td class="align-middle"><small class="font-weight-bold">Город</small></td>
+            <td class="align-middle text-center"><small class="font-weight-bold">Адрес</small></td>
+            <td class="pr-4 align-middle text-right"><small class="font-weight-bold">Настройка</small></td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let address of listAddress; let i = index" [ngClass]="itemAddress && itemAddress.id === address.id ? 'active-tr':''">
+            <td class="pl-4 align-middle text-nowrap">{{i + 1}}</td>
+            <td class="align-middle text-nowrap">{{address.city}}</td>
+            <td class="align-middle text-nowrap text-center">{{address.address}}</td>
+            <td class="pr-4 align-middle text-nowrap text-right">
+              <div class="btn-group">
+                <button class="btn btn-sm btn-table" (click)="setAddress(address)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-table" (click)="deleteAddress(address)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

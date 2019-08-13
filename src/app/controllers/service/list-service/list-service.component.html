@@ -1,24 +1,47 @@
 <div class="row">
-  <div class="col-md-9">
-    <div class="card card-service" *ngIf="listCategory">
+  <div [ngClass]="showForm ? 'col-md-9':'col-md-12'">
+    <div class="card card-service" *ngIf="listCategory" #cardService>
       <div class="card-header">
         <div class="row">
-          <div class="col-md-4">
-            <h5>Список услуг</h5>
+          <div class="col-md-2 align-self-center">
+            <h5 class="mb-0">{{itemSection?.name || 'Все услуги'}}</h5>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-10">
             <form class="text-right" [formGroup]="formCategory">
               <div class="input-group">
-                <input class="form-control form-control-sm rounded"
-                       id="name" name="name" formControlName="name" placeholder="Новая категория"/>
+                <input class="form-control form-control-sm form-control-add pl-3 mr-lg-2"
+                       id="name" name="name" formControlName="name" placeholder="Имя категории"/>
+
+                <select class="form-control form-control-sm form-control-add pl-3 mr-lg-2" name="section" formControlName="section" placeholder="Раздел">
+                  <option *ngFor="let section of listSection" [value]="section.id">{{section.name}}</option>
+                </select>
+
+                <input type="file" class="d-none" id="image" name="image" placeholder="Изображение" (change)="selectImageCategory($event)" #imageCategory>
+                <label class="form-control form-control-sm form-control-add text-muted text-left pl-3 mr-lg-2" for="image">
+                  Файл: {{imageForCategory?.name | slice:0:8}}
+                </label>
+
                 <div class="input-group-append">
-                  <input class="form-control-file pl-lg-2" type="file" name="image" placeholder="Изображение"
-                         (change)="selectImageCategory($event)" #imageCategory>
                   <div class="btn-group">
-                    <button class="btn btn-sm btn-table" [disabled]="formCategory.invalid"
-                            (click)="createCategory(formCategory.value); formCategory.reset()"><i class="fas fa-plus"></i></button>
+                    <button class="btn btn-sm btn-table mr-lg-2 text-nowrap" [disabled]="formCategory.invalid"
+                            (click)="createCategory(formCategory.value); formCategory.reset()">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="border-left mr-lg-2"></div>
+                    <div class="dropdown ml-lg-2">
+                      <button class="btn btn-sm btn-table" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Сортировать заказы">
+                        <i class="fas fa-layer-group"></i>
+                      </button>
+
+                      <div class="dropdown-menu-right dropdown-menu mt-2" aria-labelledby="dropdownMenuButton1">
+                        <div class="dropdown-item drp-item pt-2 pb-2" *ngFor="let section of listSection" [ngClass]="itemSection && itemSection.id === section.id ? 'btn-active':''"
+                             (click)="itemSection = section">{{section.name}}</div>
+                      </div>
+                    </div>
                     <button class="btn btn-sm btn-table"
                             (click)="getListCategory()"><i class="fas fa-sync-alt"></i></button>
+                    <button class="btn btn-sm btn-table text-nowrap"
+                            (click)="showForm = !showForm; itemService = null;">{{showForm ? 'Скрыть форму':'Добавить услугу'}}</button>
                   </div>
                 </div>
               </div>
@@ -28,30 +51,21 @@
       </div>
       <div class="table-responsive" *ngIf="listCategory.length > 0">
         <table class="table table-sm mb-0">
-          <tbody *ngFor="let category of listCategory; let j = index;" class="border-0">
-          <tr>
-            <td *ngIf="category !== itemCategory" class="pl-4 align-middle">
+          <tbody *ngFor="let category of listCategory; let j = index;" class="border-0"
+                 [ngClass]="itemSection && itemSection.id !== category.section ? 'd-none':''">
+          <tr *ngIf="category !== itemCategory" class="table-header">
+
+            <td class="pl-4 align-middle">
               <img src="{{category.image}}" width="25" height="25" class="rounded">
             </td>
-            <th *ngIf="category !== itemCategory" class="align-middle" colspan="3">{{category.name}}</th>
-            <th class="pl-4 align-middle p-3" colspan="2" *ngIf="category === itemCategory">
-              <input class="form-control form-control-sm m-0 rounded" #categoryUpdate
-                     name="name" [(ngModel)]="itemCategory.name" (keyup.enter)="updateCategory(itemCategory)" placeholder="Введите название категории"/>
-            </th>
-            <th class="pl-4 align-middle p-3" colspan="2" *ngIf="category === itemCategory">
-              <input class="form-control-file pl-2" type="file" name="image" placeholder="Изображение"
-                     (change)="selectImageCategory($event)" #imageCategory>
-            </th>
+            <th class="align-middle">{{category.name}}</th>
+            <td class="align-middle text-muted w-50" scope="col"><small>Информация</small></td>
+            <td class="align-middle text-muted" scope="col"><small>Цена</small>
+            <td class="align-middle text-muted text-center" scope="col"><small>Отображение</small>
             <th class="align-middle text-right pr-4" colspan="2">
               <div class="btn-group">
-                <button *ngIf="category !== itemCategory" class="btn btn-table btn-sm" (click)="focusCategoryUpdate(category)">
+                <button class="btn btn-table btn-sm" (click)="focusCategoryUpdate(category)">
                   <i class="fas fa-edit"></i>
-                </button>
-                <button *ngIf="category === itemCategory" class="btn btn-table btn-sm" (click)="closeCategoryUpdate()">
-                  <i class="fas fa-times"></i>
-                </button>
-                <button *ngIf="category === itemCategory" class="btn btn-table btn-sm" (click)="updateCategory(itemCategory)">
-                  <i class="fas fa-save"></i>
                 </button>
                 <button class="btn btn-table btn-sm" (click)="deleteCategory(category.id)">
                   <i class="fas fa-trash-alt"></i>
@@ -59,14 +73,38 @@
               </div>
             </th>
           </tr>
-          <tr *ngIf="category.service.length > 0">
-            <td class="border-0 text-muted pl-4" scope="col"><small>#</small></td>
-            <td class="border-0 text-muted" scope="col"><small>Название</small></td>
-            <td class="border-0 text-muted w-50" scope="col"><small>Информация</small></td>
-            <td class="border-0 text-muted" scope="col"><small>Цена</small>
-            <td class="border-0 text-muted text-center" scope="col"><small>Отображение</small>
-            </td><td class="border-0 text-muted" scope="col"></td>
+
+          <tr *ngIf="category === itemCategory">
+            <th class="pl-4 align-middle p-3" colspan="2">
+              <input class="form-control form-control-sm m-0 rounded" #categoryUpdate
+                     name="name" [(ngModel)]="itemCategory.name" (keyup.enter)="updateCategory(itemCategory)" placeholder="Введите название категории"/>
+            </th>
+
+            <th class="pl-4 align-middle p-3" colspan="1">
+              <select class="form-control form-control-sm m-0 rounded" name="section" [(ngModel)]="itemCategory.section" placeholder="Раздел">
+                <option *ngFor="let section of listSection" [value]="section.id">{{section.name}}</option>
+              </select>
+            </th>
+            <th class="pl-4 align-middle p-3" colspan="2">
+              <input class="form-control-file pl-2" type="file" name="image" placeholder="Изображение"
+                     (change)="selectImageCategory($event)" #imageCategory>
+            </th>
+
+            <th class="align-middle text-right pr-4" colspan="1">
+              <div class="btn-group">
+                <button class="btn btn-table btn-sm" (click)="updateCategory(itemCategory)">
+                  <i class="fas fa-save"></i>
+                </button>
+                <button class="btn btn-table btn-sm" (click)="closeCategoryUpdate()">
+                  <i class="fas fa-times"></i>
+                </button>
+                <button class="btn btn-table btn-sm" (click)="deleteCategory(category.id)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </th>
           </tr>
+
           <tr *ngFor="let service of category.service let i = index" [ngClass]="itemService === service ? 'active-tr':''">
             <td class="pl-4 align-middle">
               <img src="{{service.image}}" width="25" height="25" class="rounded">
@@ -82,10 +120,7 @@
             </td>
             <td class="text-right align-middle pr-4">
               <div class="btn-group">
-                <button class="btn btn-table btn-sm" (click)="
-                itemService = service;
-                this.imageInput.nativeElement.value = null;
-                this.image = null;">
+                <button class="btn btn-table btn-sm" (click)="showForm = true; itemService = service; this.image = null;">
                   <i class="fas fa-edit"></i>
                 </button>
                 <button class="btn btn-table btn-sm" (click)="deleteService(service.id)">
@@ -99,15 +134,15 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-3" *ngIf="showForm" [@slideIn]>
     <div class="card" *ngIf="itemService">
       <div class="card-header">
         <div class="row">
-          <div class="col-10">
-            <h5>Редактировать услугу</h5>
+          <div class="col-10 align-self-center">
+            <h5 class="mb-0">Редактировать услугу</h5>
           </div>
           <div class="col-2 text-right">
-            <button class="btn btn-sm btn-table" (click)="itemService = null; getListCategory();">
+            <button class="btn btn-sm btn-table" (click)="itemService = null; getListCategory(); showForm = false;">
               <i class="fas fa-times"></i>
             </button>
           </div>
@@ -149,9 +184,18 @@
       </div>
     </div>
 
-    <div class="card" *ngIf="!itemService">
+    <div class="card" *ngIf="!itemService && showForm">
       <div class="card-header">
-        <h5>Новая услуга</h5>
+        <div class="row">
+          <div class="col-10 align-self-center">
+            <h5 class="mb-0">Новая услуга</h5>
+          </div>
+          <div class="col-2 text-right">
+            <button class="btn btn-sm btn-table" (click)="showForm = false;">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="card-body pt-0">
         <form [formGroup]="formService">
@@ -176,7 +220,7 @@
           </div>
           <div class="form-group">
             <label for="image">Изображение</label>
-            <input class="form-control-file" type="file" id="image" name="image" (change)="selectImage($event)" #image>
+            <input class="form-control-file" type="file" name="image" (change)="selectImage($event)" #image>
           </div>
           <div class="custom-control custom-checkbox mb-3">
             <input type="checkbox" class="custom-control-input" id="flActive" formControlName="flActive">

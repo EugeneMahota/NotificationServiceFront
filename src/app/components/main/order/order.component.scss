@@ -3,13 +3,13 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
 .image-card {
   object-fit: cover;
   height: 50px;
-  width: 50px;
+  width: auto;
 }
 @media (max-width: 400px) {
   .image-card {
     object-fit: cover;
     height: 35px;
-    width: 35px;
+    width: auto;
   }
   .price {
     font-size: 0.8rem;

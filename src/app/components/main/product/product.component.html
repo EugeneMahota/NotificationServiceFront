@@ -1,25 +1,30 @@
 <div class="container pt-3 pb-4">
   <div class="row">
     <div class="col-12 text-center">
-      <div class="font-weight-bold title pt-lg-4 pb-lg-4 pt-2 pb-2 display-4">Список товаров</div>
+      <div class="font-weight-bold title pt-lg-4 pb-lg-4 pt-2 pb-2 display-4">{{itemCategoryProduct.name}}</div>
       <div class="dropdown-divider pb-lg-4 pb-4 m-auto"></div>
-      <!--<h5 class="pb-lg-5 pb-3 mb-0">-->
-        <!--На данной странице представлен список категорий, выберите необходимую и ниже появятся все товары из данной-->
-        <!--категории.-->
-      <!--</h5>-->
     </div>
 
     <div class="col-lg-3 mb-2 mb-lg-3" *ngFor="let category of listCategory">
-      <div class="border p-2 h-100 text-center card-category"
-           [ngClass]="category.id === itemCategoryProduct.id ? 'card-category-active':''"
+      <div class="p-2 h-100 text-center card-category rounded" [ngClass]="category.id === itemCategoryProduct.id ? 'card-category-active':''"
            (click)="setCategoryProduct(category)">
         <div>{{category.name}}</div>
       </div>
     </div>
 
-    <div class="col-12 mt-2 mb-2" #dropDivider></div>
+    <div class="col-12 mb-2" #dropDivider></div>
 
-    <div class="col-lg-4 col-md-6 mb-3" *ngFor="let product of itemCategoryProduct.product"
+    <div class="col-lg-12 mb-4 align-self-center">
+      <form>
+        <div class="position-absolute block-icon-search">
+          <i class="fas fa-search pl-3"></i>
+        </div>
+        <input class="form-control form-control-search rounded pl-5" placeholder="Поиск по товарам" name="searchStr"
+               (ngModelChange)="setCategoryProduct(listCategory[0])" [(ngModel)]="searchStr">
+      </form>
+    </div>
+
+    <div class="col-lg-4 col-md-6 mb-3" *ngFor="let product of itemCategoryProduct.product | searchPipe:searchStr"
          [ngClass]="product.flActive ? '':'d-none'">
       <div class="card h-100">
         <div class="card-image">
@@ -52,20 +57,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-
-    <div class="col-12 text-center loading-block" *ngIf="!listCategory">
-      <div class="lds-roller">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
       </div>
     </div>
   </div>

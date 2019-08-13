@@ -6,6 +6,8 @@ export class Sale {
   telephone: number;
   info: string;
   status: string;
+  address: string;
+  flPickup: boolean;
   date: Date;
   product: Product[];
   sum: number;

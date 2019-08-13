@@ -36,62 +36,75 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
   &:hover {
     transform: scale(1.1);
     background-color: rgba(0, 0, 0, 0.4);
-    border-color: #EC407A!important;
+    border-color: #4CAF50!important;
   }
 }
 .active-card {
   transform: scale(1.1)!important;
   background-color: rgba(0, 0, 0, 0.4)!important;
-  border-color: #EC407A!important;
+  border-color: #4CAF50!important;
 }
 .card-image {
-  width: 60px;
+  width: auto;
   height: 60px;
   object-fit: cover;
-}
-.dropdown-menu {
-  box-shadow: $boxShadow;
-  max-height: 300px;
 }
 .title {
   letter-spacing: 3px!important;
 }
 .dropdown-divider {
   width: 100px;
-  border-top: 3px solid #EC407A!important;
+  border-top: 3px solid #4CAF50!important;
   border-radius: 2px;
+}
+.dropdown-menu {
+  box-shadow: $boxShadow;
+  max-height: 300px;
 }
 .item-dropdown {
   font-weight: 400;
   cursor: pointer;
   &:hover {
-    color: #1565C0!important;
+    color: #4CAF50!important;
   }
 }
 
 .navbar {
-  border-bottom: 1px solid #545454;
   z-index: 101;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(0, 0, 0, 0);
+  border-bottom: 1px solid #757575;
+}
+
+.telephone-border {
+  a {
+    letter-spacing: 2px;
+    color: #FFFFFF;
+  }
+  border-right: 1px solid #757575;
+}
+.active {
+  color: #FFFFFF!important;
+  background-color: #4CAF50!important;
+}
+.nav-text {
+  cursor: pointer;
+  font-weight: 400;
 }
 .navbar-title {
-  &:hover {
-    color: #EC407A;
-  }
-  color: #EC407A;
   letter-spacing: 3px;
+  color: #FFFFFF;
 }
 .navbar-text {
   cursor: pointer;
-  letter-spacing: 2px;
-  font-weight: 500!important;
+  letter-spacing: 1px;
+  font-weight: 500;
 }
 .navbar-info {
   color: #FFFFFF!important;
   letter-spacing: 1.5px;
 }
 .active-pink {
-  color: #FFFFFF !important;
+  color: #4CAF50 !important;
 }
 .navbar-toggler{
   &:focus {
@@ -101,12 +114,14 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
 }
 .active-link {
   cursor: pointer;
-  color: #EC407A!important;
+  color: #ffffff!important;
   &:hover {
     text-decoration: underline!important;
   }
 }
-
+.green {
+  color: #4CAF50;
+}
 .modal {
   .modal-dialog .modal-content .modal-header {
     box-shadow: $boxShadow;
@@ -132,15 +147,24 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
 .modal-open {
   overflow-y: inherit!important;
 }
+
+.btn-feedback {
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+.modal-open {
+  overflow-y:scroll!important;
+  padding-right:0 !important;
+}
 //mobile
 @media (max-width: 768px) {
   .card-image {
-    width: 30px;
+    width: auto;
     height: 30px;
     object-fit: cover;
   }
   .card-category {
-    .media-body h5 {
+    .media-body h6 {
       margin: 0;
     }
   }

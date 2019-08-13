@@ -37,6 +37,8 @@ export class OrderService {
             date: data.date,
             status: data.status,
             price: data.price,
+            comment: data.comment,
+            dateCompleted: data.dateCompleted,
             service: {
               id: data.service._id,
               name: data.service.name,
@@ -64,6 +66,8 @@ export class OrderService {
             date: data.date,
             status: data.status,
             price: data.price,
+            comment: data.comment,
+            dateCompleted: data.dateCompleted,
             service: {
               id: data.service._id,
               name: data.service.name,
@@ -87,8 +91,15 @@ export class OrderService {
     return this.http.put(environment.apiUrl + '/order', JSON.stringify({id: id, status: status}), httpOptions);
   }
 
-  putPriceOrder(id: string, price: number): Observable<any> {
-    return this.http.put(environment.apiUrl + '/order', JSON.stringify({id: id, price: price}), httpOptions);
+  putOrder(id: string, price: number, comment: string, dateCompleted: Date): Observable<any> {
+    return this.http.put(environment.apiUrl + '/order',
+      JSON.stringify({
+        id: id,
+        price: price,
+        comment: comment,
+        dateCompleted: dateCompleted
+      }),
+      httpOptions);
   }
 
   deleteOrder(id: string): Observable<any> {

@@ -33,6 +33,8 @@ export class SaleService {
             telephone: data.telephone,
             info: data.info,
             status: data.status,
+            address: data.address,
+            flPickup: data.flPickup,
             date: data.date,
             sum: data.product.reduce((sum, value) => sum + value.product.price * value.quantity, 0),
             product: data.product.map(function (product: any) {
@@ -63,6 +65,8 @@ export class SaleService {
             telephone: data.telephone,
             info: data.info,
             status: data.status,
+            address: data.address,
+            flPickup: data.flPickup,
             date: data.date,
             sum: data.product.reduce((sum, value) => sum + value.product.price * value.quantity, 0),
             product: data.product.map(function (product: any) {

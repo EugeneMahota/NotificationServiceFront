@@ -4,24 +4,25 @@
       <div class="card card-product" *ngIf="listProduct">
         <div class="card-header">
           <div class="row">
-            <div class="col-lg-6">
-              <h5>Список товаров</h5>
+            <div class="col-lg-2 align-self-center">
+              <h5 class="mb-0">Список товаров</h5>
             </div>
-            <div class="col-lg-6 text-right">
+            <div class="col-lg-10 text-right">
               <form [formGroup]="formCategory">
                 <div class="input-group">
-                  <input class="form-control form-control-sm rounded"
+                  <input class="form-control form-control-sm form-control-add pl-3"
                          placeholder="Новая категория" formControlName="name" name="name">
                   <div class="input-group-append">
                     <div class="btn-group">
-                      <button class="btn btn-sm btn-table" (click)="createCategory(formCategory.value)" [disabled]="formCategory.invalid">
-                        <i class="fas fa-plus"></i>
+                      <button class="btn btn-sm btn-table mr-lg-2 ml-lg-2" (click)="createCategory(formCategory.value)" [disabled]="formCategory.invalid">
+                        Добавить
+                      </button>
+                      <div class="border-right"></div>
+                      <button class="btn btn-sm btn-table mr-lg-2 ml-lg-2" routerLink="add">
+                        Добавить товар
                       </button>
                       <button class="btn btn-sm btn-table" (click)="updateProduct(listProduct)">
                         <i class="fas fa-save"></i>
-                      </button>
-                      <button class="btn btn-sm btn-table" routerLink="add">
-                        Добавить товар
                       </button>
                     </div>
                   </div>
@@ -33,9 +34,13 @@
           <div class="table-responsive">
             <table class="table table-sm mb-0" *ngFor="let category of listProduct; let i = index">
               <tbody>
-              <tr class="border-top">
-                <td colspan="4" class="pl-4 pt-2 border-0"><h6 class="mb-0">{{category.name}}</h6></td>
-                <td colspan="3" class="text-right pr-4 pt-2 border-0">
+              <tr class="border-top table-header">
+                <td colspan="2" class="pl-4 pt-2 border-0 align-middle"><h6 class="mb-0">{{category.name}}</h6></td>
+                <th class="border-0 align-middle"><small class="text-muted" *ngIf="category.product.length > 0">Описание</small></th>
+                <th class="border-0 align-middle"><small class="text-muted" *ngIf="category.product.length > 0">Цена</small></th>
+                <th class="border-0 align-middle text-center"><small class="text-muted" *ngIf="category.product.length > 0">Количество</small></th>
+                <th class="border-0 align-middle text-center"><small class="text-muted" *ngIf="category.product.length > 0">Отображение</small></th>
+                <th class="border-0 align-middle text-right pr-4">
                   <div class="btn-group">
                     <button class="btn btn-sm btn-table" data-toggle="modal" data-target=".bd-example-modal-sm" (click)="setCategory(category)">
                       <i class="fas fa-edit"></i>
@@ -44,31 +49,22 @@
                       <i class="fas fa-trash-alt"></i>
                     </button>
                   </div>
-                </td>
-              </tr>
-              <tr *ngIf="category.product.length > 0">
-                <th class="border-0"></th>
-                <th class="border-0"><small class="text-muted w-25">Название</small></th>
-                <th class="border-0"><small class="text-muted w-25">Описание</small></th>
-                <th class="border-0"><small class="text-muted">Количество</small></th>
-                <th class="border-0"><small class="text-muted">Цена</small></th>
-                <th class="border-0 text-center"><small class="text-muted">Отображение</small></th>
-                <th class="border-0"><small class="text-muted"></small></th>
+                </th>
               </tr>
               <tr *ngFor="let product of category.product" class="border-top">
                 <td class="pl-4 align-middle">
                   <img [src]="product.image" width="25" height="25" class="table-image rounded">
                 </td>
                 <td class="w-25 align-middle">{{product.name}}</td>
-                <td class="w-25 align-middle">{{product.info}}</td>
-                <td class="align-middle">
-                  <div class="btn-group border rounded">
+                <td class="w-50 align-middle">{{product.info}}</td>
+                <td class="align-middle">{{product.price | currency:'RUB':' ':'1.0-0'}}</td>
+                <td class="align-middle text-center">
+                  <div class="btn-group form-control-add">
                     <button class="btn btn-sm btn-table" (click)="product.quantity !== 0 ? product.quantity = product.quantity - 1:''"><i class="fas fa-minus"></i></button>
-                    <input class="form-control form-control-sm border-0 w-auto text-center" [(ngModel)]="product.quantity">
+                    <input class="form-control form-control-sm text-center form-control-quantity" [(ngModel)]="product.quantity">
                     <button class="btn btn-sm btn-table" (click)="product.quantity = product.quantity + 1"><i class="fas fa-plus"></i></button>
                   </div>
                 </td>
-                <td class="align-middle">{{product.price | currency:'RUB':' ':'1.0-0'}}</td>
                 <td class="align-middle text-center">
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="flActive" name="flActive" [(ngModel)]="product.flActive" disabled>

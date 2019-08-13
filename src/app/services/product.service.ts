@@ -27,6 +27,8 @@ export class ProductService {
   listCategory: CategoryProduct[];
   listCategoryForSelect: CategoryProduct[];
 
+  listProduct: Product[];
+
   constructor(private http: HttpClient, private router: Router) {
   }
 
@@ -64,6 +66,25 @@ export class ProductService {
             id: data._id,
             name: data.name,
             product: data.product
+          };
+        });
+      }));
+  }
+
+  getAllProduct(): Observable<Product[]> {
+    return this.http.get(environment.apiUrl + '/product', httpOptions)
+      .pipe(map(res => {
+        this.listProduct = [].slice.call(res);
+        return this.listProduct = this.listProduct.map(function (product: any) {
+          return {
+            id: product._id,
+            name: product.name,
+            image: product.image,
+            info: product.info,
+            price: product.price,
+            quantity: product.quantity,
+            flActive: product.flActive,
+            category: product.category
           };
         });
       }));

@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-section">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-4 align-self-center">
+            <h5 class="mb-0">Список разделов</h5>
+          </div>
+          <div class="col-md-8 align-self-center">
+            <form [formGroup]="formSectionUpdate" *ngIf="itemSection">
+              <div class="input-group">
+                <input type="text" class="form-control form-control-sm form-control-add pl-3" name="name" formControlName="name"
+                       placeholder="Изменить имя раздела">
+                <div class="input-group-append">
+                  <button class="btn btn-sm btn-table ml-2" [disabled]="formSectionUpdate.invalid"
+                          (click)="updateSection(formSectionUpdate.value)">Сохранить</button>
+                </div>
+              </div>
+            </form>
+            <form [formGroup]="formSectionCreate" *ngIf="!itemSection">
+              <div class="input-group">
+                <input type="text" class="form-control form-control-sm form-control-add pl-3" name="name" formControlName="name"
+                       placeholder="Новый раздел">
+                <div class="input-group-append">
+                  <button class="btn btn-sm btn-table ml-2" [disabled]="formSectionCreate.invalid"
+                          (click)="createSection(formSectionCreate.value)">Добавить</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="overflow-auto table-responsive">
+        <table class="table table-sm mb-0">
+          <thead>
+          <tr>
+            <td class="pl-4 align-middle"><small class="font-weight-bold">#</small></td>
+            <td class="align-middle"><small class="font-weight-bold">Имя раздела</small></td>
+            <td class="pr-4 text-right align-middle"><small class="font-weight-bold">Настройка</small></td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let section of listSection; let i = index" [ngClass]="itemSection && section.id === itemSection.id ? 'active-tr':''">
+            <td class="pl-4 align-middle">{{i+1}}</td>
+            <td class="align-middle">{{section.name}}</td>
+            <td class="pr-4 text-right align-middle">
+              <div class="btn-group">
+                <button class="btn btn-sm btn-table" (click)="setSection(section)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-table" (click)="deleteSection(section)">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

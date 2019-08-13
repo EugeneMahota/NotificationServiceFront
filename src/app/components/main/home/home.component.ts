@@ -9,6 +9,8 @@ import {ServiceService} from '../../../services/service.service';
 import {CategoryService} from '../../../models/category-service';
 import {MainService} from '../../../services/main.service';
 import {Service} from '../../../models/service';
+import {Section} from '../../../models/section';
+import {SectionService} from '../../../services/section.service';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +18,9 @@ import {Service} from '../../../models/service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  listSection: Section[];
+  itemSection: Section = new Section();
 
   formRequest: FormGroup;
   listCategory: CategoryService[];
@@ -26,13 +31,15 @@ export class HomeComponent implements OnInit {
               private alert: AlertService,
               private ws: WsService,
               private router: Router,
+              private sectionService: SectionService,
               private serviceService: ServiceService,
               private mainService: MainService) {
   }
 
   ngOnInit() {
+    this.getListSection();
+
     this.initFormRequest();
-    this.getCategory();
   }
 
   initFormRequest() {
@@ -40,6 +47,27 @@ export class HomeComponent implements OnInit {
       name: ['', [Validators.required]],
       telephone: ['', [Validators.required]],
       info: ['', []]
+    });
+  }
+
+  getListSection() {
+    this.sectionService.getAll().subscribe(res => {
+      this.listSection = res;
+      if (!this.mainService.itemSection) {
+        this.getCategory(res[0]);
+        this.itemSection = res[0];
+      } else {
+        this.getCategory(this.mainService.itemSection);
+        this.itemSection = this.mainService.itemSection;
+      }
+    });
+  }
+
+  getCategory(section: Section) {
+    this.itemSection = section;
+    this.mainService.itemSection = section;
+    this.serviceService.getCategoryBySection(section).subscribe(res => {
+      this.listCategory = res;
     });
   }
 
@@ -58,12 +86,6 @@ export class HomeComponent implements OnInit {
 
   onNav(nav: string) {
     this.router.navigate(['main', nav]);
-  }
-
-  getCategory() {
-    this.serviceService.getCategoryService().subscribe(res => {
-      this.listCategory = res;
-    });
   }
 
   setCategory(category: CategoryService) {

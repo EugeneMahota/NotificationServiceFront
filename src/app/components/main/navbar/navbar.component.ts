@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {MainService} from '../../../services/main.service';
 import {Product} from '../../../models/product';
@@ -11,12 +11,22 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   animations: [
     trigger('pulse', [
       state('void', style({
-        boxShadow: '0 0 0 0px rgba(236, 64, 122, 1)'
+        boxShadow: '0 0 0 0px rgba(76, 175, 80, 1)'
       })),
       state('*', style({
-        boxShadow: '0 0 0 80px rgba(236, 64, 122, 0.0)'
+        boxShadow: '0 0 0 80px rgba(76, 175, 80, 0.0)'
       })),
       transition('void=>*', animate(600))
+    ]),
+
+    trigger('nav', [
+      state('void', style({
+        transform: 'translateY(-100%)'
+      })),
+      state('*', style({
+        transform: 'translateY(0)'
+      })),
+      transition('void=>*, *=>void', animate(200))
     ])
   ]
 })
@@ -28,10 +38,13 @@ export class NavbarComponent implements OnInit {
 
   animatePulse: boolean = false;
 
-  @ViewChild('btnMenu') btnMenu;
+  @ViewChild('btnMenu', {static: false}) btnMenu;
+  @ViewChild('btnMenuFixed', {static: false}) btnMenuFixed;
 
   listBasket: Product[] = [];
   totalBasket: number;
+
+  heightToTop: number;
 
   constructor(private router: Router, private mainService: MainService) {
     this.router.events.subscribe(res => {
@@ -75,11 +88,23 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  hideMenuFixed() {
+    if (window.innerWidth < 992) {
+      this.btnMenuFixed.nativeElement.click();
+    }
+  }
+
 
   basketAnimateOn() {
     this.animatePulse = false;
     setTimeout(() => {
       this.animatePulse = true;
     }, 600);
+  }
+
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll($event) {
+    this.heightToTop = document.documentElement.scrollTop;
   }
 }

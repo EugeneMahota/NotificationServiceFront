@@ -1,12 +1,15 @@
 <div class="image-container">
-  <img src="https://www.ecmo.ru/data/remont_smartfona.jpg" class="background-image"/>
+  <img src="assets/background-image.jpg" class="background-image"/>
   <div class="background"></div>
   <div class="after">
 
-    <nav class="navbar navbar-expand-lg navbar-dark pt-lg-3 pb-lg-3">
+    <nav class="navbar navbar-expand-lg navbar-dark pt-lg-1 pt-0 pb-lg-1 pb-0 w-100">
       <div class="container">
         <a class="navbar-brand navbar-title" href="#">
-          <h4 class="mb-0">ULTRA SERVICE</h4>
+          <h4 class="mb-0 font-weight-bold mt-1">
+            <img src="/assets/logo2.png" width="auto" height="40" alt="" class="pb-2">
+            РЕМТЕХСЕРВИС
+          </h4>
         </a>
         <button class="navbar-toggler border-0" type="button"
                 data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -16,29 +19,36 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
           <ul class="navbar-nav">
+            <li class="nav-item telephone-border">
+              <a class="nav-link navbar-text pl-lg-4 mr-3" (click)="onNav('location')">
+                <i class="fas fa-map-marker-alt mr-3"></i>
+                <i class="fas fa-envelope mr-2"></i>
+                8(918)363-65-99
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link navbar-text pl-lg-4 active-pink" (click)="onNav('feedback')">
                 {{'Главная' | uppercase}}
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link navbar-text pl-lg-4" (click)="onNav('service')">
+              <a class="nav-link navbar-text pl-lg-3" (click)="onNav('service')">
                 {{'Услуги' | uppercase}}
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link navbar-text pl-lg-4" (click)="onNav('product')">
-                {{'Товары' | uppercase}}
+              <a class="nav-link navbar-text pl-lg-3" (click)="onNav('product')">
+                {{'Магазин' | uppercase}}
               </a>
             </li>
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link navbar-text pl-lg-3" (click)="onNav('location')">-->
+            <!--{{'Контакты' | uppercase}}-->
+            <!--</a>-->
+            <!--</li>-->
             <li class="nav-item">
-              <a class="nav-link navbar-text pl-lg-4" (click)="onNav('profile')">
-                {{'Статус заказа' | uppercase}}
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link navbar-text pl-lg-4" (click)="onNav('location')">
-                {{'Контакты' | uppercase}}
+              <a class="nav-link navbar-text pl-lg-3" (click)="onNav('profile')">
+                <i class="fas fa-user mr-2"></i>{{'Статус заказа' | uppercase}}
               </a>
             </li>
           </ul>
@@ -46,35 +56,47 @@
       </div>
     </nav>
 
+
     <div class="w-100 container">
-      <div class="row mt-3 pb-5">
-        <div class="col-12 text-center mt-lg-4">
-          <div class="pb-lg-4 pb-3 display-4 title font-weight-bold">Мы ремонтируем</div>
-          <div class="dropdown-divider m-auto pb-lg-4 pb-2"></div>
-          <h5 class="pb-lg-5 pb-3 mb-0">
-            Если вы являетесь нашим клиентом, то отследить состояние заказа можно
-            <a class="active-link p-0 m-0" (click)="onNav('profile')">тут,</a>
-            а если вы хотите заказать обратный звонок нажмите
-            <a data-toggle="modal" data-target="#feedbackModal" class="active-link p-0 m-0">сюда.</a>
-          </h5>
+      <div class="row mt-1 pb-5">
+
+
+        <div class="col-12 text-center mt-lg-1">
+          <div class="title display-4 font-weight-bold pt-lg-4 pb-lg-4 pt-2 pb-2">{{itemSection.name}}</div>
+          <div class="dropdown-divider m-auto pb-4"></div>
+          <h4 class="mb-0">
+            <a data-toggle="modal" data-target="#feedbackModal" class="active-link p-0 m-0">Заказать обратный звонок <i class="fas fa-phone green ml-2"></i></a>
+          </h4>
         </div>
-        <div class="col-lg-3 col-md-6 mb-lg-2" *ngFor="let category of listCategory"
+
+        <div class="col-12 mt-4 mb-3">
+          <ul class="nav nav-tabs border-0">
+            <li class="nav-item mr-1" *ngFor="let section of listSection" (click)="getCategory(section)">
+              <a class="nav-link nav-text rounded" [ngClass]="itemSection.id === section.id ? 'active':''">
+                <h5 class="mb-0">{{section.name}}</h5>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+
+        <div class="col-lg-3 col-md-6 mb-lg-2 mb-1" *ngFor="let category of listCategory"
              (mouseenter)="setActiveCategory(category)" (mouseleave)="delService()">
           <div class="media p-2 border rounded card-category" (click)="setCategory(category)"
                [ngClass]="activeCategory === category ? 'active-card':''">
-            <img [src]="category.image" class="card-image mr-3">
+            <img [src]="category.image" class="card-image mr-3 rounded">
             <div class="media-body align-self-center">
-              <h5>{{category.name}}</h5>
+              <h6>{{category.name}}</h6>
             </div>
           </div>
           <div class="p-1"></div>
-          <div *ngIf="activeCategory" class="dropdown-menu overflow-auto mt-0"
+          <div *ngIf="activeCategory" class="dropdown-menu overflow-auto mt-0 w-100"
                [ngClass]="activeCategory.id === category.id ? 'show':''">
             <div class="row m-1 item-dropdown" *ngFor="let service of activeCategory.service; let i = index"
                  (click)="setService(service)">
               <div *ngIf="i !== 0" class="col-12 border-top"></div>
               <div class="col-8">{{service.name}}</div>
-              <div class="col-4 text-right align-self-center">от {{service.price}} ₽</div>
+              <div class="col-4 text-right align-self-center text-nowrap">от {{service.price}} ₽</div>
             </div>
           </div>
         </div>
@@ -87,17 +109,17 @@
 
 <div class="container pt-5 pb-5">
   <div class="row">
-    <div class="col-md-7 text-center mb-5">
+    <div class="col-md-8 text-center mb-5">
       <div class="pb-4 display-4 title font-weight-bold">Обратный звонок</div>
       <h5 class="mb-0 text-muted pb-5">
-        Если вы не нашли услугу, которая вам подходит, можете заказать обратный звонок.
-        Мы свяжимся с вами и поможем решить эту проблему.
+        Если Вы не нашли услугу, которая вам необходима или у Вас есть другой вопрос, можете заказать обратный звонок.
+        Мы перезвоним Вам в ближайшее время для консультации по интересующему Вас вопросу.
       </h5>
       <div class="block-icon rounded-circle m-auto d-none d-md-block">
         <i class="fas fa-phone-volume"></i>
       </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header card-header-feedback">
           <h4 class="mb-0">Мы позвоним</h4>
@@ -113,12 +135,14 @@
               <input class="form-control form-control-sm mt-2" name="telephone" formControlName="telephone">
             </div>
             <div class="form-group">
-              <small class="font-weight-bold text-muted">ОПИШИТЕ ПРОБЛЕМУ</small>
-              <textarea class="form-control form-control-sm mt-2" name="info" formControlName="info" rows="3"></textarea>
+              <small class="font-weight-bold text-muted">ТЕМА ВАШЕГО ВОПРОСА</small>
+              <textarea class="form-control form-control-sm mt-2" name="info" formControlName="info"
+                        rows="3"></textarea>
             </div>
 
             <div class="text-center">
-              <button class="btn btn-blue btn-sm pr-5 pl-5 mt-3" (click)="createRequest(formRequest.value); formRequest.reset();">Отправить
+              <button class="btn btn-blue btn-sm pr-5 pl-5 mt-3"
+                      (click)="createRequest(formRequest.value); formRequest.reset();">Отправить
               </button>
             </div>
           </form>
@@ -130,7 +154,8 @@
 
 <!-- Modal -->
 <form [formGroup]="formRequest">
-  <div class="modal fade bd-example-modal-sm" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  <div class="modal fade bd-example-modal-sm" id="feedbackModal" tabindex="-1" role="dialog"
+       aria-labelledby="exampleModalLabel"
        aria-hidden="true">
     <div class="modal-dialog border-0 modal-sm" role="document">
       <div class="modal-content border-0 rounded-top">
@@ -140,21 +165,25 @@
         <div class="modal-body">
           <div class="form-group">
             <small class="font-weight-bold text-muted">ИМЯ</small>
-            <input type="text" class="mt-2 form-control form-control-sm" name="name" formControlName="name" placeholder="">
+            <input type="text" class="mt-2 form-control form-control-sm" name="name" formControlName="name"
+                   placeholder="">
           </div>
 
           <div class="form-group">
             <small class="font-weight-bold text-muted">ТЕЛЕФОН</small>
-            <input type="text" class="mt-2 form-control form-control-sm" name="telephone" formControlName="telephone" placeholder="">
+            <input type="text" class="mt-2 form-control form-control-sm" name="telephone" formControlName="telephone"
+                   placeholder="">
           </div>
 
           <div class="form-group">
-            <small class="font-weight-bold text-muted">ОПИШИТЕ ПРОБЛЕМУ</small>
-            <textarea type="text" class="mt-2 form-control form-control-sm" name="info" formControlName="info" placeholder="" rows="3"></textarea>
+            <small class="font-weight-bold text-muted">ТЕМА ВАШЕГО ВОПРОСА</small>
+            <textarea type="text" class="mt-2 form-control form-control-sm" name="info" formControlName="info"
+                      placeholder="" rows="3"></textarea>
           </div>
         </div>
         <div class="modal-footer border-0">
-          <button type="button" class="btn btn-sm btn-blue pl-5 pr-5 m-auto" data-dismiss="modal" (click)="createRequest(formRequest.value)">
+          <button type="button" class="btn btn-sm btn-blue pl-5 pr-5 m-auto" data-dismiss="modal"
+                  (click)="createRequest(formRequest.value)">
             Отправить
           </button>
         </div>

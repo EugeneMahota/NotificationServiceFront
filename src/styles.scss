@@ -14,7 +14,7 @@ $lightGreyColor: #b9b9b9;
 $darkGreyColor: #212121;
 $whiteColor: #FFFFFF;
 
-$borderRadius: 15px;
+$borderRadius: 5px;
 $boxShadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
 
 body {
@@ -142,6 +142,10 @@ body {
   @include btn($whiteColor, $darkGreyColor);
 }
 
+.btn-green {
+  @include btn($greenColor, $whiteColor);
+}
+
 .pink {
   color: $pinkColor;
 }
@@ -177,10 +181,6 @@ input.ng-touched.ng-valid{
   height: 100%;
 }
 
-.modal-open {
-  overflow-y:scroll!important;
-  padding-right:0 !important;
-}
 .badge {
   font-weight: 400!important;
 }
@@ -201,5 +201,8 @@ input.ng-touched.ng-valid{
 @media (max-width: 768px) {
   .display-4 {
     font-size: 2rem!important;
+  }
+  .title {
+    letter-spacing: 0px!important;
   }
 }

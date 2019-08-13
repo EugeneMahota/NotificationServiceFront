@@ -4,5 +4,6 @@ export class CategoryService {
   id: string;
   name: string;
   image: string;
+  section: string;
   service: Service[];
 }

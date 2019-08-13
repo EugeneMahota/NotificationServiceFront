@@ -29,7 +29,7 @@
 }
 .btn-search {
   box-shadow: none!important;
-  border-radius: 15px;
+  border-radius: 20px;
 }
 
 .container {
@@ -37,4 +37,7 @@
 }
 .nowrap {
   white-space: nowrap;
+}
+.badge {
+  min-width: 82px;
 }

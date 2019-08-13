@@ -4,6 +4,7 @@ import {ListOrderComponent} from './list-order/list-order.component';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddOrderComponent } from './add-order/add-order.component';
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
 
 const routes = [
   {path: '', component: ListOrderComponent},
@@ -15,7 +16,9 @@ const routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   declarations: [ListOrderComponent, AddOrderComponent]
 })

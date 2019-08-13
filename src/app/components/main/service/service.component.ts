@@ -24,7 +24,7 @@ export class ServiceComponent implements OnInit {
   searchStr: string;
 
   // @ViewChild('searchInput') searchInput;
-  @ViewChild('blockCategoryScroll') public blockCategoryScroll: ElementRef;
+  @ViewChild('blockCategoryScroll', { static: false }) public blockCategoryScroll: ElementRef;
 
   constructor(private service: ServiceService,
               private main: MainService,

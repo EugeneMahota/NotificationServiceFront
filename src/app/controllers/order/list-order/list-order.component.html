@@ -7,15 +7,7 @@
             <h5 class="mb-0">Список заказов</h5>
           </div>
           <div class="col-lg-9 text-right">
-            <form class="text-right" [formGroup]="formSearch">
-            <div class="input-group">
-              <input type="text" class="form-control form-control-sm searchInput pl-3"
-                     id="searchStr" name="searchStr" formControlName="searchStr" placeholder="Введите номер заказчика"/>
-              <div class="input-group-append">
                 <div class="btn-group">
-
-                  <button type="button" class="btn btn-sm btn-table" *ngIf="formSearch.valid" (click)="formSearch.reset()"><i class="fas fa-times"></i></button>
-                  <button type="submit" class="btn btn-sm btn-table" [disabled]="formSearch.invalid" (click)="searchOrder(formSearch.value)"><i class="fas fa-search"></i></button>
 
                   <div class="dropdown d-lg-none">
                     <button class="btn btn-sm btn-table" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,7 +23,7 @@
                     </div>
                   </div>
 
-                  <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
+                  <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block ml-2"
                           [ngClass]="activePeriod === 'day' ? 'btn-active':''" (click)="setActivePeriod('day')">Сегодня</button>
                   <button class="btn btn-table btn-sm font-weight-bold d-none d-lg-block d-xl-block"
                           [ngClass]="activePeriod === 'yesterday' ? 'btn-active':''" (click)="setActivePeriod('yesterday')">Вчера</button>
@@ -58,9 +50,6 @@
                   <button class="btn btn-table btn-sm font-weight-bold" routerLink="add"><i class="fas fa-plus"></i></button>
                   <button class="btn btn-table btn-sm font-weight-bold" (click)="getOrderForPeriod()"><i class="fas fa-sync-alt"></i></button>
                 </div>
-              </div>
-            </div>
-            </form>
           </div>
         </div>
       </div>
@@ -101,8 +90,8 @@
                </div>
                <div class="col-lg-4 col-12 text-right">
                  <div class="btn-group pr-0">
-                   <button class="btn btn-sm btn-table" data-toggle="modal" data-target=".bd-example-modal-sm" (click)="itemOrder = order">
-                     <i class="fas fa-wallet"></i>
+                   <button class="btn btn-sm btn-table" data-toggle="modal" data-target="#exampleModal" (click)="setEditOrder(order)">
+                     <i class="fas fa-cog"></i>
                    </button>
                    <div class="dropdown">
                      <button class="btn btn-sm btn-table" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -138,20 +127,42 @@
 </div>
 
 
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm border-0">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form class="p-3" [formGroup]="formPrice">
-        <div class="form-group">
-          <input type="number" class="form-control rounded" placeholder="Задать другую цену" name="price" formControlName="price">
-        </div>
-        <div class="form-group mb-0 text-center">
-          <button class="btn btn-sm btn-blue pl-5 pr-5" data-toggle="modal" data-target=".bd-example-modal-sm"
-                  (click)="updatePriceOrder(formPrice.value.price)" [disabled]="formPrice.invalid">
-            Сохранить
-          </button>
-        </div>
-      </form>
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="exampleModalLabel">Информация для клиента</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formOrder">
+          <div class="form-group">
+            <label>Цена</label>
+            <input type="number" class="form-control form-control-sm" placeholder="Задать другую цену" name="price" formControlName="price">
+            <small class="text-muted">Вы можете повысить или понизить цену на заказ.</small>
+          </div>
+          <div class="form-group">
+            <label>Дата выполнения</label>
+            <input class="form-control form-control-sm" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" name="dateCompleted" formControlName="dateCompleted">
+            <owl-date-time #dt1></owl-date-time>
+            <small class="text-muted">Укажите дату выполнения заказа клиенту(можно приблизительную).</small>
+          </div>
+          <div class="form-group">
+            <label>Комментарий к заказу</label>
+            <textarea type="text" class="form-control form-control-sm" name="comment" formControlName="comment" rows="3"></textarea>
+            <small class="text-muted">Оставьте комментарий для клиента, который разъяснит, что с его заказом в данный момент.</small>
+          </div>
+          <div class="form-group mb-0 text-center mt-5">
+            <button class="btn btn-sm btn-blue pl-5 pr-5" data-toggle="modal" data-target="#exampleModal"
+                    (click)="updateOrder(formOrder.value)" [disabled]="formOrder.invalid">
+              Сохранить
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
+

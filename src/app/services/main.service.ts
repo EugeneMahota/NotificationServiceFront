@@ -3,12 +3,14 @@ import {CategoryService} from '../models/category-service';
 import {Service} from '../models/service';
 import {CategoryProduct} from '../models/category-product';
 import {Product} from '../models/product';
+import {Section} from '../models/section';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainService {
 
+  itemSection: Section;
   itemCategory: CategoryService;
   itemService: Service;
 

@@ -6,21 +6,8 @@
           <div class="col-lg-3 align-self-center">
             <h5 class="mb-0">Список продаж</h5>
           </div>
-          <div class="col-lg-9">
-
-            <form class="text-right" [formGroup]="formSearch">
-              <div class="input-group">
-                <input type="text" class="form-control form-control-sm searchInput pl-3"
-                       id="telephone" name="telephone" formControlName="telephone" placeholder="Введите номер покупателя"/>
-                <div class="input-group-append">
+          <div class="col-lg-9 text-right">
                   <div class="btn-group">
-
-                    <button type="button" class="btn btn-sm btn-table" *ngIf="formSearch.valid" (click)="formSearch.reset()"><i class="fas fa-times"></i></button>
-                    <button type="submit" class="btn btn-sm btn-table" [disabled]="formSearch.invalid"
-                            (click)="getSaleByTelephone(formSearch.value.telephone)">
-                      <i class="fas fa-search"></i>
-                    </button>
-
                     <div class="dropdown d-lg-none">
                       <button class="btn btn-sm btn-table" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-calendar"></i>
@@ -49,10 +36,6 @@
                     <button class="btn btn-table btn-sm font-weight-bold" routerLink="add"><i class="fas fa-plus"></i></button>
                     <button class="btn btn-table btn-sm font-weight-bold" (click)="getSaleForPeriod()"><i class="fas fa-sync-alt"></i></button>
                   </div>
-                </div>
-              </div>
-            </form>
-
           </div>
         </div>
       </div>
@@ -64,14 +47,16 @@
               <div class="media-body">
                 <h6 class="mt-0 mb-0">
                   <span *ngIf="sale.status === 'new'" class="badge badge-danger mr-2">Новый</span>
-                  <span *ngIf="sale.status === 'pending'" class="badge badge-primary mr-2">Ожидает</span>
-                  <span *ngIf="sale.status === 'success'" class="badge badge-success mr-2">Продан</span>
+                  <span *ngIf="sale.status === 'pending'" class="badge badge-primary mr-2">Собирается</span>
+                  <span *ngIf="sale.status === 'success'" class="badge badge-success mr-2">Собран</span>
                   <span *ngIf="sale.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
                   {{sale.name}}
                 </h6>
                 <small class="text-muted">{{sale.date | date: 'dd MMM yyyy HH:mm '}}</small>
-                <div><small class="mr-2 font-weight-bold">Комментарий:</small> {{sale.info ? sale.info: '-'}}</div>
                 <div><small class="mr-2 font-weight-bold">Телефон:</small> {{sale.telephone}}</div>
+                <div *ngIf="sale.flPickup"><small class="mr-2 font-weight-bold">Самовывоз:</small> {{sale.address}}</div>
+                <div *ngIf="!sale.flPickup"><small class="mr-2 font-weight-bold">Доставка:</small> {{sale.address}}</div>
+                <div><small class="mr-2 font-weight-bold">Инфо:</small> {{sale.info ? sale.info: '-'}}</div>
               </div>
             </div>
           </div>
@@ -109,8 +94,8 @@
                 </button>
 
                 <div class="dropdown-menu-right dropdown-menu m-0" aria-labelledby="dropdownMenuButton">
-                  <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusSale(sale.id, 'pending')">Ожидает</div>
-                  <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusSale(sale.id, 'success')">Продан</div>
+                  <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusSale(sale.id, 'pending')">Собирается</div>
+                  <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusSale(sale.id, 'success')">Собран</div>
                   <div class="dropdown-item drp-item pt-2 pb-2" (click)="updateStatusSale(sale.id, 'cancel')">Отменен</div>
                 </div>
               </div>
