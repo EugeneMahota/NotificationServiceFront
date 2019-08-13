@@ -3,11 +3,14 @@
   <div class="background"></div>
   <div class="after">
 
-    <nav class="navbar navbar-expand-lg navbar-dark pt-lg-1 pt-0 pb-lg-1 pb-0 w-100">
+    <nav class="navbar navbar-expand-lg navbar-dark pt-lg-1 pt-2 pb-lg-1 pb-2  w-100">
       <div class="container">
         <a class="navbar-brand navbar-title" href="#">
-          <h4 class="mb-0 font-weight-bold mt-1">
+          <h4 class="mb-0 font-weight-bold mt-1 d-none d-lg-block">
             <img src="/assets/logo2.png" width="auto" height="40" alt="" class="pb-2">
+            РЕМТЕХСЕРВИС
+          </h4>
+          <h4 class="mb-0 font-weight-bold mt-1 d-lg-none">
             РЕМТЕХСЕРВИС
           </h4>
         </a>
@@ -19,7 +22,7 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
           <ul class="navbar-nav">
-            <li class="nav-item telephone-border">
+            <li class="nav-item telephone-border d-none d-lg-block">
               <a class="nav-link navbar-text pl-lg-4 mr-3" (click)="onNav('location')">
                 <i class="fas fa-map-marker-alt mr-3"></i>
                 <i class="fas fa-envelope mr-2"></i>
@@ -41,11 +44,11 @@
                 {{'Магазин' | uppercase}}
               </a>
             </li>
-            <!--<li class="nav-item">-->
-            <!--<a class="nav-link navbar-text pl-lg-3" (click)="onNav('location')">-->
-            <!--{{'Контакты' | uppercase}}-->
-            <!--</a>-->
-            <!--</li>-->
+            <li class="nav-item d-lg-none">
+              <a class="nav-link navbar-text pl-lg-3" (click)="onNav('location')">
+                {{'Контакты' | uppercase}}
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link navbar-text pl-lg-3" (click)="onNav('profile')">
                 <i class="fas fa-user mr-2"></i>{{'Статус заказа' | uppercase}}
@@ -69,10 +72,10 @@
           </h4>
         </div>
 
-        <div class="col-12 mt-4 mb-3">
-          <ul class="nav nav-tabs border-0">
+        <div class="col-12 mt-4 mb-4">
+          <ul class="nav nav-tabs">
             <li class="nav-item mr-1" *ngFor="let section of listSection" (click)="getCategory(section)">
-              <a class="nav-link nav-text rounded" [ngClass]="itemSection.id === section.id ? 'active':''">
+              <a class="nav-link nav-text" [ngClass]="itemSection.id === section.id ? 'active':''">
                 <h5 class="mb-0">{{section.name}}</h5>
               </a>
             </li>
@@ -86,7 +89,7 @@
                [ngClass]="activeCategory === category ? 'active-card':''">
             <img [src]="category.image" class="card-image mr-3 rounded">
             <div class="media-body align-self-center">
-              <h6>{{category.name}}</h6>
+              <div>{{category.name}}</div>
             </div>
           </div>
           <div class="p-1"></div>

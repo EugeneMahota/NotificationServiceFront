@@ -1,18 +1,19 @@
+
 .container {
   min-height: 90vh!important;
 }
 .title {
-  letter-spacing: 3px!important;
+  letter-spacing: 3px;
 }
 .dropdown-divider {
   width: 100px;
-  border-top: 3px solid #4CAF50!important;
+  border-top: 3px solid #1565C0!important;
   border-radius: 2px;
 }
 
 .card-category-active {
-  border-color: #4CAF50!important;
-  color: #4CAF50!important;
+  border-color: #1565C0!important;
+  color: #1565C0!important;
   font-weight: 500;
 }
 .card-category {
@@ -21,8 +22,8 @@
   transition: all 0.1s ease-in-out;
   cursor: pointer;
   &:hover {
-    border-color: #4CAF50!important;
-    color: #4CAF50!important;
+    border-color: #1565C0!important;
+    color: #1565C0!important;
   }
 }
 

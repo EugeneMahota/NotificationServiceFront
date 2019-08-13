@@ -42,9 +42,8 @@ export class ProductComponent implements OnInit {
           product: res
         }
       );
-      this.listCategory = this.listCategory.reverse();
       if (!this.mainService.itemCategoryProduct) {
-        this.itemCategoryProduct = this.listCategory[0];
+        this.itemCategoryProduct = this.listCategory[this.listCategory.length - 1];
       } else {
         this.itemCategoryProduct = this.listCategory.find(x => x.id === this.mainService.itemCategoryProduct.id);
       }

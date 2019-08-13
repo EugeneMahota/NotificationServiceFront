@@ -200,9 +200,12 @@ input.ng-touched.ng-valid{
 //mobile
 @media (max-width: 768px) {
   .display-4 {
-    font-size: 2rem!important;
+    font-size: 3rem!important;
   }
   .title {
-    letter-spacing: 0px!important;
+    letter-spacing: 0!important;
+  }
+  .navbar-title {
+    letter-spacing: 0!important;
   }
 }

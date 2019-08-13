@@ -1,8 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-0 pb-lg-1 pb-0 border-bottom w-100" *ngIf="showNavbar">
+<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-2 pb-lg-1 pb-2 border-bottom w-100" *ngIf="showNavbar">
   <div class="container">
     <a class="navbar-brand navbar-title" href="#">
-      <h4 class="mb-0 font-weight-bold mt-1">
+      <h4 class="mb-0 font-weight-bold mt-1 d-none d-lg-block">
         <img src="/assets/logo.png" width="auto" height="40" alt="" class="pb-2">
+        РЕМТЕХСЕРВИС
+      </h4>
+
+      <h4 class="mb-0 font-weight-bold mt-1 d-lg-none">
         РЕМТЕХСЕРВИС
       </h4>
     </a>
@@ -24,7 +28,7 @@
             {{'Новый заказ'| uppercase}}
           </a>
         </li>
-        <li class="nav-item border-right">
+        <li class="nav-item border-right d-none d-lg-block" (click)="hideMenu()">
           <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="location">
             <i class="fas fa-map-marker-alt mr-3"></i>
             <i class="fas fa-envelope mr-2"></i>
@@ -46,11 +50,11 @@
             {{'Магазин'| uppercase}}
           </a>
         </li>
-        <!--<li class="nav-item" (click)="hideMenu()">-->
-          <!--<a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="location">-->
-            <!--{{'Контакты'| uppercase}}-->
-          <!--</a>-->
-        <!--</li>-->
+        <li class="nav-item d-lg-none" (click)="hideMenu()">
+          <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="location">
+            {{'Контакты'| uppercase}}
+          </a>
+        </li>
         <li class="nav-item" (click)="hideMenu()">
           <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="profile">
             <i class="fas fa-user mr-2"></i>{{'Статус заказа'| uppercase}}
@@ -62,12 +66,15 @@
 </nav>
 
 
-<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-0 pb-lg-1 pb-0 fixed-top w-100 navbar-fixed" *ngIf="heightToTop > 300" [@nav]>
+<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-2 pb-lg-1 pb-2 fixed-top w-100 navbar-fixed" *ngIf="heightToTop > 300" [@nav]>
   <div class="container">
     <a class="navbar-brand navbar-title" href="#">
-      <!--<img src="/assets/logo2.png" width="auto" height="50" alt="">-->
-      <h4 class="mb-0 font-weight-bold mt-1">
+      <h4 class="mb-0 font-weight-bold mt-1 d-none d-lg-block">
         <img src="/assets/logo.png" width="auto" height="40" alt="" class="pb-2">
+        РЕМТЕХСЕРВИС
+      </h4>
+
+      <h4 class="mb-0 font-weight-bold mt-1 d-lg-none">
         РЕМТЕХСЕРВИС
       </h4>
     </a>
@@ -89,7 +96,7 @@
             {{'Новый заказ'| uppercase}}
           </a>
         </li>
-        <li class="nav-item border-right">
+        <li class="nav-item border-right d-none d-lg-block">
           <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="location">
             <i class="fas fa-map-marker-alt mr-3"></i>
             <i class="fas fa-envelope mr-2"></i>
@@ -111,11 +118,11 @@
             {{'Магазин'| uppercase}}
           </a>
         </li>
-        <!--<li class="nav-item" (click)="hideMenu()">-->
-        <!--<a class="nav-link navbar-text pl-lg-4" routerLinkActive="active-pink" routerLink="location">-->
-        <!--{{'Контакты'| uppercase}}-->
-        <!--</a>-->
-        <!--</li>-->
+        <li class="nav-item d-lg-none" (click)="hideMenuFixed()">
+          <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="location">
+            {{'Контакты'| uppercase}}
+          </a>
+        </li>
         <li class="nav-item" (click)="hideMenuFixed()">
           <a class="nav-link navbar-text pl-lg-3" routerLinkActive="active-pink" routerLink="profile">
             <i class="fas fa-user mr-2"></i>{{'Статус заказа'| uppercase}}
