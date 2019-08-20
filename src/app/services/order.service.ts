@@ -46,7 +46,8 @@ export class OrderService {
               info: data.service.info,
               image: data.service.image,
               category: data.service.category,
-              flActive: data.service.flActive
+              flActive: data.service.flActive,
+              number: data.service.number
             },
             info: data.info
           };
@@ -75,7 +76,8 @@ export class OrderService {
               info: data.service.info,
               image: data.service.image,
               category: data.service.category,
-              flActive: data.service.flActive
+              flActive: data.service.flActive,
+              number: data.service.number
             },
             info: data.info
           };

@@ -28,14 +28,16 @@ export class SectionComponent implements OnInit {
 
   initFormCreate() {
     this.formSectionCreate = this.fb.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
+      number: ['', [Validators.required]]
     });
   }
 
   initFormUpdate() {
     this.formSectionUpdate = this.fb.group({
       id: ['', [Validators.required]],
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
+      number: ['', [Validators.required]]
     });
   }
 
@@ -72,6 +74,7 @@ export class SectionComponent implements OnInit {
     this.itemSection = section;
     this.formSectionUpdate.controls['id'].setValue(section.id);
     this.formSectionUpdate.controls['name'].setValue(section.name);
+    this.formSectionUpdate.controls['number'].setValue(section.number);
   }
 
   updateSection(section: Section) {

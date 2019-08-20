@@ -6,4 +6,5 @@ export class Service {
   image: string;
   category: any;
   flActive: boolean;
+  number: number;
 }

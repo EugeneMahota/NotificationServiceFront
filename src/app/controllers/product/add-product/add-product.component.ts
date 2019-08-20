@@ -34,7 +34,8 @@ export class AddProductComponent implements OnInit {
       price: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
       category: ['', [Validators.required]],
-      flActive: [true, [Validators.required]]
+      flActive: [true, [Validators.required]],
+      number: ['', [Validators.required]]
     });
   }
 
@@ -57,6 +58,7 @@ export class AddProductComponent implements OnInit {
     dataProduct.append('quantity', product.quantity.toString());
     dataProduct.append('category', product.category);
     dataProduct.append('flActive', product.flActive.toString());
+    dataProduct.append('number', product.number.toString());
     dataProduct.append('image', this.image);
 
     this.productService.postProduct(dataProduct).subscribe(res => {

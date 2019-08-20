@@ -61,7 +61,8 @@ export class AddSaleComponent implements OnInit {
         price: product.price,
         quantity: 1,
         category: product.category,
-        flActive: product.flActive
+        flActive: product.flActive,
+        number: product.number
       });
     }
     this.updateTotal();

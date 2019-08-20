@@ -4,9 +4,10 @@ import {CategoryService} from '../../../models/category-service';
 import {Service} from '../../../models/service';
 import {MainService} from '../../../services/main.service';
 import {Router} from '@angular/router';
-import {Order} from '../../../models/order';
 import {OrderService} from '../../../services/order.service';
 import {WsService} from '../../../services/ws.service';
+import {Section} from '../../../models/section';
+import {SectionService} from '../../../services/section.service';
 
 @Component({
   selector: 'app-service',
@@ -21,34 +22,38 @@ export class ServiceComponent implements OnInit {
   listCategory: CategoryService[];
   itemCategory: CategoryService = new CategoryService();
 
+  listSection: Section[];
+  itemSection: Section;
+
   searchStr: string;
 
-  // @ViewChild('searchInput') searchInput;
-  @ViewChild('blockCategoryScroll', { static: false }) public blockCategoryScroll: ElementRef;
+  quantityCategory: number = 4;
+  @ViewChild('blockService', {static: true}) blockService: ElementRef;
 
   constructor(private service: ServiceService,
               private main: MainService,
               private router: Router,
-              private orderService: OrderService,
-              private ws: WsService) {
+              private sectionService: SectionService) {
   }
 
   ngOnInit() {
     this.getListCategory();
     this.getListService();
+    this.getListSection();
   }
 
   getListCategory() {
     this.service.getCategoryService().subscribe(res => {
       this.listCategory = res;
       if (!this.main.itemCategory) {
-        window.scroll({top: 0, left: 0, behavior: 'smooth'});
         this.itemCategory = this.listCategory[0];
       } else {
         this.itemCategory = this.listCategory.find(x => x.id === this.main.itemCategory.id);
-        setTimeout(() => {
-          document.getElementById(this.itemCategory.id).scrollIntoView({behavior: 'smooth', inline: 'center'});
-        }, 100);
+        if (window.innerWidth < 991) {
+          setTimeout(() => {
+            this.blockService.nativeElement.scrollIntoView({behavior: 'smooth', inline: 'start'});
+          }, 500);
+        }
       }
     });
   }
@@ -59,33 +64,23 @@ export class ServiceComponent implements OnInit {
     });
   }
 
+  getListSection() {
+    this.sectionService.getAll().subscribe(res => {
+      this.listSection = res;
+    });
+  }
+
   setCategory(category: CategoryService) {
     this.searchStr = '';
     this.itemCategory = category;
     this.main.itemCategory = category;
+    setTimeout(() => {
+      this.blockService.nativeElement.scrollIntoView({behavior: 'smooth', inline: 'start'});
+    }, 500);
   }
 
   setService(service: Service) {
     this.main.itemService = service;
     this.router.navigate(['main', 'order']);
-  }
-
-  createOrder(order: Order) {
-    this.orderService.postOrder(order).subscribe(res => {
-      if (res.status === 'Ok') {
-        this.main.telephone = order.telephone.toString();
-        this.ws.sendMessage('addOrder', null);
-        localStorage.setItem('telephone', order.telephone.toString());
-        this.router.navigate(['main', 'profile']);
-      }
-    });
-  }
-
-  scrollPrev() {
-    this.blockCategoryScroll.nativeElement.scrollTo({left: this.blockCategoryScroll.nativeElement.scrollLeft - 500, behavior: 'smooth'});
-  }
-
-  scrollNext() {
-    this.blockCategoryScroll.nativeElement.scrollTo({left: this.blockCategoryScroll.nativeElement.scrollLeft + 500, behavior: 'smooth'});
   }
 }

@@ -3,10 +3,10 @@
     <div class="card card-order" *ngIf="listOrder">
       <div class="card-header">
         <div class="row">
-          <div class="col-lg-3 align-self-center">
+          <div class="col-lg-3 col-6 align-self-center">
             <h5 class="mb-0">Список заказов</h5>
           </div>
-          <div class="col-lg-9 text-right">
+          <div class="col-lg-9 col-6 text-right">
                 <div class="btn-group">
 
                   <div class="dropdown d-lg-none">
@@ -58,7 +58,7 @@
        <div class="card-body border-top p-2 pl-3 pr-3" [ngClass]="activeStatus === order.status || activeStatus === 'all' ? '':'d-none'"
             *ngFor="let order of listOrder">
          <div class="row">
-           <div class="col-lg-5">
+           <div class="col-lg-3">
              <div class="media">
                <img src="{{order.service.image}}" class="mr-3 rounded" width="36" height="36">
                <div class="media-body">
@@ -69,24 +69,29 @@
                    <span *ngIf="order.status === 'cancel'" class="badge badge-secondary mr-2">Отменен</span>
                    {{order.name}}
                  </h6>
-                 <div class="text-muted">{{order.date | date: 'dd MMM yyyy HH:mm '}} {{order.info ? '- ' + order.info: '-   Сообщение отсутствует.'}}</div>
+                 <div class="text-muted">
+                   {{order.date | date: 'dd MMM yyyy HH:mm '}} -
+                   {{(order.dateCompleted | date: 'dd MMM yyyy HH:mm ') || 'Нет даты'}}
+                 </div>
                </div>
              </div>
            </div>
 
-           <div class="col-lg-3 col-12 align-self-center">
+           <div class="col-lg-5 col-12 align-self-center">
              <div class="text-muted service">
-               {{order.service.name}}({{order.service.category.name}})
+               <div><strong class="mr-2">Услуга:</strong>{{order.service.name}}({{order.service.category.name}})</div>
+               <div><strong class="mr-2">Пользователь:</strong>{{order.info || '-'}}</div>
+               <div><strong class="mr-2">Мастер:</strong>{{order.comment || '-'}}</div>
              </div>
            </div>
 
            <div class="col-lg-4 col-12 align-self-center">
              <div class="row">
                <div class="col-lg-5 col-6">
-                 <div class="text-muted text-right telephone">{{order.telephone}}</div>
+                 <div class="text-muted text-right telephone text-nowrap">{{order.telephone}}</div>
                </div>
                <div class="col-lg-3 col-6">
-                 <div class="text-muted text-right">{{order.price | currency:'RUB':' ':'1.0-0'}} ₽</div>
+                 <div class="text-muted text-right text-nowrap">{{order.price | currency:'RUB':' ':'1.0-0'}} ₽</div>
                </div>
                <div class="col-lg-4 col-12 text-right">
                  <div class="btn-group pr-0">

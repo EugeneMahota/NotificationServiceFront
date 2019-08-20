@@ -28,7 +28,8 @@ export class SectionService {
         return this.listSection = this.listSection.map(function (data: any) {
           return {
             id: data._id,
-            name: data.name
+            name: data.name,
+            number: data.number
           };
         });
       }));

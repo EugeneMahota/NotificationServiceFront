@@ -19,12 +19,12 @@
         <div class="position-absolute block-icon-search">
           <i class="fas fa-search pl-3"></i>
         </div>
-        <input class="form-control form-control-search rounded pl-5" placeholder="Поиск по товарам" name="searchStr"
-               (ngModelChange)="setCategoryProduct(listCategory[0])" [(ngModel)]="searchStr">
+        <input class="form-control form-control-search form-control-sm rounded pl-5" placeholder="Поиск по товарам" name="searchStr"
+               (ngModelChange)="setCategoryProduct(listCategory[listCategory.length - 1])" [(ngModel)]="searchStr">
       </form>
     </div>
 
-    <div class="col-lg-4 col-md-6 mb-3" *ngFor="let product of itemCategoryProduct.product | searchPipe:searchStr"
+    <div class="col-lg-4 col-md-6 mb-3" *ngFor="let product of itemCategoryProduct.product | orderBy:'number':false | searchPipe:searchStr"
          [ngClass]="product.flActive ? '':'d-none'">
       <div class="card h-100">
         <div class="card-image">

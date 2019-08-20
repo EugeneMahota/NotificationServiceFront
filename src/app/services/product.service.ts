@@ -40,6 +40,7 @@ export class ProductService {
           return {
             id: data._id,
             name: data.name,
+            number: data.number,
             product: data.product.map(function (product: any) {
               return {
                 id: product._id,
@@ -49,6 +50,7 @@ export class ProductService {
                 price: product.price,
                 quantity: product.quantity,
                 flActive: product.flActive,
+                number: product.number,
                 category: product.category
               };
             })
@@ -65,7 +67,8 @@ export class ProductService {
           return {
             id: data._id,
             name: data.name,
-            product: data.product
+            product: data.product,
+            number: data.number,
           };
         });
       }));
@@ -84,7 +87,8 @@ export class ProductService {
             price: product.price,
             quantity: product.quantity,
             flActive: product.flActive,
-            category: product.category
+            category: product.category,
+            number: product.number
           };
         });
       }));

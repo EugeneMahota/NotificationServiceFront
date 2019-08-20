@@ -10,8 +10,10 @@
             <div class="col-lg-10 text-right">
               <form [formGroup]="formCategory">
                 <div class="input-group">
-                  <input class="form-control form-control-sm form-control-add pl-3"
+                  <input type="text" class="form-control form-control-sm form-control-add pl-3"
                          placeholder="Новая категория" formControlName="name" name="name">
+                  <input type="number" class="form-control form-control-sm form-control-add pl-3 ml-2"
+                         placeholder="Приоритет" formControlName="number" name="number">
                   <div class="input-group-append">
                     <div class="btn-group">
                       <button class="btn btn-sm btn-table mr-lg-2 ml-lg-2" (click)="createCategory(formCategory.value)" [disabled]="formCategory.invalid">
@@ -32,14 +34,15 @@
           </div>
         </div>
           <div class="table-responsive">
-            <table class="table table-sm mb-0" *ngFor="let category of listProduct; let i = index">
+            <table class="table table-sm mb-0" *ngFor="let category of listProduct | orderBy:'number':false; let i = index">
               <tbody>
               <tr class="border-top table-header">
-                <td colspan="2" class="pl-4 pt-2 border-0 align-middle"><h6 class="mb-0">{{category.name}}</h6></td>
+                <td colspan="2" class="pl-4 pt-2 border-0 align-middle"><h6 class="mb-0">{{category.name}}({{category.number}})</h6></td>
                 <th class="border-0 align-middle"><small class="text-muted" *ngIf="category.product.length > 0">Описание</small></th>
                 <th class="border-0 align-middle"><small class="text-muted" *ngIf="category.product.length > 0">Цена</small></th>
                 <th class="border-0 align-middle text-center"><small class="text-muted" *ngIf="category.product.length > 0">Количество</small></th>
                 <th class="border-0 align-middle text-center"><small class="text-muted" *ngIf="category.product.length > 0">Отображение</small></th>
+                <th class="border-0 align-middle text-center"><small class="text-muted" *ngIf="category.product.length > 0">Приоритет</small></th>
                 <th class="border-0 align-middle text-right pr-4">
                   <div class="btn-group">
                     <button class="btn btn-sm btn-table" data-toggle="modal" data-target=".bd-example-modal-sm" (click)="setCategory(category)">
@@ -51,7 +54,7 @@
                   </div>
                 </th>
               </tr>
-              <tr *ngFor="let product of category.product" class="border-top">
+              <tr *ngFor="let product of category.product | orderBy:'number':false" class="border-top">
                 <td class="pl-4 align-middle">
                   <img [src]="product.image" width="25" height="25" class="table-image rounded">
                 </td>
@@ -71,6 +74,7 @@
                     <label class="custom-control-label" for="flActive"></label>
                   </div>
                 </td>
+                <td class="align-middle text-center">{{product.number}}</td>
                 <td class="pr-4 align-middle text-right">
                   <div class="btn-group">
                     <button class="btn btn-sm btn-table" [routerLink]="product.id">
@@ -97,7 +101,12 @@
     <div class="modal-content">
       <form class="p-3" [formGroup]="formCategoryEdit">
         <div class="form-group">
-          <input type="text" class="form-control rounded" placeholder="Имя категории" name="name" formControlName="name">
+          <label>Название</label>
+          <input type="text" class="form-control rounded" name="name" formControlName="name">
+        </div>
+        <div class="form-group">
+          <label>Приоритет</label>
+          <input type="number" class="form-control rounded" name="number" formControlName="number">
         </div>
         <div class="form-group mb-0 text-center">
           <button class="btn btn-sm btn-blue pl-5 pr-5" data-toggle="modal" data-target=".bd-example-modal-sm"

@@ -34,9 +34,7 @@ export class MainComponent implements OnInit {
           this.animationState = false;
         }, 20);
 
-        if (res.url !== '/main/service') {
-          window.scroll({top: 0, left: 0, behavior: 'smooth'});
-        }
+        window.scroll({top: 0, left: 0, behavior: 'smooth'});
       }
 
 

@@ -6,4 +6,5 @@ export class CategoryService {
   image: string;
   section: string;
   service: Service[];
+  number: number;
 }

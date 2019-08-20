@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {RequestService} from '../../../services/request.service';
 import {Request} from '../../../models/request';
@@ -11,6 +11,8 @@ import {MainService} from '../../../services/main.service';
 import {Service} from '../../../models/service';
 import {Section} from '../../../models/section';
 import {SectionService} from '../../../services/section.service';
+import {ConfigService} from '../../../services/config.service';
+import {ConfigApp} from '../../../models/configApp';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +28,10 @@ export class HomeComponent implements OnInit {
   listCategory: CategoryService[];
   activeCategory: CategoryService;
 
+  @ViewChild('blockCategory', {static: true}) blockCategory: ElementRef;
+
+  itemConfig: ConfigApp;
+
   constructor(private fb: FormBuilder,
               private requestService: RequestService,
               private alert: AlertService,
@@ -33,13 +39,15 @@ export class HomeComponent implements OnInit {
               private router: Router,
               private sectionService: SectionService,
               private serviceService: ServiceService,
-              private mainService: MainService) {
+              private mainService: MainService,
+              private configService: ConfigService) {
   }
 
   ngOnInit() {
     this.getListSection();
-
     this.initFormRequest();
+
+    this.getConfig();
   }
 
   initFormRequest() {
@@ -54,20 +62,27 @@ export class HomeComponent implements OnInit {
     this.sectionService.getAll().subscribe(res => {
       this.listSection = res;
       if (!this.mainService.itemSection) {
-        this.getCategory(res[0]);
+        this.getCategory(res[0], '');
         this.itemSection = res[0];
       } else {
-        this.getCategory(this.mainService.itemSection);
+        this.getCategory(this.mainService.itemSection, '');
         this.itemSection = this.mainService.itemSection;
       }
     });
   }
 
-  getCategory(section: Section) {
+  getCategory(section: Section, event: string) {
     this.itemSection = section;
     this.mainService.itemSection = section;
     this.serviceService.getCategoryBySection(section).subscribe(res => {
       this.listCategory = res;
+      if (event === 'click') {
+        if (window.innerWidth < 991) {
+          setTimeout(() => {
+            this.blockCategory.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+          }, 1000);
+        }
+      }
     });
   }
 
@@ -108,6 +123,12 @@ export class HomeComponent implements OnInit {
     if (window.innerWidth > 768) {
       this.activeCategory = null;
     }
+  }
+
+  getConfig() {
+    this.configService.getListConfig().subscribe(res => {
+      this.itemConfig = res[0];
+    });
   }
 
 }

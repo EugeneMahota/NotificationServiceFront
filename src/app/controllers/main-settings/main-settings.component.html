@@ -1,5 +1,89 @@
 <div class="row">
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <div class="card-header pb-0">
+        <div class="row">
+          <div class="col-9 align-self-center">
+            <h5 class="mb-0">Конфигурационные настройки</h5>
+          </div>
+          <div class="col-3 text-right">
+            <div class="btn-group">
+              <!--<button class="btn btn-sm btn-table">-->
+                <!--<i class="fas fa-edit"></i>-->
+              <!--</button>-->
+              <button class="btn btn-sm btn-table" [disabled]="!itemConfig" (click)="deleteConfig(itemConfig)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="formConfig">
+          <div class="form-group">
+            <label>Название на сайте</label>
+            <input type="text" class="form-control form-control-sm" name="name" formControlName="name">
+          </div>
+          <div class="form-group">
+            <label>Заголовок на сайте</label>
+            <input type="text" class="form-control form-control-sm" name="titleHeader" formControlName="titleHeader">
+          </div>
+          <div class="form-group">
+            <label>Текст баннера</label>
+            <textarea type="text" class="form-control form-control-sm" name="textHeader" formControlName="textHeader" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Светлый логотип</label>
+            <div class="custom-file">
+            <input class="custom-file-input" type="file" name="logoLight" id="logoLight" (change)="selectLogoLight($event)">
+            <label class="custom-file-label form-control form-control-sm" for="logoLight">{{logoLight?.name | slice:0:20}}</label>
+          </div>
+          </div>
+          <div class="form-group">
+            <label>Темный логотип</label>
+            <div class="custom-file">
+            <input class="custom-file-input" type="file" name="logoDark" id="logoDark" (change)="selectLogoDark($event)">
+            <label class="custom-file-label form-control form-control-sm" for="logoDark">{{logoDark?.name | slice:0:20}}</label>
+          </div>
+          </div>
+          <div class="form-group">
+            <label>Баннер</label>
+            <div class="custom-file">
+            <input class="custom-file-input" type="file" name="imageHeader" id="imageHeader" (change)="selectImageHeader($event)">
+            <label class="custom-file-label form-control form-control-sm" for="imageHeader">{{imageHeader?.name | slice:0:20}}</label>
+          </div>
+          </div>
+          <div class="form-group mb-0">
+            <button class="btn btn-sm btn-blue pl-5 pr-5"
+                    [disabled]="formConfig.invalid" (click)="controlFormConfig(formConfig.value)">
+              Сохранить
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <div class="col-md-8">
+    <div class="row" *ngIf="itemConfig">
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <img [src]="itemConfig?.imageHeader" class="banner-image">
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="card mb-3">
+          <div class="card-body">
+          <img [src]="itemConfig?.logoDark" class="logo-image">
+          </div>
+        </div>
+        <div class="card mb-3 bg-dark">
+          <div class="card-body">
+            <img [src]="itemConfig?.logoLight" class="logo-image">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="card" *ngIf="listAddress">
       <div class="card-header">
         <div class="row">

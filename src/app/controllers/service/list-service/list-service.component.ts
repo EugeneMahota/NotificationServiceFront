@@ -84,7 +84,8 @@ export class ListServiceComponent implements OnInit {
   initFormCategory() {
     this.formCategory = this.fb.group({
       name: ['', [Validators.required]],
-      section: ['', [Validators.required]]
+      section: ['', [Validators.required]],
+      number: ['', [Validators.required]]
     });
   }
 
@@ -94,7 +95,8 @@ export class ListServiceComponent implements OnInit {
       price: ['', [Validators.required]],
       info: ['', []],
       category: ['', [Validators.required]],
-      flActive: ['', [Validators.required]]
+      flActive: ['', [Validators.required]],
+      number: ['', [Validators.required]]
     });
   }
 
@@ -157,6 +159,7 @@ export class ListServiceComponent implements OnInit {
     serviceData.append('category', service.category);
     serviceData.append('image', this.image);
     serviceData.append('flActive', service.flActive.toString());
+    serviceData.append('number', service.number.toString());
 
     this.serviceService.postService(serviceData).subscribe(res => {
       if (res.status === 'Ok') {
@@ -174,6 +177,7 @@ export class ListServiceComponent implements OnInit {
     serviceData.append('info', service.info);
     serviceData.append('category', service.category);
     serviceData.append('flActive', service.flActive.toString());
+    serviceData.append('number', service.number.toString());
     if (this.image) {
       serviceData.append('image', this.image);
     }
@@ -199,6 +203,7 @@ export class ListServiceComponent implements OnInit {
     categoryData.append('name', category.name);
     categoryData.append('section', category.section);
     categoryData.append('image', this.imageForCategory);
+    categoryData.append('number', category.number.toString());
 
     this.serviceService.postCategory(categoryData).subscribe(res => {
       this.getListCategoryForSelect();
@@ -212,6 +217,7 @@ export class ListServiceComponent implements OnInit {
     categoryData.append('id', category.id);
     categoryData.append('name', category.name);
     categoryData.append('section', category.section);
+    categoryData.append('number', category.number.toString());
     if (this.imageForCategory) {
       categoryData.append('image', this.imageForCategory);
     }

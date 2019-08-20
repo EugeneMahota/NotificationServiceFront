@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddProductComponent } from './add-product/add-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import {PipeModule} from '../../pipes/pipe.module';
 
 const routes = [
   {path: '', component: ProductComponent},
@@ -14,6 +15,7 @@ const routes = [
 
 @NgModule({
   imports: [
+    PipeModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,

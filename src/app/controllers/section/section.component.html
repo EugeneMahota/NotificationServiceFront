@@ -11,6 +11,8 @@
               <div class="input-group">
                 <input type="text" class="form-control form-control-sm form-control-add pl-3" name="name" formControlName="name"
                        placeholder="Изменить имя раздела">
+                <input type="number" class="form-control form-control-sm form-control-add pl-3 ml-2" name="number" formControlName="number"
+                       placeholder="Приоритет">
                 <div class="input-group-append">
                   <button class="btn btn-sm btn-table ml-2" [disabled]="formSectionUpdate.invalid"
                           (click)="updateSection(formSectionUpdate.value)">Сохранить</button>
@@ -21,6 +23,8 @@
               <div class="input-group">
                 <input type="text" class="form-control form-control-sm form-control-add pl-3" name="name" formControlName="name"
                        placeholder="Новый раздел">
+                <input type="number" class="form-control form-control-sm form-control-add pl-3 ml-2" name="number" formControlName="number"
+                       placeholder="Приоритет">
                 <div class="input-group-append">
                   <button class="btn btn-sm btn-table ml-2" [disabled]="formSectionCreate.invalid"
                           (click)="createSection(formSectionCreate.value)">Добавить</button>
@@ -36,13 +40,17 @@
           <tr>
             <td class="pl-4 align-middle"><small class="font-weight-bold">#</small></td>
             <td class="align-middle"><small class="font-weight-bold">Имя раздела</small></td>
+            <td class="align-middle text-center"><small class="font-weight-bold">Приоритет</small></td>
             <td class="pr-4 text-right align-middle"><small class="font-weight-bold">Настройка</small></td>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let section of listSection; let i = index" [ngClass]="itemSection && section.id === itemSection.id ? 'active-tr':''">
+          <tr *ngFor="let section of listSection | orderBy:'number':false; let i = index"
+
+              [ngClass]="itemSection && section.id === itemSection.id ? 'active-tr':''">
             <td class="pl-4 align-middle">{{i+1}}</td>
             <td class="align-middle">{{section.name}}</td>
+            <td class="align-middle text-center">{{section.number}}</td>
             <td class="pr-4 text-right align-middle">
               <div class="btn-group">
                 <button class="btn btn-sm btn-table" (click)="setSection(section)">

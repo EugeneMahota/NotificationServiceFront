@@ -7,4 +7,5 @@ export class Product {
   quantity: number;
   category: string;
   flActive: boolean;
+  number: number;
 }

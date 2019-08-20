@@ -6,12 +6,17 @@
       </div>
       <div class="card-body pt-0">
         <form class="form-row" [formGroup]="formProduct">
-          <div class="form-group col-lg-12">
+          <div class="form-group col-lg-8">
             <label class="text-muted">Категория</label>
             <select class="form-control form-control-sm" id="category" name="category" formControlName="category">
               <option *ngFor="let category of listCategory" [value]="category.id">{{category.name}}</option>
             </select>
             <small class="text-muted">Выберите категорию в которую добавить товар.</small>
+          </div>
+          <div class="form-group col-lg-4">
+            <label class="text-muted">Приоритет</label>
+            <input type="number" class="form-control form-control-sm" id="number" name="number" formControlName="number" placeholder="">
+            <small class="text-muted">Определяет положение в списке товаров.</small>
           </div>
           <div class="form-group col-lg-6">
             <label class="text-muted">Название</label>

@@ -39,7 +39,8 @@ export class ProductComponent implements OnInit {
         {
           id: '0101010100010',
           name: 'Все товары',
-          product: res
+          product: res,
+          number: 0
         }
       );
       if (!this.mainService.itemCategoryProduct) {
@@ -85,13 +86,13 @@ export class ProductComponent implements OnInit {
       price: product.price,
       quantity: 1,
       category: product.category,
-      flActive: product.flActive
+      flActive: product.flActive,
+      number: product.number
     });
   }
 
   delBasket(product: Product) {
     product.category = '';
-
     this.mainService.delBasket(product.id);
   }
 

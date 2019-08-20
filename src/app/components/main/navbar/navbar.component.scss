@@ -2,15 +2,12 @@ $boxShadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
 $mainColor: #1565C0;
 
 .navbar {
-  background-color: #FAFAFA!important;
+  background-color: #FFFFFF!important;
 
-}
-.navbar-fixed {
-  box-shadow: $boxShadow;
 }
 .navbar-title {
   color: #000000;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
 }
 .navbar-text {
   letter-spacing: 1px;
@@ -21,7 +18,7 @@ $mainColor: #1565C0;
   letter-spacing: 1.5px;
 }
 .active-pink {
-  color: #4CAF50 !important;
+  color: $mainColor !important;
 }
 .navbar-toggler{
   &:focus {
@@ -38,8 +35,8 @@ $mainColor: #1565C0;
   right: 0;
   bottom: 0;
   position: fixed;
-  color: #4CAF50!important;
+  color: #1565C0!important;
   &:hover {
-    box-shadow: 0 0 0 5px rgba(76, 175, 80, 0.6) !important;
+    box-shadow: 0 0 0 5px rgba(21, 101, 192, 0.6) !important;
   }
 }

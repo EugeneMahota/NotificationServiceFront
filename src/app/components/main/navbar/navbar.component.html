@@ -1,13 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-2 pb-lg-1 pb-2 border-bottom w-100" *ngIf="showNavbar">
+<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-2 pb-lg-1 pb-2 border-bottom w-100" *ngIf="showNavbar && itemConfig">
   <div class="container">
     <a class="navbar-brand navbar-title" href="#">
       <h4 class="mb-0 font-weight-bold mt-1 d-none d-lg-block">
-        <img src="/assets/logo.png" width="auto" height="40" alt="" class="pb-2">
-        РЕМТЕХСЕРВИС
+        <img [src]="itemConfig.logoDark" width="40" height="40" alt="" class="pb-2">
+        {{itemConfig.name}}
       </h4>
 
       <h4 class="mb-0 font-weight-bold mt-1 d-lg-none">
-        РЕМТЕХСЕРВИС
+        {{itemConfig.name}}
       </h4>
     </a>
     <button class="navbar-toggler border-0" type="button"
@@ -31,7 +31,7 @@
         <li class="nav-item border-right d-none d-lg-block" (click)="hideMenu()">
           <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="location">
             <i class="fas fa-map-marker-alt mr-3"></i>
-            <i class="fas fa-envelope mr-2"></i>
+            <!--<i class="fas fa-envelope mr-2"></i>-->
             8(918)363-65-99
           </a>
         </li>
@@ -66,16 +66,16 @@
 </nav>
 
 
-<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-2 pb-lg-1 pb-2 fixed-top w-100 navbar-fixed" *ngIf="heightToTop > 300" [@nav]>
+<nav class="navbar navbar-expand-lg navbar-light pt-lg-1 pt-2 pb-lg-1 pb-2 fixed-top w-100 border-bottom" *ngIf="itemConfig && heightToTop > 600" [@nav]>
   <div class="container">
     <a class="navbar-brand navbar-title" href="#">
       <h4 class="mb-0 font-weight-bold mt-1 d-none d-lg-block">
-        <img src="/assets/logo.png" width="auto" height="40" alt="" class="pb-2">
-        РЕМТЕХСЕРВИС
+        <img [src]="itemConfig.logoDark" width="40" height="40" alt="" class="pb-2">
+        {{itemConfig.name}}
       </h4>
 
       <h4 class="mb-0 font-weight-bold mt-1 d-lg-none">
-        РЕМТЕХСЕРВИС
+        {{itemConfig.name}}
       </h4>
     </a>
     <button class="navbar-toggler border-0" type="button"
@@ -99,7 +99,7 @@
         <li class="nav-item border-right d-none d-lg-block">
           <a class="nav-link navbar-text pl-lg-4 mr-3" routerLinkActive="active-pink" routerLink="location">
             <i class="fas fa-map-marker-alt mr-3"></i>
-            <i class="fas fa-envelope mr-2"></i>
+            <!--<i class="fas fa-envelope mr-2"></i>-->
             8(918)363-65-99
           </a>
         </li>

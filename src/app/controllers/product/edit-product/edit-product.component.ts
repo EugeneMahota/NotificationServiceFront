@@ -40,7 +40,8 @@ export class EditProductComponent implements OnInit {
       price: [product.price, [Validators.required]],
       quantity: [product.quantity, [Validators.required]],
       category: [product.category, [Validators.required]],
-      flActive: [product.flActive, [Validators.required]]
+      flActive: [product.flActive, [Validators.required]],
+      number: [product.number, [Validators.required]]
     });
   }
 
@@ -64,6 +65,7 @@ export class EditProductComponent implements OnInit {
     dataProduct.append('quantity', product.quantity.toString());
     dataProduct.append('category', product.category);
     dataProduct.append('flActive', product.flActive.toString());
+    dataProduct.append('number', product.number.toString());
     if (this.image) {
       dataProduct.append('image', this.image);
     }

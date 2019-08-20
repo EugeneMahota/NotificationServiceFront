@@ -6,3 +6,13 @@
 .active-tr {
   background-color: rgba(236, 64, 122, 0.1);
 }
+.banner-image {
+  object-fit: cover;
+  height: 300px;
+  width: auto;
+  border-radius:5px;
+}
+.logo-image {
+  height: 102px;
+  width: auto;
+}

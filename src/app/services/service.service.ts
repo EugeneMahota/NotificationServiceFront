@@ -66,6 +66,7 @@ export class ServiceService {
             name: category.name,
             image: category.image,
             section: category.section,
+            number: category.number,
             service: category.service.map(function (service: any) {
               return {
                 id: service._id,
@@ -74,7 +75,8 @@ export class ServiceService {
                 info: service.info,
                 image: service.image,
                 category: service.category,
-                flActive: service.flActive
+                flActive: service.flActive,
+                number: service.number
               };
             })
           };
@@ -92,6 +94,7 @@ export class ServiceService {
             name: category.name,
             image: category.image,
             section: category.section,
+            number: category.number,
             service: []
           };
         });
@@ -110,7 +113,8 @@ export class ServiceService {
             info: service.info,
             image: service.image,
             category: service.category,
-            flActive: service.flActive
+            flActive: service.flActive,
+            number: service.number
           };
         });
       }));

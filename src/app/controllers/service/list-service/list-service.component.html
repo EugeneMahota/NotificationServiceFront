@@ -16,6 +16,8 @@
                   <option *ngFor="let section of listSection" [value]="section.id">{{section.name}}</option>
                 </select>
 
+                <input type="number" class="form-control form-control-sm form-control-add pl-3 mr-lg-2"
+                       id="number" name="number" formControlName="number" placeholder="Приоритет"/>
                 <input type="file" class="d-none" id="image" name="image" placeholder="Изображение" (change)="selectImageCategory($event)" #imageCategory>
                 <label class="form-control form-control-sm form-control-add text-muted text-left pl-3 mr-lg-2" for="image">
                   Файл: {{imageForCategory?.name | slice:0:8}}
@@ -29,7 +31,8 @@
                     </button>
                     <div class="border-left mr-lg-2"></div>
                     <div class="dropdown ml-lg-2">
-                      <button class="btn btn-sm btn-table" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Сортировать заказы">
+                      <button class="btn btn-sm btn-table" id="dropdownMenuButton1" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false" title="Разделы">
                         <i class="fas fa-layer-group"></i>
                       </button>
 
@@ -51,7 +54,7 @@
       </div>
       <div class="table-responsive" *ngIf="listCategory.length > 0">
         <table class="table table-sm mb-0">
-          <tbody *ngFor="let category of listCategory; let j = index;" class="border-0"
+          <tbody *ngFor="let category of listCategory | orderBy:'number':false" class="border-0"
                  [ngClass]="itemSection && itemSection.id !== category.section ? 'd-none':''">
           <tr *ngIf="category !== itemCategory" class="table-header">
 
@@ -62,6 +65,7 @@
             <td class="align-middle text-muted w-50" scope="col"><small>Информация</small></td>
             <td class="align-middle text-muted" scope="col"><small>Цена</small>
             <td class="align-middle text-muted text-center" scope="col"><small>Отображение</small>
+            <td class="align-middle text-muted text-center" scope="col"><small>Приоритет({{category.number}})</small>
             <th class="align-middle text-right pr-4" colspan="2">
               <div class="btn-group">
                 <button class="btn btn-table btn-sm" (click)="focusCategoryUpdate(category)">
@@ -76,7 +80,7 @@
 
           <tr *ngIf="category === itemCategory">
             <th class="pl-4 align-middle p-3" colspan="2">
-              <input class="form-control form-control-sm m-0 rounded" #categoryUpdate
+              <input type="text" class="form-control form-control-sm m-0 rounded" #categoryUpdate
                      name="name" [(ngModel)]="itemCategory.name" (keyup.enter)="updateCategory(itemCategory)" placeholder="Введите название категории"/>
             </th>
 
@@ -84,6 +88,10 @@
               <select class="form-control form-control-sm m-0 rounded" name="section" [(ngModel)]="itemCategory.section" placeholder="Раздел">
                 <option *ngFor="let section of listSection" [value]="section.id">{{section.name}}</option>
               </select>
+            </th>
+            <th class="pl-4 align-middle p-3">
+              <input type="number" class="form-control form-control-sm m-0 rounded"
+                     name="name" [(ngModel)]="itemCategory.number" (keyup.enter)="updateCategory(itemCategory)" placeholder="Приоритет"/>
             </th>
             <th class="pl-4 align-middle p-3" colspan="2">
               <input class="form-control-file pl-2" type="file" name="image" placeholder="Изображение"
@@ -105,7 +113,7 @@
             </th>
           </tr>
 
-          <tr *ngFor="let service of category.service let i = index" [ngClass]="itemService === service ? 'active-tr':''">
+          <tr *ngFor="let service of category.service | orderBy:'number':false" [ngClass]="itemService === service ? 'active-tr':''">
             <td class="pl-4 align-middle">
               <img src="{{service.image}}" width="25" height="25" class="rounded">
             </td>
@@ -118,6 +126,7 @@
                 <label class="custom-control-label" for="{{service.id}}"></label>
               </div>
             </td>
+            <td class="align-middle text-center">{{service.number}}</td>
             <td class="text-right align-middle pr-4">
               <div class="btn-group">
                 <button class="btn btn-table btn-sm" (click)="showForm = true; itemService = service; this.image = null;">
@@ -158,11 +167,15 @@
           </div>
           <div class="form-group">
             <label class="text-muted">Название</label>
-            <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="itemService.name"/>
+            <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="itemService.name" required/>
           </div>
           <div class="form-group">
             <label class="text-muted">Цена</label>
-            <input type="number" class="form-control form-control-sm" name="price" [(ngModel)]="itemService.price"/>
+            <input type="number" class="form-control form-control-sm" name="price" [(ngModel)]="itemService.price" required/>
+          </div>
+          <div class="form-group">
+            <label class="text-muted">Приоритет</label>
+            <input type="number" class="form-control form-control-sm" name="number" [(ngModel)]="itemService.number" required/>
           </div>
           <div class="form-group">
             <label class="text-muted">Описание</label>
@@ -174,7 +187,7 @@
             <input class="form-control-file" type="file" name="image" (change)="selectImage($event)" #image>
           </div>
           <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" id="flActiveEdit" [(ngModel)]="itemService.flActive" name="flActive">
+            <input type="checkbox" class="custom-control-input" id="flActiveEdit" [(ngModel)]="itemService.flActive" required name="flActive">
             <label class="custom-control-label" for="flActiveEdit"> Отобразить на сайте?</label>
           </div>
           <button class="btn btn-blue pl-lg-5 pr-lg-5 btn-sm" [disabled]="formService.invalid"
@@ -212,6 +225,10 @@
           <div class="form-group">
             <label class="text-muted">Цена</label>
             <input type="number" class="form-control form-control-sm" name="price" formControlName="price"/>
+          </div>
+          <div class="form-group">
+            <label class="text-muted">Приоритет</label>
+            <input type="number" class="form-control form-control-sm" name="number" formControlName="number"/>
           </div>
           <div class="form-group">
             <label class="text-muted">Описание</label>

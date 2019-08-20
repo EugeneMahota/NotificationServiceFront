@@ -3,6 +3,8 @@ import {NavigationEnd, Router} from '@angular/router';
 import {MainService} from '../../../services/main.service';
 import {Product} from '../../../models/product';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ConfigService} from '../../../services/config.service';
+import {ConfigApp} from '../../../models/configApp';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +13,10 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   animations: [
     trigger('pulse', [
       state('void', style({
-        boxShadow: '0 0 0 0px rgba(76, 175, 80, 1)'
+        boxShadow: '0 0 0 0px rgba(21, 101, 192, 1)'
       })),
       state('*', style({
-        boxShadow: '0 0 0 80px rgba(76, 175, 80, 0.0)'
+        boxShadow: '0 0 0 80px rgba(21, 101, 192, 0.0)'
       })),
       transition('void=>*', animate(600))
     ]),
@@ -46,7 +48,9 @@ export class NavbarComponent implements OnInit {
 
   heightToTop: number;
 
-  constructor(private router: Router, private mainService: MainService) {
+  itemConfig: ConfigApp;
+
+  constructor(private router: Router, private mainService: MainService, private configService: ConfigService) {
     this.router.events.subscribe(res => {
       if (res instanceof NavigationEnd) {
         if (res.urlAfterRedirects === '/main/order') {
@@ -80,6 +84,8 @@ export class NavbarComponent implements OnInit {
       this.totalBasket = this.listBasket.reduce((sum, value) => sum + value.price * value.quantity, 0);
       this.basketAnimateOn();
     });
+
+    this.getConfig();
   }
 
   hideMenu() {
@@ -106,5 +112,11 @@ export class NavbarComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onWindowScroll($event) {
     this.heightToTop = document.documentElement.scrollTop;
+  }
+
+  getConfig() {
+    this.configService.getListConfig().subscribe(res => {
+      this.itemConfig = res[0];
+    });
   }
 }

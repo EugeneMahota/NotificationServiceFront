@@ -55,7 +55,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
         },
         {
           preset: 'islands#blueCircusIcon',
-          iconColor: '#4CAF50'
+          iconColor: '#1565C0'
         }
       ));
   }

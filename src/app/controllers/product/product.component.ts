@@ -29,20 +29,21 @@ export class ProductComponent implements OnInit {
 
   initFormCategory() {
     this.formCategory = this.fb.group({
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
+      number: ['', [Validators.required]]
     });
   }
 
   initFormCategoryEdit() {
     this.formCategoryEdit = this.fb.group({
       id: ['', [Validators.required]],
-      name: ['', [Validators.required]]
+      name: ['', [Validators.required]],
+      number: ['', [Validators.required]]
     });
   }
 
   getAllProduct() {
     this.productService.getAllCategory().subscribe(res => {
-      console.log(JSON.stringify(res));
       this.listProduct = res;
     });
   }
@@ -87,6 +88,7 @@ export class ProductComponent implements OnInit {
   setCategory(category: CategoryProduct) {
     this.formCategoryEdit.controls['id'].setValue(category.id);
     this.formCategoryEdit.controls['name'].setValue(category.name);
+    this.formCategoryEdit.controls['number'].setValue(category.number);
   }
 
   updateCategory(category: CategoryProduct) {

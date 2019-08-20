@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
 import {LOCALE_ID, NgModule} from '@angular/core';
 import localeRu from '@angular/common/locales/ru';
 import {AppRoutingModule} from './app-routing.module';
@@ -24,8 +24,9 @@ registerLocaleData(localeRu, 'ru');
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'MonitorPark' }),
     BrowserAnimationsModule,
+    BrowserTransferStateModule,
     HttpClientModule
   ],
   providers: [
