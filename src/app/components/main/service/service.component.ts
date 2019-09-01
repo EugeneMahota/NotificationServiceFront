@@ -4,8 +4,6 @@ import {CategoryService} from '../../../models/category-service';
 import {Service} from '../../../models/service';
 import {MainService} from '../../../services/main.service';
 import {Router} from '@angular/router';
-import {OrderService} from '../../../services/order.service';
-import {WsService} from '../../../services/ws.service';
 import {Section} from '../../../models/section';
 import {SectionService} from '../../../services/section.service';
 

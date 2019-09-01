@@ -1,5 +1,9 @@
 $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
 
+.nav-link {
+  color: #e0e0e0!important;
+}
+
 .image-container {
   position: relative;
 }
@@ -16,7 +20,7 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
   width: 100%;
   min-height: 100vh;
   height: 100%;
-  background-color: rgba(38, 50, 56, 0.9);
+  background-color: rgba(38, 50, 56, 0.8);
 }
 .image-container .after {
   display: block;
@@ -27,6 +31,9 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
   min-height: 100vh;
   height: 100%!important;
   object-fit: cover;
+}
+.text-category {
+  font-weight: 300;
 }
 .card-category {
   box-shadow: $boxShadow;
@@ -39,13 +46,13 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
   &:hover {
     color: #000000;
     transform: scale(1.1);
-    background-color: rgba(255, 255, 255, 0.8)!important;
+    background-color: rgba(255, 255, 255, 1)!important;
   }
 }
 .active-card {
   color: #000000;
   transform: scale(1.1)!important;
-  background-color: rgba(255, 255, 255, 0.8)!important;
+  background-color: rgba(255, 255, 255, 1)!important;
 }
 .card-image {
   width: auto;
@@ -74,11 +81,9 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
 
 .navbar {
   z-index: 101;
-  //border-bottom: 1px solid #757575;
-  //background-color: rgba(76, 175, 80, 0.6);
 }
 .home-header {
-  background-color: rgba(21, 101, 192, 0.6);
+  background-color: rgba(21, 101, 192, 0.8);
   box-shadow: $boxShadow;
 }
 
@@ -148,6 +153,19 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
 .btn-secondary {
   box-shadow: $boxShadow;
 }
+.btn-section {
+  width: 100%;
+}
+.header-title {
+  font-weight: 900;
+}
+.header-text {
+  color: #e0e0e0;
+  font-weight: 300;
+}
+.telephone-border {
+  border-right: 1px solid #FFFFFF;
+}
 //mobile
 @media (max-width: 768px) {
   .card-image {
@@ -160,5 +178,16 @@ $boxShadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
   }
   .display-4 {
     font-size: 2rem;
+  }
+  .btn-section {
+    width: auto;
+    padding-right: 0;
+  }
+  .navbar {
+    background-color: rgba(21, 101, 192, 0.8);
+    box-shadow: $boxShadow;
+  }
+  .telephone-border {
+    border: none!important;
   }
 }

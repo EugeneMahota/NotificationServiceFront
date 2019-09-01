@@ -25,7 +25,6 @@
             <li class="nav-item telephone-border d-none d-lg-block">
               <a class="nav-link navbar-text pl-lg-4 mr-3" (click)="onNav('location')">
                 <i class="fas fa-map-marker-alt mr-3"></i>
-                <!--<i class="fas fa-envelope mr-2"></i>-->
                 8(918)363-65-99
               </a>
             </li>
@@ -59,18 +58,18 @@
       </div>
     </nav>
 
-    <div class="home-header col-12 p-0">
+    <div class="home-header col-12 p-0 d-none d-lg-block">
       <div class="container w-100">
         <div class="row">
           <div class="col-lg-9">
-            <div class="display-4 font-weight-bold title pt-lg-5 pt-3 pb-3">{{itemConfig.titleHeader}}</div>
-            <div class="pb-lg-5 d-none d-lg-block">
+            <div class="display-4 title pt-lg-5 pt-3 pb-3 header-title">{{itemConfig.titleHeader}}</div>
+            <div class="pb-lg-5 header-text">
               {{itemConfig.textHeader}}
             </div>
           </div>
           <div class="col-lg-3 m-auto text-center pt-3 pb-3">
-            <button class="btn btn-outline-light" data-toggle="modal" data-target="#feedbackModal">
-              ПОЛУЧИТЬ СКИДКУ
+            <button class="btn btn-green" data-toggle="modal" data-target="#feedbackModal">
+              ОБРАТНЫЙ ЗВОНОК
               <i class="fas fa-phone ml-3"></i>
             </button>
           </div>
@@ -82,17 +81,18 @@
       <div class="row">
 
 
-        <div class="col-lg-2 mt-lg-5 mt-3" *ngIf="listSection">
-          <h5 class="d-lg-none">Разделы</h5>
-          <div class="card-section mb-lg-3 mb-2" *ngFor="let section of listSection" (click)="getCategory(section, 'click')">
-            <button class="btn w-100" [ngClass]="itemSection.id === section.id ? 'btn-blue':'btn-secondary'">
-              <div>{{section.name}}</div>
-            </button>
+        <div class="col-lg-2 mt-lg-4 mt-3" *ngIf="listSection">
+          <div class="row">
+            <div class="card-section mb-lg-3 mb-2 col-auto btn-section" *ngFor="let section of listSection" (click)="getCategory(section)">
+              <button class="btn w-100" [ngClass]="itemSection.id === section.id ? 'btn-blue':'btn-secondary'">
+                <div>{{section.name}}</div>
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="col-lg-10 mt-lg-5 mt-3 pb-3" *ngIf="listCategory" #blockCategory>
-          <h5 class="d-lg-none">Категории</h5>
+        <div class="col-lg-10 mt-lg-4 mt-3 pb-3" *ngIf="listCategory" #blockCategory>
+          <!--<h5 class="d-lg-none">Категории</h5>-->
           <div class="row">
             <div class="col-lg-4 col-md-6 mb-lg-2" *ngFor="let category of listCategory"
                  (mouseenter)="setActiveCategory(category)" (mouseleave)="delService()">

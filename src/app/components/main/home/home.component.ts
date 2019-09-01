@@ -28,8 +28,6 @@ export class HomeComponent implements OnInit {
   listCategory: CategoryService[];
   activeCategory: CategoryService;
 
-  @ViewChild('blockCategory', {static: true}) blockCategory: ElementRef;
-
   itemConfig: ConfigApp;
 
   constructor(private fb: FormBuilder,
@@ -62,27 +60,20 @@ export class HomeComponent implements OnInit {
     this.sectionService.getAll().subscribe(res => {
       this.listSection = res;
       if (!this.mainService.itemSection) {
-        this.getCategory(res[0], '');
+        this.getCategory(res[0]);
         this.itemSection = res[0];
       } else {
-        this.getCategory(this.mainService.itemSection, '');
+        this.getCategory(this.mainService.itemSection);
         this.itemSection = this.mainService.itemSection;
       }
     });
   }
 
-  getCategory(section: Section, event: string) {
+  getCategory(section: Section) {
     this.itemSection = section;
     this.mainService.itemSection = section;
     this.serviceService.getCategoryBySection(section).subscribe(res => {
       this.listCategory = res;
-      if (event === 'click') {
-        if (window.innerWidth < 991) {
-          setTimeout(() => {
-            this.blockCategory.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
-          }, 1000);
-        }
-      }
     });
   }
 
