@@ -31,7 +31,7 @@
     "@nguniversal/module-map-ngfactory-loader": "^8.0.0-rc.1",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng-pick-datetime": "^7.0.0",
     "popper.js": "^1.15.0",
     "rxjs": "~6.5.2",
